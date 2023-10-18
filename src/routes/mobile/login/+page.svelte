@@ -1,7 +1,12 @@
 <script>
+	import { goto } from '$app/navigation';
   import MacroInput from "$lib/components/MacroInput.svelte";
 
   let checked = false
+
+  function login () {
+    goto('/mobile/home')
+  }
 </script>
 
 <div class="w-screen h-screen">
@@ -44,7 +49,7 @@
     </div>
 
     <div class="w-full pb-5">
-      <button class="btn btn-primary btn-block text-white mb-[10vh]">
+      <button on:click={() => login()} class="btn btn-primary btn-block text-white mb-[10vh]">
         Login
       </button>
 
