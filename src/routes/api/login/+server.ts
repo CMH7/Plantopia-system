@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		
 		if (docSnaps.empty) return json({ error: true, data: null })
 		
-		return json({error: false, data: docSnaps.docs.})	
+		return json({error: false, data: docSnaps.docs})	
 	} else {
 		return json({error: false, data: null})
 	}
