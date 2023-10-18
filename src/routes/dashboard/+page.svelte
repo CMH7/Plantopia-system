@@ -45,7 +45,7 @@
 
               <div class="flex gap-x-4 text-primary">
                 <div class="flex justify-center items-center">
-                  <span class="material-symbols-outlined text-5xl">psychiatry</span>
+                  <span class="material-symbols-rounded text-5xl">psychiatry</span>
                 </div>
                 <h2 class="m-0 p-0 flex items-center uppercase poppins font-bold text-primary">Top Plants</h2>
               </div>

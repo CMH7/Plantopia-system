@@ -1,5 +1,5 @@
 <script lang='ts'>
-  export let icon: string = 'Group'
+  export let icon: string = 'group'
   export let title: string = 'Total Users'
   export let data: string = '15'
   export let caption: string = '2 Oct 2023 12:30 PM'
@@ -12,7 +12,7 @@
     <div class="w-full flex items-center justify-center">
       <div class="flex gap-x-4 text-primary">
         <div class="flex justify-center items-center">
-          <span class="material-symbols-outlined text-5xl">{icon}</span>
+          <span class="material-symbols-rounded text-5xl">{icon}</span>
         </div>
         <h2 class="m-0 p-0 flex items-center uppercase poppins font-bold text-primary">{title}</h2>
       </div>
