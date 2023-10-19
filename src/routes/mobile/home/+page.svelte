@@ -3,8 +3,22 @@
   import MacroInput from "$lib/components/MacroInput.svelte";
 	import MobileNavbar from "$lib/components/MobileNavbar.svelte";
 	import MyGardenCard from "$lib/components/MyGardenCard.svelte";
+	import Overlay from "$lib/components/Overlay.svelte";
+  import { overlays, plantCategories } from "$lib/stores/global";
 
   let data = []
+
+  function changeSelectedAttr (index, goal) {
+    $plantCategories[index].selected = goal
+  }
+
+  function CloseFilter() {
+    $overlays[0].active = false
+  }
+
+  function OpenFilter() {
+    $overlays[0].active = true
+  }
 </script>
 
 <div class="w-screen h-screen overflow-hidden">
@@ -15,7 +29,7 @@
 
     <div class="w-full h-1/2 flex justify-center items-center">
       <MacroInput icon='search' type='text' placeholder='Search plant'>
-        <button slot='prepend' class="p-2 centerxy btn btn-square btn-primary">
+        <button on:click={() => OpenFilter()} slot='prepend' class="p-2 centerxy btn btn-square btn-primary">
           <span class="material-symbols-rounded text-white">
             filter_list
           </span>
@@ -55,6 +69,40 @@
       </div>
     {/if}
   </div>
+
+  {#if $overlays[0].active}
+  <Overlay name='plant category filter'>
+    <div class="w-full h-[40vh] bg-white rounded-t-3xl p-[16px] shadow-2xl border absolute bottom-0">
+      <div class="w-full flex justify-between items-center">
+        <div class="poppins text-black text-sm">
+          Cancel
+        </div>
+        
+        <div class="poppins uppercase font-bold text-secondary text-lg">
+          Filter by
+        </div>
+  
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div on:click={() => CloseFilter()} class="poppins text-primary text-sm">
+          Apply
+        </div>
+      </div>
+
+      <div class="poppins text-primary text-base font-light mt-2">
+        Plant Category
+      </div>
+
+      <div class="w-full flex justify-center flex-wrap gap-3 mt-3">
+        {#each $plantCategories as pcat, i}
+          <button on:click={() => changeSelectedAttr(i, !pcat.selected)} class="rounded-xl poppins w-[40vw] p-1 {pcat.selected ? 'bg-accent text-black border-2 border-secondary' : 'text-primary'}">
+            {pcat.name}
+          </button>
+        {/each}
+      </div>
+    </div>
+  </Overlay>
+  {/if}
 
   <MobileNavbar />
 </div>
