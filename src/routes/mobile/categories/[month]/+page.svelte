@@ -1,4 +1,6 @@
 <script>
+	import { goto } from '$app/navigation';
+
   //@ts-nocheck
 	import MyGardenCard from '$lib/components/MyGardenCard.svelte';
 	import { months, pageTransitionDuration } from '$lib/stores/global.js';
@@ -6,19 +8,21 @@
   //@ts-ignore
   export let data
   let color = $months.filter(x => x.name.toLowerCase() === data.month.toLowerCase())[0]?.color
+
+  function goBack() {
+    goto('/mobile/categories', {replaceState: true})
+  }
   
 </script>
 
 <div class="w-full h-fit" in:slide={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration, axis: 'x'}} out:slide={{ duration: $pageTransitionDuration, axis: 'x' }}>
   <div class="w-full h-[10vh] flex justify-center items-center relative">
     <img src="/plantopiaText2.png" alt="plantopiatext2" class="w-3/5 h-auto object-contain">
-    <a href="/mobile/categories/" class="no-underline absolute left-[3%]">
-      <button class="btn btn-circle btn-ghost">
-        <span class="material-symbols-rounded text-4xl text-secondary m-0 p-0">
-          chevron_left
-        </span>
-      </button>
-    </a>
+    <button on:click={() => goBack()} class="btn btn-circle btn-ghost absolute left-[3%]">
+      <span class="material-symbols-rounded text-4xl text-secondary m-0 p-0">
+        chevron_left
+      </span>
+    </button>
   </div>
   
   <div class="w-full h-[7vh]">
