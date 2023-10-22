@@ -5,8 +5,8 @@
 	import { fade, slide } from "svelte/transition";
 
   let user = {
-    name: 'Charles Maverick Herrera',
-    email: 'charlesm.herrera0700@gmail.com'
+    name: 'Juan Dela Cruz',
+    email: 'juanDcruz2023@gmail.com'
   }
 
   let menus = [
