@@ -4,8 +4,8 @@
 </script>
 
 <Macro>
-  <div class="col-span-9 bg-success bg-plants bg-no-repeat bg-cover" />
-  <div class="col-span-3 flex justify-center items-center p-6">
+  <div class="col-span-8 bg-success bg-plants bg-no-repeat bg-cover" />
+  <div class="col-span-4 flex justify-center items-center p-6">
 
     <form>
       <div>

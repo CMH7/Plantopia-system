@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable, readonly, readable } from "svelte/store";
 
 export const activeModule = writable(0)
 
@@ -31,3 +31,21 @@ export const plantCategories = writable([
 		selected: false,
 	},
 ]);
+
+export const months = readonly(readable(
+	[
+		"January",
+		"Februrary",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December"
+	]
+));
+

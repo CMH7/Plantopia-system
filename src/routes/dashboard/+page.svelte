@@ -3,8 +3,8 @@
   import Macro from "$lib/components/Macro.svelte"
 	import Navbar from "$lib/components/Navbar.svelte";
 	import TopPlantsCard from "$lib/components/TopPlantsCard.svelte";
-
-  const months: string[] = ['January', 'Februrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ]
+  import { months } from "$lib/stores/global";
+  
 </script>
 
 <Macro>
@@ -53,7 +53,7 @@
               <div class="grow">
                 <select class="select select-bordered w-full max-w-xs float-right">
                   <option disabled selected>Select Month</option>
-                  {#each months as month, i}
+                  {#each $months as month, i}
                     <option value='{i}'>{month}</option>
                   {/each}
                 </select>

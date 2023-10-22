@@ -1,27 +1,30 @@
 <script>
   //@ts-nocheck
+	import { goto } from "$app/navigation";
+
+  //@ts-nocheck
 	import { activeModule } from "$lib/stores/global";
 
   let modules = [
     {name: 'Home', icon: 'home'},
-    {name: 'Capture', icon: 'image_search'},
-    {name: 'Plants', icon: 'psychiatry'},
+    {name: 'Categories', icon: 'potted_plant'},
     {name: 'Profile', icon: 'account_circle'},
   ]
 
   function switchModule(index) {
+    goto(`/mobile/${modules[index].name.toLowerCase()}`)
     activeModule.set(index)
   }
 </script>
 
 <div class="w-full h-[10vh]">
-  <div class="w-full h-full rounded-t-2xl bg-secondary flex justify-around items-center">
+  <div class="w-full h-full rounded-t-2xl bg-secondary flex justify-center items-center gap-x-[15vw]">
     {#each modules as module, i}
-      <button on:click={() => switchModule(i)} class="btn btn-square btn-secondary text-white">
-        <span class="material-symbols-rounded text-white">
+      <button on:click={() => switchModule(i)} class="btn btn-square btn-ghost text-white gap-0">
+        <span class="material-symbols-rounded text-white text-4xl ">
           {module.icon}
         </span>
-        <div class="{$activeModule == i ? '' : 'hidden'}">
+        <div class="text-[10px] {$activeModule == i ? '' : 'hidden'}">
           {module.name}
         </div>
       </button>

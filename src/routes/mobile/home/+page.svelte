@@ -6,7 +6,7 @@
 	import Overlay from "$lib/components/Overlay.svelte";
   import { overlays, plantCategories } from "$lib/stores/global";
 
-  let data = []
+  let data = Array(10)
 
   function changeSelectedAttr (index, goal) {
     $plantCategories[index].selected = goal
@@ -27,21 +27,30 @@
       <img src="/plantopiaText2.png" alt="plantopiatext2">
     </div>
 
-    <div class="w-full h-1/2 flex justify-center items-center">
-      <MacroInput icon='search' type='text' placeholder='Search plant'>
-        <button on:click={() => OpenFilter()} slot='prepend' class="p-2 centerxy btn btn-square btn-primary">
-          <span class="material-symbols-rounded text-white">
-            filter_list
+    <div class="w-full h-1/2 flex justify-center items-center gap-x-5">
+      <MacroInput icon='search' type='text' placeholder='Search plant' className='w-[70vw]'>
+        <button on:click={() => OpenFilter()} slot='prepend' class="p-2 centerxy btn btn-square btn-ghost">
+          <span class="material-symbols-rounded text-primary">
+            image_search
           </span>
         </button>
       </MacroInput>
+
+      <button on:click={() => OpenFilter()} class="centerxy btn btn-square btn-primary">
+        <span class="material-symbols-rounded text-white">
+          filter_list
+        </span>
+      </button>
     </div>
   </div>
 
-  <div class="w-full min-h-[70vh] max-h-[65vh] relative overflow-x-hidden overflow-y-auto">
-    <div class="bg-white shadow-lg poppins px-5 w-full text-[8vw] font-bold sticky top-0 rounded-b-2xl">
+  <div class="w-full h-[10vh]">
+    <div class="bg-white poppins text-primary px-5 w-full text-[8vw] font-bold sticky -top-1">
       My Garden
     </div>
+  </div>
+
+  <div class="w-full min-h-[60vh] max-h-[60vh] relative overflow-x-hidden overflow-y-auto">
 
     {#if data?.length > 0}
       <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
@@ -71,7 +80,7 @@
   </div>
 
   {#if $overlays[0].active}
-  <Overlay name='plant category filter'>
+  <Overlay>
     <div class="w-full h-[40vh] bg-white rounded-t-3xl p-[16px] shadow-2xl border absolute bottom-0">
       <div class="w-full flex justify-between items-center">
         <div class="poppins text-black text-sm">
