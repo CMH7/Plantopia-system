@@ -54,7 +54,7 @@
                 <select class="select select-bordered w-full max-w-xs float-right">
                   <option disabled selected>Select Month</option>
                   {#each $months as month, i}
-                    <option value='{i}'>{month}</option>
+                    <option value='{i + 1}'>{month.name}</option>
                   {/each}
                 </select>
               </div>

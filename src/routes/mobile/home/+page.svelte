@@ -45,12 +45,12 @@
   </div>
 
   <div class="w-full h-[10vh]">
-    <div class="bg-white poppins text-primary px-5 w-full text-[8vw] font-bold sticky -top-1">
+    <div class="bg-white poppins text-primary px-5 w-full text-[8vw] font-bold">
       My Garden
     </div>
   </div>
 
-  <div class="w-full min-h-[60vh] max-h-[60vh] relative overflow-x-hidden overflow-y-auto">
+  <div class="w-full min-h-[60vh] max-h-[60vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
 
     {#if data?.length > 0}
       <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">

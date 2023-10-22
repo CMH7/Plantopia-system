@@ -32,20 +32,22 @@ export const plantCategories = writable([
 	},
 ]);
 
-export const months = readonly(readable(
-	[
-		"January",
-		"Februrary",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September",
-		"October",
-		"November",
-		"December"
-	]
-));
+export const months = readonly(
+	readable(
+		[
+			{ name: "January", color: "text-[#00AEDD]" },
+			{ name: "February", color: "text-[#F25050]" },
+			{ name: "March", color: "text-[#A0E3F2]" },
+			{ name: "April", color: "text-[#F2BA52]" },
+			{ name: "May", color: "text-[#A8BF54]" },
+			{ name: "June", color: "text-[#DDACF2]" },
+			{ name: "July", color: "text-[#F2BC8D]" },
+			{ name: "August", color: "text-[#F28F38]" },
+			{ name: "September", color: "text-[#023E73]" },
+			{ name: "October", color: "text-[#F29BD4]" },
+			{ name: "November", color: "text-[#F25C5C]" },
+			{ name: "December", color: "text-[#4ED9CB]" },
+		]
+	)
+);
 
