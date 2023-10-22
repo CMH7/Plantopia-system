@@ -6,7 +6,11 @@ export const overlays = writable([
   {
     name: 'plant category filter',
     active: false
-  }
+	},
+	{
+		name: 'logout modal',
+		active: false
+	}
 ])
 
 export const plantCategories = writable([

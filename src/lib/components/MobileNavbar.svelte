@@ -10,7 +10,7 @@
   ]
 
   function switchModule(index) {
-    goto(`/mobile/${modules[index].name.toLowerCase()}`)
+    goto(`/mobile/${modules[index].name.toLowerCase()}`, {replaceState: true})
     activeModule.set(index)
   }
 
