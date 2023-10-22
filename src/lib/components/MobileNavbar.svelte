@@ -20,7 +20,7 @@
 <div class="w-full h-[10vh]">
   <div class="w-full h-full rounded-t-2xl bg-secondary flex justify-center pt-[2vh] gap-x-[15vw]">
     {#each modules as module, i}
-      <button on:click={() => switchModule(i)} class="btn btn-square btn-ghost text-white gap-0">
+      <button on:click={() => switchModule(i)} class="text-white">
         <span class="material-symbols-rounded text-white text-[8vw] ">
           {module.icon}
         </span>

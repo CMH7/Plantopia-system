@@ -24,13 +24,13 @@
     </a>
   </div>
 
-  <div class="w-full h-[10vh]">
+  <div class="w-full h-[7vh]">
     <div class="bg-white poppins {color} px-5 w-full text-[8vw] font-bold">
       {data.month}
     </div>
   </div>
 
-  <div class="w-full min-h-[70vh] max-h-[70vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
+  <div class="w-full min-h-[73vh] max-h-[73vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
 
     {#if data?.data?.length > 0}
       <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
