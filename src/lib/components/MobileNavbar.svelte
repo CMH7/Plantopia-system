@@ -1,8 +1,6 @@
 <script>
   //@ts-nocheck
 	import { goto } from "$app/navigation";
-
-  //@ts-nocheck
 	import { activeModule } from "$lib/stores/global";
 
   let modules = [
@@ -15,13 +13,14 @@
     goto(`/mobile/${modules[index].name.toLowerCase()}`)
     activeModule.set(index)
   }
+
 </script>
 
 <div class="w-full h-[10vh]">
-  <div class="w-full h-full rounded-t-2xl bg-secondary flex justify-center pt-[2vh] gap-x-[15vw]">
+  <div class="w-full h-full rounded-t-2xl bg-secondary flex justify-around items-center relative">
     {#each modules as module, i}
       <button on:click={() => switchModule(i)} class="text-white">
-        <span class="material-symbols-rounded text-white text-[8vw] ">
+        <span class="material-symbols-rounded text-white text-[9vw] ">
           {module.icon}
         </span>
         <div class="text-[10px] {$activeModule == i ? '' : 'hidden'}">

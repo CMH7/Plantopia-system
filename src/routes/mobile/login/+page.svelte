@@ -1,6 +1,8 @@
 <script>
 	import { goto } from '$app/navigation';
   import MacroInput from "$lib/components/MacroInput.svelte";
+	import { pageTransitionDuration } from '$lib/stores/global';
+	import { fade, slide } from 'svelte/transition';
 
   let checked = false
 
@@ -9,7 +11,7 @@
   }
 </script>
 
-<div class="w-screen h-screen">
+<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
   <div class="relative w-full h-[25vh] flex justify-center">
     <img src="/bg1.png" alt="textLogo" class="w-full h-full absolute object-fill z-0 m-0 p-0 ">
     <img src="/plantopiaText.png" alt="textLogo" class="w-[90%] h-auto absolute z-10 m-0 p-0">
@@ -58,5 +60,4 @@
       </div>
     </div>
   </div>
-
 </div>
