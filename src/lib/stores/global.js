@@ -55,5 +55,5 @@ export const months = readonly(
 	)
 );
 
-export const pageTransitionDuration = writable(500);
+export const pageTransitionDuration = writable(150);
 
