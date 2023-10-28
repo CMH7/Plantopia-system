@@ -5,6 +5,8 @@
 	import { pageTransitionDuration } from "$lib/stores/global";
 	import { fade } from "svelte/transition";
 
+  let icon = 'visibility'
+
   function goBack() {
     goto('/mobile/profile', {replaceState: true})
   }
@@ -21,11 +23,17 @@
     </button>
   </div>
 
-  <form class="w-full h-[90vh] flex flex-col items-center overflow-y-auto rounded-t-2xl shadow-inner">
+  <form class="w-full h-[90vh] px-[10vw] flex flex-col items-center overflow-y-auto rounded-t-2xl shadow-inner">
     <MacroInput bind:value={$userDetails.name} name='Name' errorMessage='' placeholder='Email' icon='person' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]' />
     <MacroInput bind:value={$userDetails.email} name='Email' errorMessage='' placeholder='Email' icon='mail' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]' />
-    <MacroInput bind:value={$userDetails.password} name='Password' errorMessage='' placeholder='Email' icon='lock' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]' />
+    <MacroInput bind:value={$userDetails.password} name='Password' errorMessage='' placeholder='Email' icon='lock' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]'>
+      <button slot='prepend'>
+        <span class="material-symbols-rounded text-primary p-2">
+          {icon}
+        </span>
+      </button>
+    </MacroInput>
 
-    
+
   </form>
 </div>

@@ -14,12 +14,12 @@
     </div>
   </div>
   
-  <div class="w-full h-[65vh] px-8 md:px-32  ">
+  <div class="w-full h-[65vh] gpx  ">
     <div class="w-full h-full flex flex-col justify-center gap-y-7">
-      <MacroInput errorMessage='' required={true} placeholder='Name' type='text' icon='person' className='mb-2' />
-      <MacroInput errorMessage='' required={true} placeholder='Email' type='text' icon='mail' className='mb-2' />
-      <MacroInput errorMessage='' required={true} placeholder='Password' type='text' icon='lock' className='mb-2' />
-      <MacroInput errorMessage='' required={true} placeholder='Confirm password' type='text' icon='lock' className='mb-2' />
+      <MacroInput errorMessage='' required={true} placeholder='Name' icon='person' className='mb-2' />
+      <MacroInput errorMessage='' required={true} placeholder='Email' icon='mail' className='mb-2' />
+      <MacroInput errorMessage='' required={true} placeholder='Password' icon='lock' className='mb-2' />
+      <MacroInput errorMessage='' required={true} placeholder='Confirm password' icon='lock' className='mb-2' />
   
       <button class="btn btn-primary btn-block text-white">
         Sign up

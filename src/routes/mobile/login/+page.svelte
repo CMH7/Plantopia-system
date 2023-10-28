@@ -30,10 +30,10 @@
     </div>
   </div>
 
-  <div class="w-full h-[55vh] px-8 md:px-32 flex flex-col justify-between">
+  <div class="w-full h-[55vh] gpx flex flex-col justify-between">
     <div class="flex flex-col gap-y-2">
-      <MacroInput errorMessage='' required={true} placeholder='Email' type='text' icon='mail' className='mb-2' />
-      <MacroInput errorMessage='' required={true} placeholder='Password' type='password' icon='lock' />
+      <MacroInput errorMessage='' required={true} placeholder='Email' icon='mail' className='mb-2' />
+      <MacroInput errorMessage='' required={true} placeholder='Password' icon='lock' />
 
       <div class="w-full flex justify-between items-center px-[2vh]">
         <div class="flex items-center gap-x-1">

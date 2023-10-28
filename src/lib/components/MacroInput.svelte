@@ -11,7 +11,7 @@
   export let labelClass = ''
 </script>
 
-<div class='{className}'>
+<div class='w-full {className}'>
   <form class="p-0 m-0" >
     
     <label for="{name}" class="label poppins font-medium {name !== '' ? '' : 'hidden'} {labelClass}">

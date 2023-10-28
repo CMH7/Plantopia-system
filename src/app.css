@@ -13,3 +13,8 @@
   @apply justify-center;
   @apply items-center;
 }
+
+.gpx {
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
