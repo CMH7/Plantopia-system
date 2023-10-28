@@ -45,7 +45,7 @@
   
   <div class="w-full h-[80vh]">
     
-    <div class="w-full h-[60vh] flex flex-col justify-around items-center px-[10vw]">
+    <div class="w-full h-[60vh] flex flex-col justify-around items-center px-[10vw] rounded-t-2xl shadow-inner">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div on:click={() => goto('/mobile/profile/info', {replaceState: true})} class="w-full h-[10vh] flex justify-center items-center gap-x-10">

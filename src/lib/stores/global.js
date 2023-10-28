@@ -57,3 +57,8 @@ export const months = readonly(
 
 export const pageTransitionDuration = writable(150);
 
+export const userDetails = writable({
+	name: 'Charles Maverick Herrera',
+	email: 'charlesm.herrera0700@gmail.com',
+	password: 'secret1234'
+})

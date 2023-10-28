@@ -1,5 +1,7 @@
 <script>
+	import { userDetails } from './../../../../lib/stores/global.js';
 	import { goto } from "$app/navigation";
+	import MacroInput from "$lib/components/MacroInput.svelte";
 	import { pageTransitionDuration } from "$lib/stores/global";
 	import { fade } from "svelte/transition";
 
@@ -18,4 +20,12 @@
       </span>
     </button>
   </div>
+
+  <form class="w-full h-[90vh] flex flex-col items-center overflow-y-auto rounded-t-2xl shadow-inner">
+    <MacroInput bind:value={$userDetails.name} name='Name' errorMessage='' placeholder='Email' icon='person' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]' />
+    <MacroInput bind:value={$userDetails.email} name='Email' errorMessage='' placeholder='Email' icon='mail' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]' />
+    <MacroInput bind:value={$userDetails.password} name='Password' errorMessage='' placeholder='Email' icon='lock' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]' />
+
+    
+  </form>
 </div>

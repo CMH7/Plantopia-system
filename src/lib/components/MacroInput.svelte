@@ -1,22 +1,21 @@
-<script lang='ts'>
-	import type { ChangeEventHandler } from "svelte/elements";
-
-  export let className: string = ''
-  export let icon: string = ''
-  export let value: string = ''
-  export let onChange: ChangeEventHandler<HTMLInputElement> = e => {}
-  export let type: string = 'text'
-  export let required: boolean = false
-  export let placeholder: string = ''
-  export let name: string = ''
-  export let errorMessage: string = ''
+<script>
+  //@ts-nocheck
+  export let className = ''
+  export let icon = ''
+  export let value = ''
+  export let onChange = e => {}
+  export let required = false
+  export let placeholder = ''
+  export let name = ''
+  export let errorMessage = ''
+  export let labelClass = ''
 </script>
 
 <div class='{className}'>
   <form class="p-0 m-0" >
     
-    <label for="{name}" class="label poppins font-medium {name !== '' ? '' : 'hidden'}">
-      {name} <span class="text-error {required ? '' : 'hidden'}">*</span>
+    <label for="{name}" class="label poppins font-medium {name !== '' ? '' : 'hidden'} {labelClass}">
+      {name} <span class="text-error {required ? 'ml-2 grow' : 'hidden'}">*</span>
     </label>
     
 
@@ -28,10 +27,10 @@
       </div>
 
       <input
-        class="bg-transparent form-input input md:input-lg w-full border-none poppins text-base placeholder:text-primary"
-        {value}
+        class="bg-transparent form-input input md:input-lg w-full border-none poppins text-base placeholder:text-primary pl-0"
+        bind:value
         on:change={onChange}
-        {type}
+        type='text'
         {required}
         {placeholder}
         {name}
