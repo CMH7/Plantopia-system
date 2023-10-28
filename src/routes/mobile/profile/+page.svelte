@@ -1,8 +1,9 @@
 <script>
+  //@ts-nocheck
 	import { goto } from "$app/navigation";
 	import Overlay from "$lib/components/Overlay.svelte";
 	import { activeModule, overlays, pageTransitionDuration } from "$lib/stores/global";
-	import { fade, slide } from "svelte/transition";
+	import { fade, fly, slide } from "svelte/transition";
 
   let user = {
     name: 'Juan Dela Cruz',
@@ -32,8 +33,12 @@
   function showLogoutModal() {
     $overlays[1].active = true
   }
+
+  function next(path) {
+    goto(`/mobile/profile/${path}`)
+  }
 </script>
-<div class="w-full h-fit" in:slide={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration, axis: 'x' }} out:slide={{ duration: $pageTransitionDuration, axis: 'x' }}>
+<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
   <div class="w-full h-[10vh] flex justify-center items-center">
     <img src="/plantopiaText2.png" alt="plantopiatext2" class="w-3/5 h-auto object-contain">
   </div>
@@ -64,7 +69,9 @@
       <div class="w-full h-2/3 card bg-white shadow-xl border flex flex-col">
 
         {#each menus as menu, i}
-          <div class="w-full h-1/3 flex justify-between items-center px-5 {i == 1 ? 'border-y' : ''}">
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <div on:click={() => next(menu.name.toLowerCase())} class="w-full h-1/3 flex justify-between items-center px-5 {i == 1 ? 'border-y' : ''}">
             <div class="flex items-center gap-x-5">
               <span class="material-symbols-rounded text-primary">
                 {menu.icon}

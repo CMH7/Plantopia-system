@@ -9,7 +9,7 @@
   }
 </script>
 
-<div class="w-full h-fit" in:slide={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration, axis: 'x' }} out:slide={{ duration: $pageTransitionDuration, axis: 'x' }}>
+<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
   <div class="w-full h-[10vh] flex justify-center items-center">
     <img src="/plantopiaText2.png" alt="plantopiatext2" class="w-3/5 h-auto object-contain">
   </div>

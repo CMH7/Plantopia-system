@@ -21,6 +21,10 @@
   }
 </script>
 
+<svelte:head>
+  <meta name="viewport" content= "width=device-width, user-scalable=no">
+</svelte:head>
+
 <div class="w-screen { $page.url.pathname === '/mobile/splash' || $page.url.pathname === '/mobile/login' || $page.url.pathname === '/mobile/signup' ? 'h-screen' : 'h-[90vh]'} overflow-hidden">
   <slot />
 </div>
