@@ -47,7 +47,7 @@
     {#if data?.length > 0}
       <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
         {#each data as _, i}
-          <MyGardenCard />
+          <MyGardenCard id={i} />
         {/each}
       </div>
     {:else}

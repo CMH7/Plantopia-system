@@ -1,12 +1,21 @@
-<script lang='ts'>
-  export let plantName: string = 'Queen leng plantsss'
-  export let plantDesc: string = 'lorem ipsum description lorem ipsum descriptiondescription description'
-  export let plantImg: string = '/aloe.png'
-  export let plantCategories: string[] = ['Shrubs']
-  export let favorite: boolean = false
+<script>
+  //@ts-nocheck
+	import { goto } from "$app/navigation";
+	import PlantInfo from "./PlantInfo.svelte";
+
+  export let plantName = 'Queen leng plantsss'
+  export let plantDesc = 'lorem ipsum description lorem ipsum descriptiondescription description'
+  export let plantImg = '/aloe.png'
+  export let plantCategories = ['Shrubs']
+  export let favorite = false
+  export let id = 0
 
   function setFavorite() {
     favorite = !favorite
+  }
+
+  function plantInformation(id) {
+    goto(`/mobile/plantinfo/${id}`, {replaceState: false})
   }
 
   let link = `https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,700,${favorite ? '1' : '0'},200`
@@ -17,7 +26,9 @@
 </svelte:head> -->
 
 
-<div class="w-full min-h-[130px] max-h-[130px] relative overflow-clip transition-all hover:cursor-pointer hover:border-primary border rounded-xl hover:shadow-xl p-2 flex gap-x-3">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div on:click={() => plantInformation(id)} class="w-full min-h-[130px] max-h-[130px] relative overflow-clip transition-all hover:cursor-pointer hover:border-primary border rounded-xl hover:shadow-xl p-2 flex gap-x-3">
 
   <div class="w-1/3 h-full aspect-square flex justify-center shrink-0">
     <img class="m-0 p-0 w-full h-full rounded-lg object-cover" src="{plantImg}" alt="aloe">
