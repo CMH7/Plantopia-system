@@ -19,7 +19,7 @@
       <img src="/plantopiaText2.png" alt="plantopiatext2" class="w-3/5 h-auto object-contain">
     </div>
   
-    <div class="w-full h-1/2 flex justify-center items-center gpx gap-x-5">
+    <div class="w-full h-1/2 flex justify-center items-center gpx gap-x-2">
       <MacroInput icon='search' placeholder='Search plant' className='w-[70vw]'>
         <button on:click={() => OpenFilter()} slot='prepend' class="p-2 centerxy btn btn-square btn-ghost">
           <span class="material-symbols-rounded text-primary">

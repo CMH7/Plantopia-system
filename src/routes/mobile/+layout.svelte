@@ -2,7 +2,7 @@
   //@ts-nocheck
 	import MobileNavbar from "$lib/components/MobileNavbar.svelte"
   import { page } from "$app/stores";
-	import { activeModule, overlays, plantCategories } from "$lib/stores/global";
+	import { activeModule, infoEditing, overlays, plantCategories } from "$lib/stores/global";
 	import Overlay from "$lib/components/Overlay.svelte";
 	import { goto } from "$app/navigation";
 
@@ -19,6 +19,11 @@
     activeModule.set(0)
     goto('/mobile/login', {replaceState: true})
   }
+
+  function save(index) {
+    CloseModal(index)
+    $infoEditing = !$infoEditing
+  } 
 </script>
 
 <svelte:head>
@@ -74,7 +79,7 @@
 <Overlay>
   <div class="w-full h-full flex justify-center items-center">
     <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
-      <div class="poppins w-full px-5 pt-2">
+      <div class="poppins w-full px-5 pt-2 text-sm text-center">
         Are you sure you want to logout?
       </div>
 
@@ -84,6 +89,33 @@
         </button>
         <button on:click={() => Logout()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
           Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</Overlay>
+{/if}
+
+<!-- logout modal -->
+{#if $overlays[2].active}
+<Overlay>
+  <div class="w-full h-full flex justify-center items-center">
+    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+      <div class="w-full flex justify-center pt-1">
+        <span class="material-symbols-rounded text-primary">
+          help
+        </span>
+      </div>
+      <div class="poppins w-full px-5 pt-2 text-sm text-center">
+        Are you sure you want to save the changes you've made?
+      </div>
+
+      <div class="w-full flex items-center justify-center absolute bottom-0">
+        <button on:click={() => CloseModal(2)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+          No
+        </button>
+        <button on:click={() => save(2)} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+          Yes
         </button>
       </div>
     </div>

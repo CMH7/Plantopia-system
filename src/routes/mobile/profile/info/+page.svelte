@@ -1,14 +1,25 @@
 <script>
-	import { userDetails } from './../../../../lib/stores/global.js';
+  //@ts-nocheck
+	import { overlays, userDetails, infoEditing } from './../../../../lib/stores/global.js';
 	import { goto } from "$app/navigation";
 	import MacroInput from "$lib/components/MacroInput.svelte";
 	import { pageTransitionDuration } from "$lib/stores/global";
 	import { fade } from "svelte/transition";
 
+  let editing = false
+
   let icon = 'visibility'
 
   function goBack() {
     goto('/mobile/profile', {replaceState: true})
+  }
+
+  function edit() {
+    $infoEditing = !$infoEditing
+  }
+
+  function save() {
+    $overlays[2].active = true
   }
 </script>
 
@@ -23,17 +34,26 @@
     </button>
   </div>
 
-  <form class="w-full h-[90vh] px-[10vw] flex flex-col items-center overflow-y-auto rounded-t-2xl shadow-inner">
-    <MacroInput bind:value={$userDetails.name} name='Name' errorMessage='' placeholder='Email' icon='person' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]' />
-    <MacroInput bind:value={$userDetails.email} name='Email' errorMessage='' placeholder='Email' icon='mail' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]' />
-    <MacroInput bind:value={$userDetails.password} name='Password' errorMessage='' placeholder='Email' icon='lock' className='mb-2' labelClass='text-primary font-bold uppercase text-[5vw]'>
+  <form class="w-full h-[80vh] px-[10vw] flex flex-col items-center overflow-y-auto rounded-t-2xl shadow-inner">
+    <MacroInput disabled={!$infoEditing} bind:value={$userDetails.name} name='Name' errorMessage='' placeholder='Email' icon='person' className='mb-2' labelClass='text-primary font-bold uppercase pb-0 text-[4vw]' />
+    <MacroInput disabled={!$infoEditing} bind:value={$userDetails.email} name='Email' errorMessage='' placeholder='Email' icon='mail' className='mb-2' labelClass='text-primary font-bold uppercase pb-0 text-[4vw]' />
+    <MacroInput disabled={!$infoEditing} bind:value={$userDetails.password} name='Password' errorMessage='' placeholder='Email' icon='lock' className='mb-2' labelClass='text-primary font-bold uppercase pb-0 text-[4vw]'>
       <button slot='prepend'>
         <span class="material-symbols-rounded text-primary p-2">
           {icon}
         </span>
       </button>
     </MacroInput>
-
-
+    <div class="pt-[5vh]">
+      {#if !$infoEditing}
+        <button on:click={() => edit()} class="btn btn-primary btn-wide poppins text-white">
+          Edit Profile
+        </button>
+      {:else}
+        <button on:click={() => save()} class="btn btn-primary btn-wide poppins text-white">
+          Save Changes
+        </button>
+      {/if}
+    </div>
   </form>
 </div>

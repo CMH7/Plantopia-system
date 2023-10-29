@@ -9,6 +9,7 @@
   export let name = ''
   export let errorMessage = ''
   export let labelClass = ''
+  export let disabled = false;
 </script>
 
 <div class='w-full {className}'>
@@ -18,8 +19,7 @@
       {name} <span class="text-error {required ? 'ml-2 grow' : 'hidden'}">*</span>
     </label>
     
-
-    <div class="w-full rounded-xl border-primary border-2 flex items-center">
+    <div class="w-full rounded-xl border-primary border-2 flex items-center {disabled ? 'bg-base-200' : '' }">
       <div class="p-2 centerxy">
         <span class="material-symbols-rounded text-primary">
           {icon}
@@ -30,10 +30,10 @@
         class="bg-transparent form-input input md:input-lg w-full border-none poppins text-base placeholder:text-primary pl-0"
         bind:value
         on:change={onChange}
-        type='text'
         {required}
         {placeholder}
         {name}
+        {disabled}
       />
 
       <slot name="prepend" />

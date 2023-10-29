@@ -10,6 +10,10 @@ export const overlays = writable([
 	{
 		name: 'logout modal',
 		active: false
+	},
+	{
+		name: 'save info changes',
+		active: false
 	}
 ])
 
@@ -62,3 +66,5 @@ export const userDetails = writable({
 	email: 'charlesm.herrera0700@gmail.com',
 	password: 'secret1234'
 })
+
+export const infoEditing = writable(false)
