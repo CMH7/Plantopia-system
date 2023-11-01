@@ -2,9 +2,13 @@
   //@ts-nocheck
 	import MobileNavbar from "$lib/components/MobileNavbar.svelte"
   import { page } from "$app/stores";
-	import { activeModule, infoEditing, overlays, plantCategories } from "$lib/stores/global";
+	import { PICurrentPlant, activeModule, infoEditing, overlays, plantCategories, userGarden } from "$lib/stores/global";
 	import Overlay from "$lib/components/Overlay.svelte";
 	import { goto } from "$app/navigation";
+	import MacroInput from "$lib/components/MacroInput.svelte";
+
+  let nickname = ''
+  let renickname = $PICurrentPlant.plant.name
 
   function changeSelectedAttr (index, goal) {
     $plantCategories[index].selected = goal
@@ -23,7 +27,31 @@
   function save(index) {
     CloseModal(index)
     $infoEditing = !$infoEditing
-  } 
+  }
+
+  function showNickname() {
+    $overlays[3].active = false
+    $overlays[4].active = true
+    nickname = $PICurrentPlant.plant.name
+  }
+
+  function addToMyGarden() {
+    let userGar = $userGarden
+    userGar = [...userGar, {id: $PICurrentPlant.plant.id, nickname}]
+    userGarden.set(userGar)
+    CloseModal(4)
+  }
+
+  function removePlant() {
+    let userGar = $userGarden
+    userGar = userGar.filter(x => x.id != $PICurrentPlant.plant.id)
+    userGarden.set(userGar)
+    CloseModal(5)
+  }
+
+  function renicknamefn() {
+    $userGarden.filter(x => x.id == $PICurrentPlant.plant.id)[0].nickname = renickname
+  }
 </script>
 
 <svelte:head>
@@ -116,6 +144,104 @@
         </button>
         <button on:click={() => save(2)} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
           Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</Overlay>
+{/if}
+
+<!-- add to my garden modal -->
+{#if $overlays[3].active}
+<Overlay>
+  <div class="w-full h-full flex justify-center items-center">
+    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+      <div class="w-full flex justify-center pt-1">
+        <span class="material-symbols-rounded text-primary">
+          potted_plant
+        </span>
+      </div>
+      <div class="poppins w-full px-5 pt-2 text-sm text-center">
+        Are you sure you want to add this to your garden?
+      </div>
+
+      <div class="w-full flex items-center justify-center absolute bottom-0">
+        <button on:click={() => CloseModal(3)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+          No
+        </button>
+        <button on:click={() => showNickname()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</Overlay>
+{/if}
+
+<!-- remove to my garden modal -->
+{#if $overlays[5].active}
+<Overlay>
+  <div class="w-full h-full flex justify-center items-center">
+    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+      <div class="w-full flex justify-center pt-1">
+        <span class="material-symbols-rounded text-primary">
+          potted_plant
+        </span>
+      </div>
+      <div class="poppins w-full px-5 pt-2 text-sm text-center">
+        Are you sure you want to remove this to your garden?
+      </div>
+
+      <div class="w-full flex items-center justify-center absolute bottom-0">
+        <button on:click={() => CloseModal(5)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+          No
+        </button>
+        <button on:click={() => removePlant()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</Overlay>
+{/if}
+
+<!-- plant nickname modal -->
+{#if $overlays[4].active}
+<Overlay>
+  <div class="w-full h-full flex justify-center items-center">
+    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+      <div class="poppins w-full px-5 pt-2">
+        Nickname
+      </div>
+      <MacroInput icon='match_case' bind:value={nickname} className='px-4' />
+      <div class="w-full flex items-center justify-center absolute bottom-0">
+        <button on:click={() => CloseModal(4)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+          Cancel
+        </button>
+        <button on:click={() => addToMyGarden()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</Overlay>
+{/if}
+
+<!-- plant re-nickname modal -->
+{#if $overlays[6].active}
+<Overlay>
+  <div class="w-full h-full flex justify-center items-center">
+    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+      <div class="poppins w-full px-5 pt-2">
+        Nickname
+      </div>
+      <MacroInput icon='match_case' bind:value={renickname} className='px-4' />
+      <div class="w-full flex items-center justify-center absolute bottom-0">
+        <button on:click={() => CloseModal(6)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+          Cancel
+        </button>
+        <button on:click={() => renicknamefn()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+          Submit
         </button>
       </div>
     </div>

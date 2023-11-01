@@ -14,6 +14,22 @@ export const overlays = writable([
 	{
 		name: 'save info changes',
 		active: false
+	},
+	{
+		name: 'add to mygarden',
+		active: false
+	},
+	{
+		name: 'plant new nickname',
+		active: false
+	},
+	{
+		name: 'remove to mygarden',
+		active: false
+	},
+	{
+		name: 're-nickname plant',
+		active: false
 	}
 ])
 
@@ -68,3 +84,22 @@ export const userDetails = writable({
 })
 
 export const infoEditing = writable(false)
+
+export const PIActiveTab = writable(0)
+
+export const PICurrentPlant = writable({
+	plant: {
+		id: -1,
+		name: '',
+		care: '',
+		info: ''
+	},
+	inTheGarden: false
+})
+
+export const userGarden = writable([
+	{
+		id: 99,
+		nickname: 'Leng2x plant'
+	}
+])
