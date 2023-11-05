@@ -2,9 +2,10 @@
 	import { goto } from "$app/navigation";
 	import { pageTransitionDuration } from "$lib/stores/global";
 	import { fade, fly } from "svelte/transition";
+  import { userDetails } from "$lib/stores/global";
 
   function goBack() {
-    goto('/mobile/profile', {replaceState: true})
+    history.back()
   }
 </script>
 

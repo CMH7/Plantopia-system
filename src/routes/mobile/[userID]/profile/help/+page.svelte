@@ -3,11 +3,12 @@
   	import { goto } from "$app/navigation"
     import { pageTransitionDuration } from "$lib/stores/global"
     import { fade } from "svelte/transition"
+    import { userDetails } from "$lib/stores/global";
 
     let currentSelectedAccordion = -1
 
     function goBack() {
-      goto('/mobile/profile', {replaceState: true})
+      history.back()
     }
 
     function openCloseAccord(index) {

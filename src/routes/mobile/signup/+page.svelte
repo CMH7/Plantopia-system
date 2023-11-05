@@ -2,8 +2,10 @@
 	import { applyAction, deserialize, enhance } from "$app/forms";
 	import { invalidateAll } from "$app/navigation";
   import MacroInput from "$lib/components/MacroInput.svelte";
+	import MobileNoification from "$lib/components/MobileNoification.svelte";
 	import { pageTransitionDuration } from "$lib/stores/global";
-	import { fade, slide } from "svelte/transition";
+	import { fade, fly, slide } from "svelte/transition";
+  import { notif } from "$lib/stores/global";
 
   let name = ''
   let email = ''
@@ -29,20 +31,11 @@
 
     console.log(result);
 
-    if(result.type === 'error') {
-      // $notifs = [...$notifs, {
-      //   msg: result.data.message,
-      //   type: 'error',
-      //   id: `${(Math.random() * 999) + 1}`
-      // }]
-    }
-
-    if (result.type === 'redirect') {
-      // $notifs = [...$notifs, {
-      //   msg: 'Check your email inbox for verification',
-      //   type: 'success',
-      //   id: `${(Math.random() * 999) + 1}`
-      // }]
+    if(result.type === 'failure') {
+      $notif.show = true
+      $notif.type = 'error'
+      //@ts-ignore
+      $notif.message = result.data.message
     }
 
     if (result.type === 'success') {

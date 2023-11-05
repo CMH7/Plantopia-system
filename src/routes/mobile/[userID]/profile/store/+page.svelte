@@ -4,7 +4,7 @@
 	import { fade, fly } from "svelte/transition";
 
   function goBack() {
-    goto('/mobile/profile', {replaceState: true})
+    history.back()
   }
 </script>
 

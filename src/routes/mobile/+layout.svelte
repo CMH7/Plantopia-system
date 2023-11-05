@@ -6,6 +6,7 @@
 	import Overlay from "$lib/components/Overlay.svelte";
 	import { goto } from "$app/navigation";
 	import MacroInput from "$lib/components/MacroInput.svelte";
+	import MobileNoification from "$lib/components/MobileNoification.svelte";
 
   let nickname = ''
   let renickname = $PICurrentPlant.plant.name
@@ -57,6 +58,8 @@
 <svelte:head>
   <meta name="viewport" content= "width=device-width, user-scalable=no">
 </svelte:head>
+
+<MobileNoification />
 
 <div class="w-screen { $page.url.pathname === '/mobile/splash' || $page.url.pathname === '/mobile/login' || $page.url.pathname === '/mobile/signup' ? 'h-screen' : 'h-[90vh]'} overflow-hidden">
   <slot />

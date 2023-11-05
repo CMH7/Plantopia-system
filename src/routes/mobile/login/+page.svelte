@@ -1,15 +1,53 @@
 <script>
-	import { goto } from '$app/navigation';
+	import { applyAction, deserialize, enhance } from '$app/forms';
+	import { goto, invalidateAll } from '$app/navigation';
   import MacroInput from "$lib/components/MacroInput.svelte";
-	import { pageTransitionDuration } from '$lib/stores/global';
+	import { notif, pageTransitionDuration } from '$lib/stores/global';
 	import { fade, slide } from 'svelte/transition';
 
   let checked = false
+  let email = ''
+  let password = ''
+  let loggingin = false
 
-  function login () {
-    goto('/mobile/home')
+  const login = async () => {
+    loggingin = true
+
+    let form = document.getElementById('formLogin')
+    // @ts-ignore
+    const data = new FormData(form);
+    
+    // @ts-ignore
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data
+    });
+
+    /** @type {import('@sveltejs/kit').ActionResult} */
+    const result = deserialize(await response.text());
+
+    console.log(result);
+
+    if(result.type === 'error') {
+      $notif.type = 'error'
+      $notif.message = 'Email is not yet verified'
+      $notif.show = true
+    }
+
+    if (result.type === 'success') {
+      // re-run all `load` functions, following the successful update
+      await invalidateAll();
+    }
+
+    applyAction(result);
+    loggingin = false
   }
 </script>
+
+<form id='formLogin' class="hidden" method="post" action="?/login" use:enhance>
+  <input name='name' type="text" bind:value={email}>
+  <input name='email' type="text" bind:value={password}>
+</form>
 
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
   <div class="relative w-full h-[25vh] flex justify-center">
@@ -32,8 +70,8 @@
 
   <div class="w-full h-[55vh] gpx flex flex-col justify-between">
     <div class="flex flex-col gap-y-2">
-      <MacroInput errorMessage='' required={true} placeholder='Email' icon='mail' className='mb-2' />
-      <MacroInput errorMessage='' required={true} placeholder='Password' icon='lock' />
+      <MacroInput disabled={loggingin} bind:value={email} errorMessage='' required={true} placeholder='Email' icon='mail' className='mb-2' />
+      <MacroInput disabled={loggingin} bind:value={password} errorMessage='' required={true} placeholder='Password' icon='lock' />
 
       <div class="w-full flex justify-between items-center px-[2vh]">
         <div class="flex items-center gap-x-1">
@@ -52,7 +90,13 @@
 
     <div class="w-full pb-5">
       <button on:click={() => login()} class="btn btn-primary btn-block text-white mb-[10vh]">
-        Login
+        {#if !loggingin}
+          <div in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
+            Login
+          </div>
+        {:else}
+          <span in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }} class="loading loading-spinner loading-lg"></span>
+        {/if}
       </button>
 
       <div class="text-xs font-bold text-neutral italic flex justify-center poppins">

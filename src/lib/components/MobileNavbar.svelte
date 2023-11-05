@@ -1,7 +1,7 @@
 <script>
   //@ts-nocheck
 	import { goto } from "$app/navigation";
-	import { activeModule } from "$lib/stores/global";
+	import { activeModule, userDetails } from "$lib/stores/global";
 
   let modules = [
     {name: 'Home', icon: 'home'},
@@ -10,7 +10,7 @@
   ]
 
   function switchModule(index) {
-    goto(`/mobile/${modules[index].name.toLowerCase()}`, {replaceState: true})
+    goto(`/mobile/${$userDetails.uid}/${modules[index].name.toLowerCase()}`, {replaceState: true})
     activeModule.set(index)
   }
 

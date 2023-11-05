@@ -3,9 +3,10 @@
 	import { goto } from "$app/navigation";
   import { months, pageTransitionDuration } from "$lib/stores/global"
 	import { fade, slide } from "svelte/transition";
+  import { userDetails } from "$lib/stores/global";
 
   function catPlant(monthName) {
-    goto(`/mobile/categories/${monthName}`, {replaceState: true})
+    goto(`/mobile/${$userDetails.uid}/categories/${monthName}`, {replaceState: true})
   }
 </script>
 

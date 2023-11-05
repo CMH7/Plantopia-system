@@ -2,6 +2,7 @@
   //@ts-nocheck
 	import { goto } from "$app/navigation";
 	import PlantInfo from "./PlantInfo.svelte";
+  import { userDetails } from "$lib/stores/global";
 
   export let plantName = 'Queen leng plantsss'
   export let plantDesc = 'lorem ipsum description lorem ipsum descriptiondescription description'
@@ -15,7 +16,7 @@
   }
 
   function plantInformation(id) {
-    goto(`/mobile/plantinfo/${id}`, {replaceState: false})
+    goto(`/mobile/${$userDetails.uid}/plantinfo/${id}`, {replaceState: false})
   }
 
   let link = `https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,700,${favorite ? '1' : '0'},200`

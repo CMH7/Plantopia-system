@@ -1,4 +1,5 @@
 <script>
+	import { userDetails } from '$lib/stores/global';
 	import { goto } from '$app/navigation';
 
   //@ts-nocheck
@@ -10,7 +11,7 @@
   let color = $months.filter(x => x.name.toLowerCase() === data.month.toLowerCase())[0]?.color
 
   function goBack() {
-    goto('/mobile/categories', {replaceState: true})
+    goto(`/mobile/${$userDetails.uid}/categories`, {replaceState: true})
   }
   
 </script>

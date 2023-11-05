@@ -1,8 +1,7 @@
 <script>
   //@ts-nocheck
 	import { goto } from "$app/navigation";
-	import Overlay from "$lib/components/Overlay.svelte";
-	import { activeModule, overlays, pageTransitionDuration } from "$lib/stores/global";
+	import { activeModule, overlays, pageTransitionDuration, userDetails } from "$lib/stores/global";
 	import { fade, fly, slide } from "svelte/transition";
 
   let user = {
@@ -35,7 +34,7 @@
   }
 
   function next(path) {
-    goto(`/mobile/profile/${path}`)
+    goto(`/mobile/${$userDetails.uid}/profile/${path}`)
   }
 </script>
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
@@ -48,7 +47,7 @@
     <div class="w-full h-[60vh] flex flex-col justify-around items-center px-[10vw] rounded-t-2xl shadow-inner">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <div on:click={() => goto('/mobile/profile/info', {replaceState: true})} class="w-full h-[10vh] flex justify-around items-center gap-x-10">
+      <div on:click={() => next('info')} class="w-full h-[10vh] flex justify-around items-center gap-x-10">
   
         <div>
           <div class="poppins text-primary font-bold">

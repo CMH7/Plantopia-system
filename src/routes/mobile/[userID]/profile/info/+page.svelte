@@ -1,9 +1,7 @@
 <script>
   //@ts-nocheck
-	import { overlays, userDetails, infoEditing } from './../../../../lib/stores/global.js';
-	import { goto } from "$app/navigation";
+	import { overlays, userDetails, infoEditing, pageTransitionDuration } from '$lib/stores/global.js';
 	import MacroInput from "$lib/components/MacroInput.svelte";
-	import { pageTransitionDuration } from "$lib/stores/global";
 	import { fade } from "svelte/transition";
 
   let editing = false
@@ -11,7 +9,7 @@
   let icon = 'visibility'
 
   function goBack() {
-    goto('/mobile/profile', {replaceState: true})
+    history.back()
   }
 
   function edit() {

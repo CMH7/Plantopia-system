@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs'
 import { db } from '$lib/configurations/firebase'
 import { collection, doc, getDocs, query, serverTimestamp, setDoc, where } from 'firebase/firestore'
 import { nanoid } from 'nanoid'
-import { error, redirect } from '@sveltejs/kit'
+import { error, fail, redirect } from '@sveltejs/kit'
 import sgMail from "@sendgrid/mail";
 import constants from '$lib/configurations/constants'
 import { config } from 'dotenv'
@@ -27,7 +27,7 @@ export const actions = {
         collection(db, "users"),
         where("email", "==", email))
 		);
-    if (!docSnaps.empty) throw error(401, { message: 'Email used has an existing account' })
+    if (!docSnaps.empty) return fail(401, { message: 'Email used has an existing account' })
     const uid = nanoid();
 
     await setDoc(doc(db, "users", uid), {
