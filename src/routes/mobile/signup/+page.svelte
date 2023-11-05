@@ -74,13 +74,19 @@
   
   <div class="w-full h-[65vh] gpx  ">
     <div class="w-full h-full flex flex-col justify-center gap-y-7">
-      <MacroInput bind:value={name} errorMessage='' required={true} placeholder='Name' icon='person' className='mb-2' />
-      <MacroInput bind:value={email} errorMessage='' required={true} placeholder='Email' icon='mail' className='mb-2' />
-      <MacroInput bind:value={password} errorMessage='' required={true} placeholder='Password' icon='lock' className='mb-2' />
-      <MacroInput bind:value={confirmPassword} errorMessage='' required={true} placeholder='Confirm password' icon='lock' className='mb-2' />
+      <MacroInput disabled={creating} bind:value={name} errorMessage='' required={true} placeholder='Name' icon='person' className='mb-2' />
+      <MacroInput disabled={creating} bind:value={email} errorMessage='' required={true} placeholder='Email' icon='mail' className='mb-2' />
+      <MacroInput disabled={creating} bind:value={password} errorMessage='' required={true} placeholder='Password' icon='lock' className='mb-2' />
+      <MacroInput disabled={creating} bind:value={confirmPassword} errorMessage='' required={true} placeholder='Confirm password' icon='lock' className='mb-2' />
   
-      <button on:click={() => signup()} class="btn btn-primary btn-block text-white">
-        Sign up
+      <button disabled={creating} on:click={() => signup()} class="btn btn-primary btn-block text-white">
+        {#if !creating}
+          <div in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
+            Sign up
+          </div>
+        {:else}
+          <span in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }} class="loading loading-spinner loading-lg"></span>
+        {/if}
       </button>
     </div>
   </div>
