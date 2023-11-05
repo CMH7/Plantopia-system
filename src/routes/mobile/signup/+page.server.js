@@ -33,7 +33,7 @@ export const actions = {
     await setDoc(doc(db, "users", uid), {
 			name,
 			email,
-			passCopy,
+			password: passCopy,
       dateCreated: serverTimestamp(),
       dateUpdated: serverTimestamp(),
       verified: false

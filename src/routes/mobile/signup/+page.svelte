@@ -6,12 +6,17 @@
 	import { pageTransitionDuration } from "$lib/stores/global";
 	import { fade, fly, slide } from "svelte/transition";
   import { notif } from "$lib/stores/global";
+	import { onDestroy } from "svelte";
 
   let name = ''
   let email = ''
   let password = ''
   let confirmPassword = ''
   let creating = false
+
+  onDestroy(() => {
+    $notif.show = false
+  })
 
   const signup = async () => {
     creating = true

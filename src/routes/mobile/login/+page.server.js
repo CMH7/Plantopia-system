@@ -27,7 +27,6 @@ export const actions = {
 		const data = await request.formData();
 		const email = data.get("email")?.toString();
 		const password = data.get("password")?.toString();
-		const passCopy = bcryptjs.hashSync(password?.toString(), 13);
 
 		// get data where email = email to check if exisiting or not
 		let docSnaps = await getDocs(
@@ -35,18 +34,12 @@ export const actions = {
         where("email", "==", email)
       )
 		);
-		if (!docSnaps.empty) return fail(404, { message: "Email not found. Please sign up" });
+		if (docSnaps.empty) return fail(404, { message: "Email not found. Please sign up" });
 		
-		docSnaps = await getDocs(
-      query(
-        collection(db, "users"),
-        and(
-          where("email", "==", email),
-          where("password", '==', passCopy)
-        )
-      )
-		);
-		if (docSnaps.empty) return fail(404, { message: "Wrong password" });
-		throw redirect(302, `/mobile/login`);
+		const user = { id: docSnaps.docs[0].id, ...docSnaps.docs[0].data() };
+		if (!user.verified) return fail(500, { message: 'Email is not yet verified'})
+		if (!bcryptjs.compareSync(password, user.password)) return fail(404, { message: "Wrong password" });
+
+		throw redirect(302, `/mobile/${user.id}/home`);
 	},
 };

@@ -3,12 +3,17 @@
 	import { goto, invalidateAll } from '$app/navigation';
   import MacroInput from "$lib/components/MacroInput.svelte";
 	import { notif, pageTransitionDuration } from '$lib/stores/global';
+	import { onDestroy } from 'svelte';
 	import { fade, slide } from 'svelte/transition';
 
   let checked = false
   let email = ''
   let password = ''
   let loggingin = false
+
+  onDestroy(() => {
+    $notif.show = false
+  })
 
   const login = async () => {
     loggingin = true
@@ -27,11 +32,12 @@
     const result = deserialize(await response.text());
 
     console.log(result);
-
-    if(result.type === 'error') {
-      $notif.type = 'error'
-      $notif.message = 'Email is not yet verified'
+    
+    if(result.type === 'failure') {
       $notif.show = true
+      $notif.type = 'error'
+      //@ts-ignore
+      $notif.message = result.data.message
     }
 
     if (result.type === 'success') {
@@ -45,8 +51,8 @@
 </script>
 
 <form id='formLogin' class="hidden" method="post" action="?/login" use:enhance>
-  <input name='name' type="text" bind:value={email}>
-  <input name='email' type="text" bind:value={password}>
+  <input name='email' type="text" bind:value={email}>
+  <input name='password' type="text" bind:value={password}>
 </form>
 
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
