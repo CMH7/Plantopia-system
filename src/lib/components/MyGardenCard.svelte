@@ -4,8 +4,8 @@
 	import PlantInfo from "./PlantInfo.svelte";
   import { userDetails } from "$lib/stores/global";
 
-  export let plantName = 'Queen leng plantsss'
-  export let plantDesc = 'lorem ipsum description lorem ipsum descriptiondescription description'
+  export let name = 'Pink flower'
+  export let sciName = 'Scientific name'
   export let plantImg = '/aloe.png'
   export let plantCategories = ['Shrubs']
   export let favorite = false
@@ -29,32 +29,34 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div on:click={() => plantInformation(id)} class="w-full min-h-[130px] max-h-[130px] relative overflow-clip transition-all hover:cursor-pointer hover:border-primary border rounded-xl hover:shadow-xl p-2 flex gap-x-3">
+<div on:click={() => plantInformation(id)} class="w-[43vw] min-h-[230px] max-h-[230px] relative overflow-clip transition-all hover:cursor-pointer hover:border-primary border rounded-xl hover:shadow-xl p-2 flex flex-col gap-x-3">
 
-  <div class="w-1/3 h-full aspect-square flex justify-center shrink-0">
+  <div class="w-full h-2/3 flex justify-center shrink-0">
     <img class="m-0 p-0 w-full h-full rounded-lg object-cover" src="{plantImg}" alt="aloe">
   </div>
 
-  <div class="grow flex flex-col overflow-hidden">
-    <div class="poppins max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-primary text-xl font-bold">
-      {plantName}
-    </div>
-    
-    <div class="poppins text-xs leading-tight mt-2 max-h-[50%] overflow-hidden">
-      {plantDesc}
+  <div class="flex flex-col justify-between h-1/3 overflow-hidden pt-1">
+    <div class="flex flex-col">
+      <div class="poppins text-center overflow-hidden text-secondary text-sm font-bold">
+        {name}
+      </div>
+      
+      <div class="poppins text-center text-xs leading-tight italic overflow-hidden text-primary">
+        {sciName}
+      </div>
     </div>
 
-    <button on:click={() => setFavorite()} class="centerxy btn btn-circle btn-sm btn-ghost p-0 m-0 absolute top-0 right-0">
+    <div class="flex items-center justify-center w-full">
+      {#each plantCategories as cat, i}
+      <div class="badge badge-primary rounded-xl border-2 border-primary bg-accent badge-xs p-2">{cat}</div>
+      {/each}
+    </div>
+
+    <button on:click={() => setFavorite()} class="centerxy btn btn-circle btn-sm btn-ghost absolute bottom-0 right-0 p-0 m-0">
       <span class="material-symbols-rounded {!favorite ? 'text-neutral-300' : 'text-primary'} text-lg">
         favorite
       </span>
     </button>
-
-    <div class="mt-2  flex">
-      {#each plantCategories as cat, i}
-        <div class="badge badge-primary rounded-xl border-2 border-primary bg-accent badge-xs p-2">{cat}</div>
-      {/each}
-    </div>
   </div>
 
 </div>
