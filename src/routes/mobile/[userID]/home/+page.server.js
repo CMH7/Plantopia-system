@@ -24,15 +24,14 @@ export async function load(e) {
     )
     plantlist = data1.data.data
 
-    plantlist = plantlist.filter(
-			(x) =>
-				x?.default_image?.original_url !==
-				"https://perenual.com/storage/image/upgrade_access.jpg"
-		);
+    // console.log(plantlist);
+    // plantlist = plantlist.filter(x => {
+    //     x?.default_image?.original_url !== "https://perenual.com/storage/image/upgrade_access.jpg"
+    // });
     
     data.searchValue = q,
     data.plantlist = plantlist
-    console.log(data.plantlist[0].default_image);
+    // console.log(data.plantlist[0].default_image);
   }
 
   console.log('rendered');

@@ -25,8 +25,14 @@
     goto(`/mobile/${$userDetails.uid}/home/${monthName}`, {replaceState: true})
   }
 
-  function search() {
-    goto(`/mobile/${$userDetails.uid}/home?q=${searchValue}`, {replaceState: true})
+  async function search() {
+    if(searchValue !== '') {
+      console.log('search');
+      await goto(`/mobile/${$userDetails.uid}/home?q=${searchValue}`, {replaceState: true})
+    }else {
+      console.log('home');
+      await goto(`/mobile/${$userDetails.uid}/home`, {replaceState: true})
+    }
   }
 </script>
 <!-- 

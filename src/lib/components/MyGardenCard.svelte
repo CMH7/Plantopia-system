@@ -16,7 +16,9 @@
   }
 
   function plantInformation(id) {
-    goto(`/mobile/${$userDetails.uid}/plantinfo/${id}`, {replaceState: false})
+    if(plantImg !== 'https://perenual.com/storage/image/upgrade_access.jpg') {
+      goto(`/mobile/${$userDetails.uid}/plantinfo/${id}`, {replaceState: false})
+    }
   }
 
   let link = `https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,700,${favorite ? '1' : '0'},200`
@@ -30,6 +32,12 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div on:click={() => plantInformation(id)} class="w-[43vw] min-h-[230px] max-h-[230px] relative overflow-clip transition-all hover:cursor-pointer hover:border-primary border rounded-xl hover:shadow-xl p-2 flex flex-col gap-x-3">
+
+  {#if plantImg === 'https://perenual.com/storage/image/upgrade_access.jpg'}
+    <div class="absolute top-1 left-1 badge badge-primary text-white text-xs">
+      premium
+    </div>
+  {/if}
 
   <div class="w-full h-2/3 flex justify-center shrink-0">
     <img class="m-0 p-0 w-full h-full rounded-lg object-cover" src="{plantImg === 'https://perenual.com/storage/image/upgrade_access.jpg' ? '/aloe.png' : plantImg}" alt="aloe">
