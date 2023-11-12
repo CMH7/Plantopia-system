@@ -44,10 +44,10 @@
   </div>
 
   <div class="w-full h-[40vh] flex justify-center relative">
-    <img src='/plants.jpg' class="w-full h-full object-cover m-0" alt="plantname">
+    <img src={`${data.plant.image !== 'https://perenual.com/storage/image/upgrade_access.jpg' ? data.plant.image : '/plants.jpg'}`} class="w-full h-full object-cover m-0" alt="plantname">
     <div class="absolute top-1 left-1 badge">
-      {#if $userGarden.filter(x => x.id == $PICurrentPlant.plant.id).length > 0}
-        {$userGarden.filter(x => x.id == $PICurrentPlant.plant.id)[0].id}
+      {#if $userGarden.filter(x => x.id === $PICurrentPlant.plant.id).length > 0}
+        {$userGarden.filter(x => x.id === $PICurrentPlant.plant.id)[0].id}
       {:else}
         {$PICurrentPlant.plant.id}
       {/if}
@@ -57,10 +57,10 @@
         {#if $userGarden.filter(x => x.id == $PICurrentPlant.plant.id).length > 0}
           {$userGarden.filter(x => x.id == $PICurrentPlant.plant.id)[0].nickname}
         {:else}
-          {$PICurrentPlant.plant.name}
+          {$PICurrentPlant.plant.common_name}
         {/if}
       </div>
-      {#if $userGarden.filter(x => x.id == $PICurrentPlant.plant.id).length > 0}
+      {#if $userGarden.filter(x => x.id === $PICurrentPlant.plant.id).length > 0}
         <button on:click={() => renickname()} class="btn btn-square btn-primary btn-sm">
           <span class="material-symbols-rounded text-white text-xl m-0 p-0">
             stylus
@@ -105,7 +105,7 @@
         </div>
       {:else}
         <div in:fly={{duration: $pageTransitionDuration, delay: $pageTransitionDuration, x: 100}} out:fly={{duration: $pageTransitionDuration}}>
-          {$PICurrentPlant.plant.info}
+          {$PICurrentPlant.plant.description}
         </div>
       {/if}
     </div>

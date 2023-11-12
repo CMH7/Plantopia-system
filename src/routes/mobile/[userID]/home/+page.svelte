@@ -5,7 +5,7 @@
   import MacroInput from "$lib/components/MacroInput.svelte"
 	import MyGardenCard from "$lib/components/MyGardenCard.svelte"
 	import Overlay from "$lib/components/Overlay.svelte"
-  import { overlays, pageTransitionDuration, plantCategories, userDetails, months } from "$lib/stores/global"
+  import { overlays, pageTransitionDuration, plantCategories, userDetails, months, userGarden } from "$lib/stores/global"
 	import { onMount } from "svelte";
 	import { fade, slide } from "svelte/transition"
 
@@ -109,7 +109,7 @@
     {:else}
       <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
         {#each data?.plantlist as plant}
-          <MyGardenCard id={plant.id} name={plant.common_name} plantImg={plant.default_image?.original_url} sciName={plant.scientific_name[0]}  />
+          <MyGardenCard favorite={$userGarden.filter(x => x.id === plant.id).length > 0} id={plant.id} name={plant.common_name} plantImg={plant.default_image?.original_url} sciName={plant.scientific_name[0]}  />
         {/each}
       </div>
     {/if}

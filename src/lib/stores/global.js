@@ -90,17 +90,22 @@ export const PIActiveTab = writable(0)
 
 export const PICurrentPlant = writable({
 	plant: {
-		id: -1,
-		name: '',
+		id: '',
+		common_name: '',
+		description: '',
+		scientific_name: [],
+		other_name: [],
+		family: '',
+		pruning_month: [],
 		care: '',
-		info: ''
+		image: '',
 	},
-	inTheGarden: false
-})
+	inTheGarden: false,
+});
 
 export const userGarden = writable([
 	{
-		id: 99,
+		id: '99',
 		nickname: 'Leng2x plant'
 	}
 ])

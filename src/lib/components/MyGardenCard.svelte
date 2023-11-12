@@ -2,7 +2,7 @@
   //@ts-nocheck
 	import { goto } from "$app/navigation";
 	import PlantInfo from "./PlantInfo.svelte";
-  import { userDetails } from "$lib/stores/global";
+  import { userDetails, userGarden } from "$lib/stores/global";
 
   export let name = 'Pink flower'
   export let sciName = 'Scientific name'
@@ -38,7 +38,11 @@
   <div class="flex flex-col justify-between h-1/3 overflow-hidden pt-1">
     <div class="flex flex-col">
       <div class="poppins text-center w-full text-ellipsis overflow-hidden text-secondary text-sm font-bold">
-        {name}
+        {#if favorite}
+          {$userGarden.filter(x => x.id === `${id}`)[0].nickname}
+        {:else}
+          {name}
+        {/if}
       </div>
       
       <div class="poppins text-center text-xs leading-tight italic overflow-hidden text-primary">
