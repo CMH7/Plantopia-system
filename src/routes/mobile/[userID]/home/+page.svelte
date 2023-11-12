@@ -3,13 +3,15 @@
   import MacroInput from "$lib/components/MacroInput.svelte";
 	import MyGardenCard from "$lib/components/MyGardenCard.svelte";
 	import Overlay from "$lib/components/Overlay.svelte";
-  import { overlays, pageTransitionDuration, plantCategories } from "$lib/stores/global";
+  import { overlays, pageTransitionDuration, plantCategories, userDetails, months } from "$lib/stores/global";
 	import { fade, slide } from "svelte/transition";
-
-  let data = Array(10)
 
   function OpenFilter() {
     $overlays[0].active = true
+  }
+
+  function catPlant(monthName) {
+    goto(`/mobile/${$userDetails.uid}/categories/${monthName}`, {replaceState: true})
   }
 </script>
 
@@ -38,18 +40,31 @@
   
   <div class="w-full h-[7vh]">
     <div class="bg-white poppins text-primary px-5 w-full text-[8vw] font-bold">
-      My Garden
+      Plants
     </div>
   </div>
   
   <div class="w-full min-h-[63vh] max-h-[63vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
   
-    {#if data?.length > 0}
-      <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
-        {#each data as _, i}
-          <MyGardenCard id={i} />
-        {/each}
-      </div>
+    <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
+      {#each $months as month, i}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div on:click={() => catPlant(month.name)} class="w-[40vw] h-[30vh] rounded-xl bg-white border border-primary shadow-lg overflow-hidden flex flex-col justify-center items-center py-2 px-3">
+          <img src={`/${month.name.toLowerCase()}.png`} alt='monthPlant' class="w-full h-[80%]  p-0 object-contain m-auto" />
+          <div class="w-full flex justify-between items-center ">
+            <div class="poppins font-bold uppercase {month.color}">
+              {month.name}
+            </div>
+
+            <span class="material-symbols-rounded">
+              chevron_right
+            </span>
+          </div>
+        </div>
+      {/each}
+    </div>
+    <!-- {#if data?.length > 0}
     {:else}
       <div class="w-full pt-[15vh] flex flex-col justify-center items-center gap-y-4 px-5">
   
@@ -68,7 +83,7 @@
           Add plant
         </button>
       </div>
-    {/if}
+    {/if} -->
   </div>
 
 </div>
