@@ -1,19 +1,38 @@
 <script>
   //@ts-nocheck
-  import MacroInput from "$lib/components/MacroInput.svelte";
-	import MyGardenCard from "$lib/components/MyGardenCard.svelte";
-	import Overlay from "$lib/components/Overlay.svelte";
-  import { overlays, pageTransitionDuration, plantCategories, userDetails, months } from "$lib/stores/global";
-	import { fade, slide } from "svelte/transition";
+	import { enhance } from "$app/forms";
+	import { goto } from "$app/navigation"
+  import MacroInput from "$lib/components/MacroInput.svelte"
+	import MyGardenCard from "$lib/components/MyGardenCard.svelte"
+	import Overlay from "$lib/components/Overlay.svelte"
+  import { overlays, pageTransitionDuration, plantCategories, userDetails, months } from "$lib/stores/global"
+	import { onMount } from "svelte";
+	import { fade, slide } from "svelte/transition"
+
+  let searchValue = ''
+
+  export let data
+
+  onMount(() => {
+    console.log(data);
+  })
 
   function OpenFilter() {
     $overlays[0].active = true
   }
 
   function catPlant(monthName) {
-    goto(`/mobile/${$userDetails.uid}/categories/${monthName}`, {replaceState: true})
+    goto(`/mobile/${$userDetails.uid}/home/${monthName}`, {replaceState: true})
+  }
+
+  function search() {
+    goto(`/mobile/${$userDetails.uid}/home?q=${searchValue}`, {replaceState: true})
   }
 </script>
+<!-- 
+<form id='formSearchText' class="hidden" method="post" action="?/searchText" use:enhance>
+  <input name='searchValue' type="text" bind:value={searchValue}>
+</form> -->
 
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
   <div class="w-full h-[20vh]">
@@ -22,8 +41,8 @@
     </div>
   
     <div class="w-full h-1/2 flex justify-center items-center gpx gap-x-2">
-      <MacroInput icon='search' placeholder='Search plant' className='w-[70vw]'>
-        <button on:click={() => OpenFilter()} slot='prepend' class="p-2 centerxy btn btn-square btn-ghost">
+      <MacroInput onChange={search} bind:value={searchValue} icon='search' placeholder='Search plant' className='w-[70vw]'>
+        <button on:click|preventDefault={() => OpenFilter()} slot='prepend' class="p-2 centerxy btn btn-square btn-ghost">
           <span class="material-symbols-rounded text-primary">
             image_search
           </span>
@@ -40,32 +59,36 @@
   
   <div class="w-full h-[7vh]">
     <div class="bg-white poppins text-primary px-5 w-full text-[8vw] font-bold">
-      Plants
+      {#if !data?.searchValue}
+        Plants
+      {:else}
+        Results
+      {/if}
     </div>
   </div>
   
   <div class="w-full min-h-[63vh] max-h-[63vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
   
-    <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
-      {#each $months as month, i}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div on:click={() => catPlant(month.name)} class="w-[40vw] h-[30vh] rounded-xl bg-white border border-primary shadow-lg overflow-hidden flex flex-col justify-center items-center py-2 px-3">
-          <img src={`/${month.name.toLowerCase()}.png`} alt='monthPlant' class="w-full h-[80%]  p-0 object-contain m-auto" />
-          <div class="w-full flex justify-between items-center ">
-            <div class="poppins font-bold uppercase {month.color}">
-              {month.name}
-            </div>
+    {#if !data?.searchValue}
+      <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
+        {#each $months as month, i}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <div on:click={() => catPlant(month.name)} class="w-[40vw] h-[30vh] rounded-xl bg-white border border-primary shadow-lg overflow-hidden flex flex-col justify-center items-center py-2 px-3">
+            <img src={`/${month.name.toLowerCase()}.png`} alt='monthPlant' class="w-full h-[80%]  p-0 object-contain m-auto" />
+            <div class="w-full flex justify-between items-center ">
+              <div class="poppins font-bold uppercase {month.color}">
+                {month.name}
+              </div>
 
-            <span class="material-symbols-rounded">
-              chevron_right
-            </span>
+              <span class="material-symbols-rounded">
+                chevron_right
+              </span>
+            </div>
           </div>
-        </div>
-      {/each}
-    </div>
-    <!-- {#if data?.length > 0}
-    {:else}
+        {/each}
+      </div>
+    {:else if data?.plantlist.length == 0}
       <div class="w-full pt-[15vh] flex flex-col justify-center items-center gap-y-4 px-5">
   
         <svg width="62" height="62" viewBox="0 0 62 62" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,17 +96,23 @@
         </svg>
         
         <div class="text-[5vw] poppins text-primary ">
-          No plants in garden.
+          No plants found.
         </div>
   
-        <button class="btn btn-primary btn-wide font-bold poppins text-[5vw] text-white">
+        <!-- <button class="btn btn-primary btn-wide font-bold poppins text-[5vw] text-white">
           <span class="material-symbols-rounded text-white text-3xl">
             add
           </span>
           Add plant
-        </button>
+        </button> -->
       </div>
-    {/if} -->
+    {:else}
+      <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
+        {#each data?.plantlist as plant}
+          <MyGardenCard id={plant.id} name={plant.common_name} plantImg={plant.default_image?.original_url} sciName={plant.scientific_name[0]}  />
+        {/each}
+      </div>
+    {/if}
   </div>
 
 </div>

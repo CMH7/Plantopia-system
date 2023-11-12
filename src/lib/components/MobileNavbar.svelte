@@ -7,7 +7,7 @@
   let modules = [
     {name: 'Home', icon: 'home'},
     {name: 'Store', icon: 'storefront'},
-    {name: 'Categories', icon: 'potted_plant'},
+    {name: 'Garden', icon: 'potted_plant'},
     {name: 'Profile', icon: 'account_circle'},
   ]
 

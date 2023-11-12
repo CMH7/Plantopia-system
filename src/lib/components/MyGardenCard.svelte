@@ -32,12 +32,12 @@
 <div on:click={() => plantInformation(id)} class="w-[43vw] min-h-[230px] max-h-[230px] relative overflow-clip transition-all hover:cursor-pointer hover:border-primary border rounded-xl hover:shadow-xl p-2 flex flex-col gap-x-3">
 
   <div class="w-full h-2/3 flex justify-center shrink-0">
-    <img class="m-0 p-0 w-full h-full rounded-lg object-cover" src="{plantImg}" alt="aloe">
+    <img class="m-0 p-0 w-full h-full rounded-lg object-cover" src="{plantImg === 'https://perenual.com/storage/image/upgrade_access.jpg' ? '/aloe.png' : plantImg}" alt="aloe">
   </div>
 
   <div class="flex flex-col justify-between h-1/3 overflow-hidden pt-1">
     <div class="flex flex-col">
-      <div class="poppins text-center overflow-hidden text-secondary text-sm font-bold">
+      <div class="poppins text-center w-full text-ellipsis overflow-hidden text-secondary text-sm font-bold">
         {name}
       </div>
       
@@ -46,11 +46,11 @@
       </div>
     </div>
 
-    <div class="flex items-center justify-center w-full">
+    <!-- <div class="flex items-center justify-center w-full">
       {#each plantCategories as cat, i}
       <div class="badge badge-primary rounded-xl border-2 border-primary bg-accent badge-xs p-2">{cat}</div>
       {/each}
-    </div>
+    </div> -->
 
     <button on:click={() => setFavorite()} class="centerxy btn btn-circle btn-sm btn-ghost absolute bottom-0 right-0 p-0 m-0">
       <span class="material-symbols-rounded {!favorite ? 'text-neutral-300' : 'text-primary'} text-lg">

@@ -6,7 +6,7 @@
   import { userDetails } from "$lib/stores/global";
 
   function catPlant(monthName) {
-    goto(`/mobile/${$userDetails.uid}/categories/${monthName}`, {replaceState: true})
+    goto(`/mobile/${$userDetails.uid}/garden/${monthName}`, {replaceState: true})
   }
 </script>
 
