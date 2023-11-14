@@ -106,6 +106,7 @@ export const PICurrentPlant = writable({
 export const userGarden = writable([
 	{
 		id: '99',
+		custom: false,
 		nickname: 'Leng2x plant'
 	}
 ])

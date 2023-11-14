@@ -2,6 +2,7 @@
 	import { applyAction, deserialize, enhance } from '$app/forms';
 	import { goto, invalidateAll } from '$app/navigation';
   import MacroInput from "$lib/components/MacroInput.svelte";
+	import MacroPassword from '$lib/components/MacroPassword.svelte';
 	import { notif, pageTransitionDuration } from '$lib/stores/global';
 	import { onDestroy } from 'svelte';
 	import { fade, slide } from 'svelte/transition';
@@ -77,7 +78,7 @@
   <div class="w-full h-[55vh] gpx flex flex-col justify-between">
     <div class="flex flex-col gap-y-2">
       <MacroInput disabled={loggingin} bind:value={email} errorMessage='' required={true} placeholder='Email' icon='mail' className='mb-2' />
-      <MacroInput disabled={loggingin} bind:value={password} errorMessage='' required={true} placeholder='Password' icon='lock' />
+      <MacroPassword disabled={loggingin} bind:value={password} errorMessage='' required={true} placeholder='Password' icon='lock' />
 
       <div class="w-full flex justify-between items-center px-[2vh]">
         <div class="flex items-center gap-x-1">
