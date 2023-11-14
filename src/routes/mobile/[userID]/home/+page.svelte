@@ -14,6 +14,12 @@
   export let data
 
   onMount(() => {
+    userDetails.set({
+      uid: data.user.id,
+      name: data.user.name,
+      email: data.user.email,
+      password: data.user.password
+    })
     console.log(data);
   })
 

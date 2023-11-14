@@ -4,11 +4,6 @@
 	import { activeModule, overlays, pageTransitionDuration, userDetails } from "$lib/stores/global";
 	import { fade, fly, slide } from "svelte/transition";
 
-  let user = {
-    name: 'Juan Dela Cruz',
-    email: 'juanDcruz2023@gmail.com'
-  }
-
   let menus = [
     {
       name: 'About',
@@ -51,11 +46,11 @@
   
         <div>
           <div class="poppins text-primary font-bold">
-            {user.name}
+            {$userDetails.name}
           </div>
   
           <div class="text-xs italic text-neutral">
-            {user.email}
+            {$userDetails.email}
           </div>  
         </div>
   
