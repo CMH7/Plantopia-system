@@ -4,9 +4,10 @@
   import { page } from "$app/stores";
 	import { PICurrentPlant, activeModule, infoEditing, overlays, plantCategories, userGarden, searchValue, userDetails } from "$lib/stores/global";
 	import Overlay from "$lib/components/Overlay.svelte";
-	import { goto } from "$app/navigation";
+	import { goto, invalidateAll } from "$app/navigation";
 	import MacroInput from "$lib/components/MacroInput.svelte";
 	import MobileNoification from "$lib/components/MobileNoification.svelte";
+	import { applyAction, deserialize, enhance } from "$app/forms";
 
   let nickname = ''
   let renickname = $PICurrentPlant.plant.name
@@ -88,15 +89,47 @@
 
   function showNickname() {
     $overlays[3].active = false
+    nickname = $PICurrentPlant.plant.common_name
     $overlays[4].active = true
-    nickname = $PICurrentPlant.plant.name
   }
 
-  function addToMyGarden() {
-    let userGar = $userGarden
-    userGar = [...userGar, {id: $PICurrentPlant.plant.id, nickname}]
-    userGarden.set(userGar)
+  async function addToMyGarden() {
+    // loggingin = true
+
+    let form = document.getElementById('formAddToMyGarden')
+    // @ts-ignore
+    const data = new FormData(form);
+    
+    // @ts-ignore
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data
+    });
+
+    /** @type {import('@sveltejs/kit').ActionResult} */
+    const result = deserialize(await response.text());
+
+    console.log(result);
+    
+    // if(result.type === 'failure') {
+    //   $notif.show = true
+    //   $notif.type = 'error'
+    //   //@ts-ignore
+    //   $notif.message = result.data.message
+    // }
+
+    if (result.type === 'success') {
+      // re-run all `load` functions, following the successful update
+      let userGar = $userGarden
+      userGar = [...userGar, {id: $PICurrentPlant.plant.id, nickname, custom: $PICurrentPlant.plant.custom}]
+      userGarden.set(userGar)
+      console.log('success');
+      await invalidateAll();
+    }
+
+    applyAction(result);
     CloseModal(4)
+    // loggingin = false
   }
 
   function removePlant() {
@@ -116,6 +149,13 @@
 </svelte:head>
 
 <MobileNoification />
+
+<form id='formAddToMyGarden' class="hidden" method="post" action="/mobile/login?/addToGarden" use:enhance>
+  <input name='id' type="text" bind:value={$PICurrentPlant.plant.id}>
+  <input name='nickname' type="text" bind:value={nickname}>
+  <input name='custom' type="text" bind:value={$PICurrentPlant.plant.custom}>
+  <input name='uid' type="text" bind:value={$userDetails.uid}>
+</form>
 
 <div class="w-screen { $page.url.pathname === '/mobile/splash' || $page.url.pathname === '/mobile/login' || $page.url.pathname === '/mobile/signup' ? 'h-screen' : 'h-[90vh]'} overflow-hidden">
   <slot />

@@ -16,13 +16,14 @@ export async function load({ params }) {
 		care += ` ${x.description}`
 	});
 
-	console.log(data2.data.data);
+	// console.log(data2.data.data);
 	
 
 	const data = {
 		plant: {
 			id: params.plantID,
 			common_name: data1.data.common_name,
+			custom: false,
 			description: data1.data.description,
   		scientific_name: data1.data.scientific_name,
   		other_name: data1.data.other_name,

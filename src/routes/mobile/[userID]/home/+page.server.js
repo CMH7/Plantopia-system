@@ -45,16 +45,27 @@ export async function load(e) {
   data.user = user2
 
   let q = e.url.searchParams.get('q')
+  let indoor = e.url.searchParams.get('indoor')
+  let cycle = e.url.searchParams.get('cycle')
+
+  // console.log(
+	// 	`https://perenual.com/api/species-list?key=sk-GNAU653141782caa62551&q=${q}${
+	// 		indoor !== "" && indoor != null ? `&indoor=${indoor}` : ""
+	// 	}${cycle !== "" && cycle != null ? `&cycle=${cycle}` : ""}&order=asc`
+	// );
   // console.log(q)
   if (q != null) {
     const data1 = await axios.get(
-      `https://perenual.com/api/species-list?key=sk-GNAU653141782caa62551&q=${q}&order=asc`, {
-        headers: {
-          "Api-Key": "AdARzwkXXXyLaSqmDN3gv3JcY4qRoFv0luuIhmedxx0c5XffvE",
-          "Content-Type": "application/json"
-        },
-      }
-    )
+			`https://perenual.com/api/species-list?key=sk-GNAU653141782caa62551&q=${q}${
+				indoor !== "" && indoor != null ? `&indoor=${indoor}` : ""
+			}${cycle !== "" && cycle != null ? `&cycle=${cycle}` : ""}&order=asc`,
+			{
+				headers: {
+					"Api-Key": "AdARzwkXXXyLaSqmDN3gv3JcY4qRoFv0luuIhmedxx0c5XffvE",
+					"Content-Type": "application/json",
+				},
+			}
+		);
     plantlist = data1.data.data
 
     // console.log(plantlist);

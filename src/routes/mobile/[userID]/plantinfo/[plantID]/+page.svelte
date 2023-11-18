@@ -19,7 +19,7 @@
     PIActiveTab.set(index)
   }
 
-  function addToMyGarden(index) {
+  function addToMyGarden() {
     $overlays[3].active = true
   }
 

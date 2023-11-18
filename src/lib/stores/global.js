@@ -97,6 +97,7 @@ export const PIActiveTab = writable(0)
 export const PICurrentPlant = writable({
 	plant: {
 		id: '',
+		custom: false,
 		common_name: '',
 		description: '',
 		scientific_name: [],
