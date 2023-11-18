@@ -43,6 +43,8 @@ export const actions = {
 		if (!user.verified) return fail(500, { message: 'Email is not yet verified'})
 		if (!bcryptjs.compareSync(password, user.password)) return fail(404, { message: "Wrong password" });
 
+		
+
 		throw redirect(302, `/mobile/${user.id}/home`);
 	},
 };

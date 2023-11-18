@@ -7,7 +7,7 @@
   export let name = 'Pink flower'
   export let sciName = 'Scientific name'
   export let plantImg = '/aloe.png'
-  export let plantCategories = ['Shrubs']
+  export let custom = false;
   export let favorite = false
   export let id = 0
 
@@ -47,7 +47,7 @@
     <div class="flex flex-col">
       <div class="poppins text-center w-full text-ellipsis overflow-hidden text-secondary text-sm font-bold">
         {#if favorite}
-          {$userGarden.filter(x => x.id === `${id}`)[0].nickname}
+          {$userGarden.filter(x => x.id === `${id}`)[0]?.nickname}
         {:else}
           {name}
         {/if}

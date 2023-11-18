@@ -1,9 +1,18 @@
 <script>
   //@ts-nocheck
 	import { goto } from "$app/navigation";
-  import { months, pageTransitionDuration } from "$lib/stores/global"
+  import { months, pageTransitionDuration, userGarden } from "$lib/stores/global"
 	import { fade, slide } from "svelte/transition";
   import { userDetails } from "$lib/stores/global";
+	import { onMount } from "svelte";
+	import MyGardenCard from "$lib/components/MyGardenCard.svelte";
+
+  export let data
+
+  onMount(() => {
+    userGarden.set(data.userGarden)
+    console.log($userGarden);
+  })
 
   function catPlant(monthName) {
     goto(`/mobile/${$userDetails.uid}/garden/${monthName}`, {replaceState: true})
@@ -16,21 +25,8 @@
   </div>
   
   <div class="w-full min-h-[80vh] max-h-[80vh] overflow-x-hidden overflow-y-auto py-5 flex flex-wrap justify-center gap-5 rounded-t-2xl shadow-inner">
-    {#each $months as month, i}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div on:click={() => catPlant(month.name)} class="w-[40vw] h-[30vh] rounded-xl bg-white border border-primary shadow-lg overflow-hidden flex flex-col justify-center items-center py-2 px-3">
-      <img src={`/${month.name.toLowerCase()}.png`} alt='monthPlant' class="w-full h-[80%]  p-0 object-contain m-auto" />
-      <div class="w-full flex justify-between items-center ">
-        <div class="poppins font-bold uppercase {month.color}">
-          {month.name}
-        </div>
-
-        <span class="material-symbols-rounded">
-          chevron_right
-        </span>
-      </div>
-    </div>
+    {#each data?.userPlantList as plant}
+      <MyGardenCard favorite={true} id={plant.id} name={plant.common_name} plantImg={plant.default_image?.original_url} sciName={plant.scientific_name[0]}  />
     {/each}
   </div>
 </div>
