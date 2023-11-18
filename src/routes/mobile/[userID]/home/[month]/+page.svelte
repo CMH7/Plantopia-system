@@ -11,7 +11,7 @@
   let color = $months.filter(x => x.name.toLowerCase() === data.month.toLowerCase())[0]?.color
 
   function goBack() {
-    goto(`/mobile/${$userDetails.uid}/categories`, {replaceState: true})
+    goto(`/mobile/${$userDetails.uid}/home`, {replaceState: true})
   }
   
 </script>
