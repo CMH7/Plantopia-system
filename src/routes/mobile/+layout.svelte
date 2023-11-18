@@ -22,6 +22,7 @@
   function Logout() {
     $overlays.forEach(x => x.active = false)
     activeModule.set(0)
+    localStorage.clear();
     goto('/mobile/login', {replaceState: true})
   }
 

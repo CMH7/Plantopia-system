@@ -4,7 +4,7 @@
   import MacroInput from "$lib/components/MacroInput.svelte";
 	import MacroPassword from '$lib/components/MacroPassword.svelte';
 	import { notif, pageTransitionDuration } from '$lib/stores/global';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount, afterUpdate } from 'svelte';
 	import { fade, slide } from 'svelte/transition';
 
   let checked = false
@@ -15,6 +15,29 @@
   onDestroy(() => {
     $notif.show = false
   })
+
+  onMount(() => {
+    const storedCreds = localStorage.getItem('creds');
+
+    if (storedCreds) {
+      try {
+        const creds = JSON.parse(storedCreds);
+        email = creds.email;
+        password = creds.password;
+        console.log(creds);
+        console.log('logging in');
+        autLogin()
+      } catch (error) {
+        console.error('Error parsing stored credentials:', error);
+      }
+    }
+  });
+
+  const autLogin = () => {
+    setTimeout(() => {
+      login()
+    }, 200)
+  }
 
   const login = async () => {
     loggingin = true
@@ -41,6 +64,11 @@
       $notif.message = result.data.message
     }
 
+    if(result.type === 'redirect') {
+      localStorage.setItem('creds', JSON.stringify({email, password}))
+      console.log('creds saved!')
+    }
+
     if (result.type === 'success') {
       // re-run all `load` functions, following the successful update
       await invalidateAll();
@@ -51,7 +79,7 @@
   }
 </script>
 
-<form id='formLogin' class="hidden" method="post" action="?/login" use:enhance>
+<form id='formLogin' class="fixed opacity-0" method="post" action="?/login" use:enhance>
   <input name='email' type="text" bind:value={email}>
   <input name='password' type="text" bind:value={password}>
 </form>

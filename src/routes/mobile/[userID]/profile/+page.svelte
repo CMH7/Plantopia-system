@@ -15,11 +15,6 @@
     }
   ]
 
-  function Logout() {
-    goto('/mobile/login', {replaceState: true})
-    activeModule.set(0)
-  }
-
   function showLogoutModal() {
     $overlays[1].active = true
   }
