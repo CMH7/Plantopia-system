@@ -26,7 +26,7 @@
   
   <div class="w-full min-h-[80vh] max-h-[80vh] overflow-x-hidden overflow-y-auto py-5 flex flex-wrap justify-center gap-5 rounded-t-2xl shadow-inner">
     {#each data?.userPlantList as plant}
-      <MyGardenCard favorite={true} id={plant.id} name={plant.common_name} plantImg={plant.default_image?.original_url} sciName={plant.scientific_name[0]}  />
+      <MyGardenCard custom={plant.custom} favorite={true} id={plant.id} name={plant.common_name} plantImg={plant.image} sciName={plant.scientific_name[0]}  />
     {/each}
   </div>
 </div>

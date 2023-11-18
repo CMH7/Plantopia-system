@@ -1,7 +1,6 @@
 <script>
   //@ts-nocheck
 	import { goto } from "$app/navigation";
-	import PlantInfo from "./PlantInfo.svelte";
   import { userDetails, userGarden } from "$lib/stores/global";
 
   export let name = 'Pink flower'
@@ -16,8 +15,12 @@
   }
 
   function plantInformation(id) {
-    if(plantImg !== 'https://perenual.com/storage/image/upgrade_access.jpg') {
-      goto(`/mobile/${$userDetails.uid}/plantinfo/${id}`, {replaceState: false})
+    if(custom) {
+      goto(`/mobile/${$userDetails.uid}/garden/${id}`, {replaceState: false})
+    } else {
+      if(plantImg !== 'https://perenual.com/storage/image/upgrade_access.jpg') {
+        goto(`/mobile/${$userDetails.uid}/plantinfo/${id}`, {replaceState: false})
+      }
     }
   }
 
@@ -40,7 +43,7 @@
   {/if}
 
   <div class="w-full h-2/3 flex justify-center shrink-0">
-    <img class="m-0 p-0 w-full h-full rounded-lg object-cover" src="{plantImg === 'https://perenual.com/storage/image/upgrade_access.jpg' ? '/aloe.png' : plantImg}" alt="aloe">
+    <img class="m-0 p-0 w-full h-full rounded-lg object-cover" src="{plantImg === 'https://perenual.com/storage/image/upgrade_access.jpg' || plantImg === '' ? '/aloe.png' : plantImg}" alt="aloe">
   </div>
 
   <div class="flex flex-col justify-between h-1/3 overflow-hidden pt-1">

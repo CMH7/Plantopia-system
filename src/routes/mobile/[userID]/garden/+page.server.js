@@ -48,7 +48,7 @@ export async function load(e) {
   
   data.userPlantList = userCustomPlantDocSnaps.docs.map(x => { return { ...x.data() } })
 
-  console.log(data);
+  // console.log(data);
   
   return data
 }
