@@ -10,10 +10,6 @@
       icon: 'info'
     },
     {
-      name: 'Store',
-      icon: 'storefront'
-    },
-    {
       name: 'Help',
       icon: 'help'
     }
@@ -39,10 +35,10 @@
   
   <div class="w-full h-[80vh]">
     
-    <div class="w-full h-[60vh] flex flex-col justify-around items-center px-[10vw] rounded-t-2xl shadow-inner">
+    <div class="w-full h-[60vh] flex flex-col items-center px-[10vw] rounded-t-2xl shadow-inner">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <div on:click={() => next('info')} class="w-full h-[10vh] flex justify-around items-center gap-x-10">
+      <div on:click={() => next('info')} class="w-full h-[10vh] flex justify-around items-center gap-x-10 my-5">
   
         <div>
           <div class="poppins text-primary font-bold">
@@ -60,12 +56,16 @@
   
       </div>
 
-      <div class="w-full h-2/3 card bg-white shadow-xl border flex flex-col">
+      <div class="poppins text-primary font-bold text-xl w-full mb-3">
+        Menu
+      </div>
+
+      <div class="w-full h-fit card bg-white shadow-xl border flex flex-col">
 
         {#each menus as menu, i}
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <div on:click={() => next(menu.name.toLowerCase())} class="w-full h-1/3 flex justify-between items-center px-5 {i == 1 ? 'border-y' : ''}">
+          <div on:click={() => next(menu.name.toLowerCase())} class="w-full h-[10vh] flex justify-between items-center px-5 {i == 1 ? 'border-y' : ''}">
             <div class="flex items-center gap-x-5">
               <span class="material-symbols-rounded text-primary">
                 {menu.icon}
