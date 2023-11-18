@@ -2,7 +2,7 @@
   //@ts-nocheck
 	import MobileNavbar from "$lib/components/MobileNavbar.svelte"
   import { page } from "$app/stores";
-	import { PICurrentPlant, activeModule, infoEditing, overlays, plantCategories, userGarden } from "$lib/stores/global";
+	import { PICurrentPlant, activeModule, infoEditing, overlays, plantCategories, userGarden, searchValue, userDetails } from "$lib/stores/global";
 	import Overlay from "$lib/components/Overlay.svelte";
 	import { goto } from "$app/navigation";
 	import MacroInput from "$lib/components/MacroInput.svelte";
@@ -11,7 +11,62 @@
   let nickname = ''
   let renickname = $PICurrentPlant.plant.name
 
+  async function applyFilter() {
+    CloseModal(0)
+    if($searchValue !== '') {
+      console.log('search');
+      let filters = ''
+      let inoutdoor = false
+      $plantCategories.forEach(
+        x => {
+          if (x.selected) {
+            if(x.name === 'Indoor') {
+              filters += '&indoor=1'
+              inoutdoor = true;
+            } else if(x.name === 'Indoor') {
+              if(!inoutdoor) {
+                filters += '&indoor=0'
+              } else {
+                filters = ''
+              }
+            } else {
+              filters += `&cycle=${x.name.toLowerCase()}`
+            }
+          }
+        }
+      )
+      await goto(`/mobile/${$userDetails.uid}/home?q=${$searchValue}${filters}`, {replaceState: true})
+    }else {
+      console.log('home');
+      await goto(`/mobile/${$userDetails.uid}/home`, {replaceState: true})
+    }
+  }
+
   function changeSelectedAttr (index, goal) {
+    if(index == 2) {
+      $plantCategories[3].selected = false
+      $plantCategories[4].selected = false
+      $plantCategories[5].selected = false
+    }
+    
+    if(index == 3) {
+      $plantCategories[2].selected = false
+      $plantCategories[4].selected = false
+      $plantCategories[5].selected = false
+    }
+    
+    if(index == 4) {
+      $plantCategories[2].selected = false
+      $plantCategories[3].selected = false
+      $plantCategories[5].selected = false
+    }
+    
+    if(index == 5) {
+      $plantCategories[2].selected = false
+      $plantCategories[3].selected = false
+      $plantCategories[4].selected = false
+    }
+
     $plantCategories[index].selected = goal
   }
 
@@ -86,20 +141,23 @@
 
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <div on:click={() => CloseModal(0)} class="poppins text-primary text-sm">
+      <div on:click={() => applyFilter()} class="poppins text-primary text-sm">
         Apply
       </div>
     </div>
 
-    <div class="poppins text-primary text-base font-light mt-2">
+    <!-- <div class="poppins text-primary text-base font-light mt-2">
       Plant Category
-    </div>
-
+    </div> -->
+    
     <div class="w-full flex justify-center flex-wrap gap-3 mt-3">
       {#each $plantCategories as pcat, i}
         <button on:click={() => changeSelectedAttr(i, !pcat.selected)} class="rounded-xl poppins w-[40vw] p-1 {pcat.selected ? 'bg-accent text-black border-2 border-secondary' : 'text-primary'}">
           {pcat.name}
         </button>
+        {#if pcat.name === 'Outdoor'}
+          <div class="w-full m-0 p-0 divider">Cycle</div>
+        {/if}
       {/each}
     </div>
   </div>

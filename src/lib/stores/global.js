@@ -33,25 +33,31 @@ export const overlays = writable([
 	}
 ])
 
+export const searchValue = writable('')
+
 export const plantCategories = writable([
 	{
-		name: "Climbers",
+		name: "Indoor",
 		selected: false,
 	},
 	{
-		name: "Creepers",
+		name: "Outdoor",
 		selected: false,
 	},
 	{
-		name: "Herbs",
+		name: "Perennial",
 		selected: false,
 	},
 	{
-		name: "Shrubs",
+		name: "Annual",
 		selected: false,
 	},
 	{
-		name: "Trees",
+		name: "Biennial",
+		selected: false,
+	},
+	{
+		name: "Biannual",
 		selected: false,
 	},
 ]);

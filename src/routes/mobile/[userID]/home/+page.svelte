@@ -5,11 +5,9 @@
   import MacroInput from "$lib/components/MacroInput.svelte"
 	import MyGardenCard from "$lib/components/MyGardenCard.svelte"
 	import Overlay from "$lib/components/Overlay.svelte"
-  import { overlays, pageTransitionDuration, plantCategories, userDetails, months, userGarden } from "$lib/stores/global"
+  import { overlays, pageTransitionDuration, plantCategories, userDetails, months, userGarden, searchValue } from "$lib/stores/global"
 	import { onMount } from "svelte";
 	import { fade, slide } from "svelte/transition"
-
-  let searchValue = ''
 
   export let data
 
@@ -20,7 +18,11 @@
       email: data.user.email,
       password: data.user.password
     })
-    console.log(data);
+
+    if(data.searchValue !== '' || data.searchValue != null) {
+      $searchValue = data.searchValue
+    }
+    // console.log(data);
   })
 
   function OpenFilter() {
@@ -32,9 +34,29 @@
   }
 
   async function search() {
-    if(searchValue !== '') {
+    if($searchValue !== '') {
       console.log('search');
-      await goto(`/mobile/${$userDetails.uid}/home?q=${searchValue}`, {replaceState: true})
+      let filters = ''
+      let inoutdoor = false
+      $plantCategories.forEach(
+        x => {
+          if (x.selected) {
+            if(x.name === 'Indoor') {
+              filters += '&indoor=1'
+              inoutdoor = true;
+            } else if(x.name === 'Indoor') {
+              if(!inoutdoor) {
+                filters += '&indoor=0'
+              } else {
+                filters = ''
+              }
+            } else {
+              filters += `&cycle=${x.name.toLowerCase()}`
+            }
+          }
+        }
+      )
+      await goto(`/mobile/${$userDetails.uid}/home?q=${$searchValue}${filters}`, {replaceState: true})
     }else {
       console.log('home');
       await goto(`/mobile/${$userDetails.uid}/home`, {replaceState: true})
@@ -53,7 +75,7 @@
     </div>
   
     <div class="w-full h-1/2 flex justify-center items-center gpx gap-x-2">
-      <MacroInput onChange={search} bind:value={searchValue} icon='search' placeholder='Search plant' className='w-[70vw]'>
+      <MacroInput onChange={search} bind:value={$searchValue} icon='search' placeholder='Search plant' className='w-[70vw]'>
         <button on:click|preventDefault={() => OpenFilter()} slot='prepend' class="p-2 centerxy btn btn-square btn-ghost">
           <span class="material-symbols-rounded text-primary">
             image_search
@@ -74,7 +96,14 @@
       {#if !data?.searchValue}
         Plants
       {:else}
-        Results
+        <div class="w-full flex items-center justify-between">
+          Results
+          <!-- <div>
+          </div>
+          <div>
+            {data?.plantlist.length}
+          </div> -->
+        </div>
       {/if}
     </div>
   </div>

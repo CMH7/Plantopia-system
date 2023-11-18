@@ -40,12 +40,12 @@ export async function load(e) {
 		name: docSnap.data().name,
 		password: docSnap.data().password,
   };
-  console.log(user2)
+  // console.log(user2)
   
   data.user = user2
 
   let q = e.url.searchParams.get('q')
-  console.log(q)
+  // console.log(q)
   if (q != null) {
     const data1 = await axios.get(
       `https://perenual.com/api/species-list?key=sk-GNAU653141782caa62551&q=${q}&order=asc`, {
@@ -67,7 +67,7 @@ export async function load(e) {
     // console.log(data.plantlist[0].default_image);
   }
 
-  console.log('rendered');
+  // console.log('rendered');
 
   // console.log(data);
   return data
