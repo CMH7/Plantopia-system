@@ -1,11 +1,11 @@
 <script>
 	import { applyAction, deserialize, enhance } from "$app/forms";
-	import { invalidateAll } from "$app/navigation";
+	import { goto, invalidateAll } from "$app/navigation";
 	import Macro from "$lib/components/Macro.svelte";
   import MacroInput from "$lib/components/MacroInput.svelte";
 	import MacroPassword from "$lib/components/MacroPassword.svelte";
 	import { notif, pageTransitionDuration } from "$lib/stores/global";
-	import { onDestroy } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 	import { fade } from "svelte/transition";
 
   let creds = {
@@ -13,6 +13,15 @@
     password: ''
   }
   let loggingin = false;
+
+  onMount(async () => {
+    let admin_creds = localStorage.getItem('admin_creds')
+    //@ts-ignore
+    admin_creds = JSON.parse(admin_creds)
+    if(admin_creds != null) {
+      await goto('/dashboard', {replaceState: true})
+    }
+  })
 
   onDestroy(() => {
     $notif.show = false;

@@ -1,9 +1,21 @@
 <script lang='ts'>
+	import { goto } from "$app/navigation";
 	import DashboardCard from "$lib/components/DashboardCard.svelte";
   import Macro from "$lib/components/Macro.svelte"
 	import Navbar from "$lib/components/Navbar.svelte";
 	import TopPlantsCard from "$lib/components/TopPlantsCard.svelte";
   import { months } from "$lib/stores/global";
+	import { onMount } from "svelte";
+
+  onMount(async () => {
+    let admin_creds = localStorage.getItem('admin_creds')
+    //@ts-ignore
+    admin_creds = JSON.parse(admin_creds)
+    if(admin_creds == null) {
+      localStorage.clear()
+      await goto('/login', {replaceState: true})
+    }
+  })
   
 </script>
 

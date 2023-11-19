@@ -17,7 +17,7 @@
   {#if link !== 'login' && link !== 'mobile' && link !== '' && link !== 'verification' }
     <button class="btn btn-accent shadow-lg fixed bottom-10 right-10 poppins group">
       Data as of {new Date().toDateString()} 
-      <span class="material-symbols-outlined group-hover:rotate-180 transition-all ">Refresh</span>
+      <span class="material-symbols-rounded group-hover:rotate-180 transition-all ">Refresh</span>
     </button>
   {/if}
 </div>
