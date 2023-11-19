@@ -3,7 +3,7 @@
 
   let mainLinks = [
     'Dashboard',
-    'Plant Entry'
+    'Entries'
   ]
 
   const logout = async () => {

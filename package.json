@@ -11,6 +11,7 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
 	},
 	"devDependencies": {
+		"@smui/data-table": "^7.0.0-beta.15",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"autoprefixer": "^10.4.16",
@@ -26,6 +27,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sendgrid/mail": "^7.7.0",
+		"@smui/icon-button": "^7.0.0-beta.15",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.6",
