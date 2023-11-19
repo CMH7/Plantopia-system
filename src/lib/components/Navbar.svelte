@@ -1,24 +1,33 @@
-<script lang='ts'>
-	import MacroInput from "./MacroInput.svelte";
-  import { page } from "$app/stores";
+<script>
   import { goto } from "$app/navigation";
-	import type { MouseEventHandler } from "svelte/elements";
 
-  const logout: MouseEventHandler<HTMLButtonElement> = function() {
-    goto("/", {replaceState: true, noScroll: true, keepFocus: false})
+  let mainLinks = [
+    'Dashboard',
+    'Plant Entry'
+  ]
+
+  const logout = async () => {
+    localStorage.clear()
+    await goto("/login", {replaceState: true })
   }
+
 
 </script>
 
 <div class="flex justify-between items-center bg-base-100 p-2 shadow-lg">
 
   <!-- links -->
-  <div class="flex items-center"> 
-    <a href='/'>
-      <button class="btn btn-ghost">
-        Dashboard
-      </button>
-    </a>
+  <div class="flex items-center">
+    <img class="h-[50px] m-0 p-0 " src="/ezgif.png" alt="plantopia text">
+    {#each mainLinks as linkk}
+      <div class="flex items-center"> 
+        <a href={`/${linkk.toLowerCase()}`}>
+          <button class="btn btn-ghost">
+            {linkk}
+          </button>
+        </a>
+      </div>
+    {/each}
   </div>
 
   <div class="flex items-center">
@@ -35,7 +44,7 @@
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <label tabindex="0" class="btn btn-ghost btn-circle avatar">
         <div class="w-15 rounded-full">
-          <span class="material-symbols-outlined">account_circle</span>
+          <span class="material-symbols-rounded">account_circle</span>
         </div>
       </label>
 
@@ -51,7 +60,7 @@
         <!-- svelte-ignore a11y-missing-attribute -->
         <li><a>Settings</a></li>
         <!-- svelte-ignore a11y-missing-attribute -->
-        <li><button on:click={logout}>Logout</button></li>
+        <li><button on:click={() => logout()}>Logout</button></li>
       </ul>
     </div>
 
