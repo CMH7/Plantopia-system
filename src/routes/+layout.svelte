@@ -5,13 +5,14 @@
 <script lang='ts'>
   import "../app.css";
   import { page } from "$app/stores";
-	import MobileNavbar from "$lib/components/MobileNavbar.svelte";
+	import MobileNoification from "$lib/components/MobileNoification.svelte";
 
   let link: string = $page.url.pathname
   link = link.split('/')[1]
 </script>
 
 <div data-theme="light" class="prose relative">
+  <MobileNoification />
   <slot />
   {#if link !== 'login' && link !== 'mobile' && link !== '' && link !== 'verification' }
     <button class="btn btn-accent shadow-lg fixed bottom-10 right-10 poppins group">
