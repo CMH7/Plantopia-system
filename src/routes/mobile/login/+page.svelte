@@ -109,7 +109,7 @@
       <MacroPassword disabled={loggingin} bind:value={password} errorMessage='' required={true} placeholder='Password' icon='lock' />
 
       <div class="w-full flex justify-between items-center px-[2vh]">
-        <div class="flex items-center gap-x-1">
+        <div class="flex items-center gap-x-1 opacity-0">
           <input {checked} type="checkbox" name="Remember me" id="cb-remember-me" class="text-neutral">
           <label for="cb-remember-me" class="text-xs md:text-[2.5vw]">Remember me</label>
         </div>

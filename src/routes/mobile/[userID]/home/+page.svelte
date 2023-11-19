@@ -22,7 +22,6 @@
     if(data.searchValue !== '' || data.searchValue != null) {
       $searchValue = data.searchValue
     }
-    // console.log(data);
   })
 
   function OpenFilter() {
@@ -63,10 +62,6 @@
     }
   }
 </script>
-<!-- 
-<form id='formSearchText' class="hidden" method="post" action="?/searchText" use:enhance>
-  <input name='searchValue' type="text" bind:value={searchValue}>
-</form> -->
 
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
   <div class="w-full h-[20vh]">
@@ -76,11 +71,15 @@
   
     <div class="w-full h-1/2 flex justify-center items-center gpx gap-x-2">
       <MacroInput onChange={search} bind:value={$searchValue} icon='search' placeholder='Search plant' className='w-[70vw]'>
-        <button on:click|preventDefault={() => OpenFilter()} slot='prepend' class="p-2 centerxy btn btn-square btn-ghost">
-          <span class="material-symbols-rounded text-primary">
-            image_search
-          </span>
-        </button>
+        <div slot='prepend'>
+          <button class="p-2 centerxy btn btn-square btn-ghost">
+            <a href="#">
+              <span class="material-symbols-rounded text-primary">
+                image_search
+              </span>
+            </a>
+          </button>
+        </div>
       </MacroInput>
   
       <button on:click={() => OpenFilter()} class="centerxy btn btn-square btn-primary">
@@ -98,11 +97,6 @@
       {:else}
         <div class="w-full flex items-center justify-between">
           Results
-          <!-- <div>
-          </div>
-          <div>
-            {data?.plantlist.length}
-          </div> -->
         </div>
       {/if}
     </div>

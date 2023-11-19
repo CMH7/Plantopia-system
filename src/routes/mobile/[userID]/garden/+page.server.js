@@ -42,6 +42,7 @@ export async function load(e) {
 
 
   let customPlants = userGarden.filter(x => x.custom)
+  let customPlantsPeren = userGarden.filter(x => !x.custom)
   let userCustomPlantDocSnaps = await getDocs(
     query(collection(db, "seasonalPlants"), where("id", "in", [...customPlants.map(x => parseInt(x.id))]))
   );
