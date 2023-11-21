@@ -4,6 +4,7 @@
   export let data: string = '15'
   export let caption: string = '2 Oct 2023 12:30 PM'
   export let btnName: string = 'View Records'
+  export let btnLink: string = '/users'
 </script>
 
 <div class="transition-all card w-full bg-base-100 shadow-lg hover:shadow-2xl">
@@ -29,7 +30,9 @@
     </div>
 
     <div class="card-actions mt-5">
-      <button class="btn btn-primary btn-block text-white poppins">{btnName}</button>
+      <a href="{btnLink}" class="w-full">
+        <button type='button' class="btn btn-primary btn-block text-white poppins">{btnName}</button>
+      </a>
     </div>
   </div>
 </div>
