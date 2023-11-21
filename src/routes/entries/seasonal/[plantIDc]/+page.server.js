@@ -59,7 +59,8 @@ export const actions = {
       family: fam,
       description: desc,
       care,
-      custom: custom === 'true' ? true : false
+      custom: custom === 'true' ? true : false,
+      image: ''
     }).catch(err => {
       return fail(500, {message: `Error saving plant data. Please try again later. ${err}`})
     })
