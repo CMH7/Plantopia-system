@@ -1,5 +1,6 @@
 <script>
 	import { goto } from "$app/navigation";
+	import AdminLayout from "$lib/components/AdminLayout.svelte";
 	import MacroGrid from "$lib/components/MacroGrid.svelte";
 	import MacroHeader from "$lib/components/MacroHeader.svelte";
 	import Navbar from "$lib/components/Navbar.svelte";
@@ -46,9 +47,7 @@
 
 </script>
 
-<MacroGrid>
-  <MacroHeader bind:crumbs />
-
+<AdminLayout bind:crumbs>
   <RowCol>
     <div class="flex justify- items-center gap-10 px-32">
       {#each entries as entry}
@@ -67,4 +66,4 @@
       {/each}
     </div>
   </RowCol>
-</MacroGrid>
+</AdminLayout>

@@ -1,7 +1,6 @@
 import { db } from '$lib/configurations/firebase';
 import { fail, redirect } from '@sveltejs/kit';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import bcryptjs from 'bcryptjs'
 
 /** @type {import('./$types').Actions} */
 export const actions = {

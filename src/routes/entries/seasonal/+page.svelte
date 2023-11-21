@@ -1,8 +1,8 @@
 <script>
   //@ts-nocheck
-	import MacroGrid from "$lib/components/MacroGrid.svelte";
-	import MacroHeader from "$lib/components/MacroHeader.svelte";
+	import AdminLayout from "$lib/components/AdminLayout.svelte";
 	import RowCol from "$lib/components/RowCol.svelte";
+	import { seasonalPlantList } from "$lib/stores/global.js";
   import DataTable, {
     Head,
     Body,
@@ -18,6 +18,8 @@
     if(admin_creds == null) {
       localStorage.clear()
       await goto('/login', {replaceState: true})
+    } else {
+      seasonalPlantList.set(data.seasonalPlants)
     }
   })
 
@@ -37,9 +39,19 @@
   let items = []
 </script>
 
-<MacroGrid>
-  <MacroHeader bind:crumbs />
-
+<AdminLayout bind:crumbs>
+  <RowCol>
+    <div class="w-full flex justify-end items-center px-32 mb-3">
+      <a href="/entries/seasonal/new">
+        <button type='button' class="btn btn-wide btn-primary poppins text-white">
+          <span class="material-symbols-rounded">
+            add
+          </span>
+          Add plant
+        </button>
+      </a>
+    </div>
+  </RowCol>
   <RowCol>
     <div class=" w-full px-32">
       <DataTable stickyHeader table$aria-label="Plants list" class='card border shadow-lg poppins max-h-[700px] overflow-y-auto'>
@@ -85,17 +97,19 @@
               {/each}
             </Cell>
             <Cell class='pr-2'>
-              <button class="btn btn-icon btn-circle">
-                <span class="material-symbols-rounded text-primary">
-                  edit
-                </span>
-              </button>
+              <a href="/entries/seasonal/{plant.id}">
+                <button class="btn btn-icon btn-circle">
+                  <span class="material-symbols-rounded text-primary">
+                    edit
+                  </span>
+                </button>
+              </a>
             </Cell>
           </Row>
           {/each}
         </Body>
       </DataTable>
     </div>
-
+  
   </RowCol>
-</MacroGrid>
+</AdminLayout>

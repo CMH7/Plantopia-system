@@ -18,3 +18,15 @@
   padding-left: 5vw;
   padding-right: 5vw;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.hide-scrollbar {
+  scrollbar-width: thin;
+}

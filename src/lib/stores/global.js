@@ -30,6 +30,18 @@ export const overlays = writable([
 	{
 		name: 're-nickname plant',
 		active: false
+	},
+	{//8
+		name: 'Save changes seasonal',
+		active: false
+	},
+	{//9
+		name: 'Save changes perenual',
+		active: false
+	},
+	{//10
+		name: 'Add new seasonal plant',
+		active: false
 	}
 ])
 
@@ -123,3 +135,7 @@ export const notif = writable({
 	type: 'success',
 	message: 'Hello'
 })
+
+export const seasonalPlantList = writable([])
+
+export const perenualPlantList = writable([])
