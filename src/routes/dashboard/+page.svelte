@@ -16,6 +16,8 @@
       await goto('/login', {replaceState: true})
     }
   })
+
+  export let data
   
 </script>
 
@@ -37,11 +39,11 @@
         <div class="w-full grid grid-rows-[12] gap-y-6">
 
           <div class="row row-span-6 ">
-            <DashboardCard />
+            <DashboardCard data={`${data.allUsersCount}`} />
           </div>
 
           <div class="row row-span-6">
-            <DashboardCard icon='psychiatry' title='Total Plants' data='25' caption={new Date().toDateString()} />
+            <DashboardCard icon='psychiatry' title='Total Plants' data={`${data.allUsersCount}`} caption={new Date().toDateString()} />
           </div>
 
         </div>
