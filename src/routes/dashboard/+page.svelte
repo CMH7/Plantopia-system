@@ -39,11 +39,11 @@
         <div class="w-full grid grid-rows-[12] gap-y-6">
 
           <div class="row row-span-6 ">
-            <DashboardCard data={`${data.allUsersCount}`} />
+            <DashboardCard data={`${data.allUsersCount}`} btnLink='/dashboard/users' />
           </div>
 
           <div class="row row-span-6">
-            <DashboardCard icon='psychiatry' title='Total Plants' data={`${data.allUsersCount}`} caption={new Date().toDateString()} />
+            <DashboardCard icon='psychiatry' title='Total Gardens' data={`${data.allUserGardensCount}`} caption={new Date().toDateString()} btnLink='/dashboard/gardens' />
           </div>
 
         </div>

@@ -20,8 +20,12 @@
 
   let crumbs = [
     {
+      name: 'Dashboard',
+      link: '/dashboard'
+    },
+    {
       name: 'Users',
-      link: '/users'
+      link: '/dashboard/users'
     }
   ]
 
