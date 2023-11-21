@@ -24,27 +24,23 @@ export const actions = {
     oname = oname.split(',')
     pmonth = pmonth.split(",");
 
-    await setDoc(
-      doc(
-        db,
-        "perenualPlants",
-        uid
-      ),
-      {
-        id: parseInt(id),
-        common_name: cname,
-        scientific_name: sname,
-        other_name: oname,
-        pruning_month: pmonth,
-        family: fam,
-        description: desc,
-        care,
-        custom: custom === "true" ? true : false,
-        image: ''
-      }
-    ).catch(err => {
-      return fail(500, {message: `Error saving plant data. Please try again later. ${err}`})
-    })
+    let plantDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
+    await setDoc(doc(db, "perenualPlants", uid), {
+			id: plantDocSnaps.docs.length + 1,
+			common_name: cname,
+			scientific_name: sname,
+			other_name: oname,
+			pruning_month: pmonth,
+			family: fam,
+			description: desc,
+			care,
+			custom: custom === "true" ? true : false,
+			image: "",
+		}).catch((err) => {
+			return fail(500, {
+				message: `Error saving plant data. Please try again later. ${err}`,
+			});
+		});
 
     throw redirect(302, `/entries/perenual/${id}`);
   }

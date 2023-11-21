@@ -24,6 +24,9 @@ export const actions = {
     oname = oname.split(',')
     pmonth = pmonth.split(",");
 
+    let plantDocSnaps = await getDocs(
+			query(collection(db, "seasonalPlants"))
+    );
     await setDoc(
       doc(
         db,
@@ -31,7 +34,7 @@ export const actions = {
         uid
       ),
       {
-        id: parseInt(id),
+        id: plantDocSnaps.docs.length + 1,
         common_name: cname,
         scientific_name: sname,
         other_name: oname,
