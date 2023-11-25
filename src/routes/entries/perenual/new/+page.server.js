@@ -10,6 +10,7 @@ export const actions = {
     const data = await request.formData();
     // console.log(data);
     let id = data.get('id')?.toString()
+    let pid = data.get('pid')?.toString()
 		let cname = data.get('cname')?.toString()
 		let fam = data.get('fam')?.toString()
 		let sname = data.get('sname')?.toString()
@@ -27,6 +28,7 @@ export const actions = {
     let plantDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
     await setDoc(doc(db, "perenualPlants", uid), {
 			id: plantDocSnaps.docs.length + 1,
+			pid: parseInt(pid),
 			common_name: cname,
 			scientific_name: sname,
 			other_name: oname,
