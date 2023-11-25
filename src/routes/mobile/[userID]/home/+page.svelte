@@ -32,9 +32,10 @@
     goto(`/mobile/${$userDetails.uid}/home/${monthName}`, {replaceState: true})
   }
 
-  async function search() {
+  const search = async () => {
     if($searchValue !== '') {
       console.log('search');
+      console.log($searchValue);
       let filters = ''
       let inoutdoor = false
       $plantCategories.forEach(
@@ -55,7 +56,8 @@
           }
         }
       )
-      await goto(`/mobile/${$userDetails.uid}/home?q=${$searchValue}${filters}`, {replaceState: true})
+      // await goto(`/mobile/${$userDetails.uid}/home?q=${$searchValue}${filters}`, {replaceState: true})
+      window.location = `/mobile/${$userDetails.uid}/home?q=${$searchValue}${filters}`
     }else {
       console.log('home');
       await goto(`/mobile/${$userDetails.uid}/home`, {replaceState: true})
@@ -73,11 +75,9 @@
       <MacroInput onChange={search} bind:value={$searchValue} icon='search' placeholder='Search plant' className='w-[70vw]'>
         <div slot='prepend'>
           <button class="p-2 centerxy btn btn-square btn-ghost">
-            <a href="#">
-              <span class="material-symbols-rounded text-primary">
-                image_search
-              </span>
-            </a>
+            <span class="material-symbols-rounded text-primary">
+              image_search
+            </span>
           </button>
         </div>
       </MacroInput>

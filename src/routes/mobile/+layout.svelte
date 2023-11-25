@@ -109,7 +109,7 @@
     /** @type {import('@sveltejs/kit').ActionResult} */
     const result = deserialize(await response.text());
 
-    console.log(result);
+    // console.log(result);
     
     // if(result.type === 'failure') {
     //   $notif.show = true
@@ -142,6 +142,8 @@
   function renicknamefn() {
     $userGarden.filter(x => x.id == $PICurrentPlant.plant.id)[0].nickname = renickname
   }
+
+  $: stringifiedCurrentPlant = JSON.stringify($PICurrentPlant.plant)
 </script>
 
 <svelte:head>
@@ -155,6 +157,7 @@
   <input name='nickname' type="text" bind:value={nickname}>
   <input name='custom' type="text" bind:value={$PICurrentPlant.plant.custom}>
   <input name='uid' type="text" bind:value={$userDetails.uid}>
+  <input name="dataa" type='text' bind:value={stringifiedCurrentPlant}>
 </form>
 
 <div class="w-screen { $page.url.pathname === '/mobile/splash' || $page.url.pathname === '/mobile/login' || $page.url.pathname === '/mobile/signup' ? 'h-screen' : 'h-[90vh]'} overflow-hidden">
