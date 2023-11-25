@@ -222,6 +222,7 @@
 
 <form id='formSavePlant2' class="hidden" method="post" action="?/savePlant" use:enhance>
   <input name='id' type="text" bind:value={data.plant.id}>
+  <input name='pid' type="text" bind:value={data.plant.pid}>
   <input name='cname' type="text" bind:value={data.plant.common_name}>
   <input name='fam' type="text" bind:value={data.plant.family}>
   <input name='sname' type="text" bind:value={scientific_names}>
@@ -259,12 +260,17 @@
             </select> 
           </div>
 
-          <div class="flex flex-col w-1/2">
+          <div class="flex flex-col w-1/3">
+            <label for="plant-id-{data.plant.pid}" class="font-bold">P-ID</label>
+            <input id="plant-id-{data.plant.pid}" bind:value={data.plant.pid} type="text" class="input input-bordered w-5/6" />
+          </div>
+          
+          <div class="flex flex-col w-1/3">
             <label for="plant-id-{data.plant.id}" class="font-bold">ID</label>
             <input id="plant-id-{data.plant.id}" bind:value={data.plant.id} disabled type="text" class="input input-bordered w-5/6" />
           </div>
 
-          <div class="flex flex-col w-1/2">
+          <div class="flex flex-col w-1/3">
             <label for="plant-oname-{data.plant.id}" class="font-bold">Custom</label>
             <input type="checkbox" disabled bind:checked={custom} class="checkbox checkbox-lg" />
           </div>
