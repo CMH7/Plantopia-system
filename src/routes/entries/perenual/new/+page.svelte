@@ -40,7 +40,7 @@
   let showSNames = true
   let newOname = ""
   let showONames = true
-  let custom = true
+  let custom = false
 
   let adding = false
 

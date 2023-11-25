@@ -230,7 +230,7 @@
   <input name='pmonth' type="text" bind:value={pruningMonths}>
   <input name='desc' type="text" bind:value={data.plant.description}>
   <input name='care' type="text" bind:value={data.plant.care}>
-  <input name='custom' type="text" bind:value={custom}>
+  <input name='custom' type="text" bind:value={data.plant.custom}>
 </form>
 
 <AdminLayout bind:crumbs>
@@ -272,7 +272,7 @@
 
           <div class="flex flex-col w-1/3">
             <label for="plant-oname-{data.plant.id}" class="font-bold">Custom</label>
-            <input type="checkbox" disabled bind:checked={custom} class="checkbox checkbox-lg" />
+            <input type="checkbox" bind:checked={data.plant.custom} class="checkbox checkbox-lg" />
           </div>
         </div>
         
