@@ -5,7 +5,7 @@
   import MacroInput from "$lib/components/MacroInput.svelte"
 	import MyGardenCard from "$lib/components/MyGardenCard.svelte"
 	import Overlay from "$lib/components/Overlay.svelte"
-  import { overlays, pageTransitionDuration, plantCategories, userDetails, months, userGarden, searchValue } from "$lib/stores/global"
+  import { overlays, pageTransitionDuration, plantCategories, userDetails, months, userGarden, searchValue, plantopiaPerenPlants } from "$lib/stores/global"
 	import { onMount } from "svelte";
 	import { fade, slide } from "svelte/transition"
 
@@ -18,6 +18,9 @@
       email: data.user.email,
       password: data.user.password
     })
+
+    userGarden.set(data.userGarden)
+    plantopiaPerenPlants.set(data.perenualPlants)
 
     if(data.searchValue !== '' || data.searchValue != null) {
       $searchValue = data.searchValue
@@ -144,7 +147,14 @@
     {:else}
       <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
         {#each data?.plantlist as plant}
-          <MyGardenCard favorite={$userGarden.filter(x => x.id === `${plant.id}`).length > 0} id={plant.id} name={plant.common_name} plantImg={plant.default_image?.original_url} sciName={plant.scientific_name[0]}  />
+          <MyGardenCard 
+            favorite={data.perenualPlants.filter(x => x.pid === plant.id).length > 0}
+            id={plant.id}
+            name={plant.common_name}
+            plantImg={plant.default_image?.original_url}
+            sciName={plant.scientific_name[0]}
+            custom={false}
+          />
         {/each}
       </div>
     {/if}

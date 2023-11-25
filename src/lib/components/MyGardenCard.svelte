@@ -1,7 +1,7 @@
 <script>
   //@ts-nocheck
 	import { goto } from "$app/navigation";
-  import { userDetails, userGarden } from "$lib/stores/global";
+  import { plantopiaPerenPlants, userDetails, userGarden } from "$lib/stores/global";
 
   export let name = 'Pink flower'
   export let sciName = 'Scientific name'
@@ -14,12 +14,12 @@
     favorite = !favorite
   }
 
-  function plantInformation(id) {
+  async function plantInformation(id) {
     if(custom) {
-      goto(`/mobile/${$userDetails.uid}/garden/${id}`, {replaceState: false})
+      await goto(`/mobile/${$userDetails.uid}/garden/${id}`, {replaceState: false})
     } else {
       if(plantImg !== 'https://perenual.com/storage/image/upgrade_access.jpg') {
-        goto(`/mobile/${$userDetails.uid}/plantinfo/${id}`, {replaceState: false})
+         await goto(`/mobile/${$userDetails.uid}/plantinfo/${id}`, {replaceState: false})
       }
     }
   }
@@ -50,7 +50,7 @@
     <div class="flex flex-col">
       <div class="poppins text-center w-full text-ellipsis overflow-hidden text-secondary text-sm font-bold">
         {#if favorite}
-          {$userGarden.filter(x => x.id === `${id}`)[0]?.nickname}
+          {$userGarden.filter(x => x.id == $plantopiaPerenPlants.filter(x => x.pid === id)[0]?.id )[0]?.nickname}
         {:else}
           {name}
         {/if}
@@ -67,7 +67,7 @@
       {/each}
     </div> -->
 
-    <button on:click={() => setFavorite()} class="centerxy btn btn-circle btn-sm btn-ghost absolute bottom-0 right-0 p-0 m-0">
+    <button class="centerxy btn btn-circle btn-sm btn-ghost absolute bottom-0 right-0 p-0 m-0">
       <span class="material-symbols-rounded {!favorite ? 'text-neutral-300' : 'text-primary'} text-lg">
         favorite
       </span>

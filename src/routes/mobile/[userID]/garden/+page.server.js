@@ -46,8 +46,11 @@ export async function load(e) {
   let userCustomPlantDocSnaps = await getDocs(
     query(collection(db, "seasonalPlants"), where("id", "in", [...customPlants.map(x => parseInt(x.id))]))
   );
-  
-  data.userPlantList = userCustomPlantDocSnaps.docs.map(x => { return { ...x.data() } })
+  let userNotCustomPlantDocSnaps = await getDocs(
+    query(collection(db, "perenualPlants"), where("id", "in", [...customPlantsPeren.map(x => parseInt(x.id))]))
+  );
+  let temp = userNotCustomPlantDocSnaps.docs.map(x => { return { ...x.data() } })
+  data.userPlantList = [...temp , ...userCustomPlantDocSnaps.docs.map(x => { return { ...x.data() } })]
 
   // console.log(data);
   

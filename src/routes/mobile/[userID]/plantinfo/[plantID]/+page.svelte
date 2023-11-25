@@ -46,21 +46,21 @@
   <div class="w-full h-[40vh] flex justify-center relative">
     <img src={`${data.plant.image !== 'https://perenual.com/storage/image/upgrade_access.jpg' ? data.plant.image : '/plants.jpg'}`} class="w-full h-full object-cover m-0" alt="plantname">
     <div class="absolute top-1 left-1 badge">
-      {#if $userGarden.filter(x => x.id === $PICurrentPlant.plant.id).length > 0}
-        {$userGarden.filter(x => x.id === $PICurrentPlant.plant.id)[0].id}
+      {#if data.inTheGarden}
+        {data.plant.id}
       {:else}
         {$PICurrentPlant.plant.id}
       {/if}
     </div>
     <div class='absolute w-fit rounded-t-xl px-[3vw] py-1 -bottom-1 bg-white poppins text-xl text-primary font-bold flex items-center gap-x-3' >
       <div>
-        {#if $userGarden.filter(x => x.id == $PICurrentPlant.plant.id).length > 0}
-          {$userGarden.filter(x => x.id == $PICurrentPlant.plant.id)[0].nickname}
+        {#if data.inTheGarden}
+          {data.nickname}
         {:else}
           {$PICurrentPlant.plant.common_name}
         {/if}
       </div>
-      {#if $userGarden.filter(x => x.id === $PICurrentPlant.plant.id).length > 0}
+      {#if data.inTheGarden}
         <button on:click={() => renickname()} class="btn btn-square btn-primary btn-sm">
           <span class="material-symbols-rounded text-white text-xl m-0 p-0">
             stylus
@@ -91,8 +91,8 @@
         </button>
       </div>
 
-      <button on:click={() => { if(($userGarden.filter(x => x.id == $PICurrentPlant.plant.id).length > 0))  { removePlant() } else { addToMyGarden($PICurrentPlant.plant.id) }}}>
-        <span class="material-symbols-rounded {!($userGarden.filter(x => x.id == $PICurrentPlant.plant.id).length > 0) ? 'text-neutral-300' : 'text-primary'} text-2xl m-0 p-0">
+      <button on:click={() => { if(data.inTheGarden){ removePlant() } else { addToMyGarden($PICurrentPlant.plant.pid) }}}>
+        <span class="material-symbols-rounded {!data.inTheGarden ? 'text-neutral-300' : 'text-primary'} text-2xl m-0 p-0">
           favorite
         </span>
       </button>

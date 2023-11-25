@@ -2,7 +2,7 @@
   //@ts-nocheck
 	import MobileNavbar from "$lib/components/MobileNavbar.svelte"
   import { page } from "$app/stores";
-	import { PICurrentPlant, activeModule, infoEditing, overlays, plantCategories, userGarden, searchValue, userDetails } from "$lib/stores/global";
+	import { PICurrentPlant, activeModule, infoEditing, overlays, plantCategories, userGarden, searchValue, userDetails, notif } from "$lib/stores/global";
 	import Overlay from "$lib/components/Overlay.svelte";
 	import { goto, invalidateAll } from "$app/navigation";
 	import MacroInput from "$lib/components/MacroInput.svelte";
@@ -139,8 +139,41 @@
     CloseModal(5)
   }
 
-  function renicknamefn() {
-    $userGarden.filter(x => x.id == $PICurrentPlant.plant.id)[0].nickname = renickname
+  async function renicknamefn() {
+    // loggingin = true
+
+    let form = document.getElementById('formReNickname')
+    // @ts-ignore
+    const data = new FormData(form);
+    
+    // @ts-ignore
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data
+    });
+
+    /** @type {import('@sveltejs/kit').ActionResult} */
+    const result = deserialize(await response.text());
+
+    // console.log(result);
+    
+    if(result.type === 'failure') {
+      $notif.show = true
+      $notif.message = result.data.message
+    }
+
+    if (result.type === 'success') {
+      // re-run all `load` functions, following the successful update
+      // let userGar = $userGarden
+      // userGar = [...userGar, {id: $PICurrentPlant.plant.id, nickname, custom: $PICurrentPlant.plant.custom}]
+      // userGarden.set(userGar)
+      console.log('success');
+      await invalidateAll();
+    }
+
+    applyAction(result);
+    CloseModal(6)
+    // loggingin = false
   }
 
   $: stringifiedCurrentPlant = JSON.stringify($PICurrentPlant.plant)
@@ -151,6 +184,13 @@
 </svelte:head>
 
 <MobileNoification />
+
+<form id='formReNickname' class="hidden" method="post" action="/mobile/login?/renickname" use:enhance>
+  <input name='id' type="text" bind:value={$PICurrentPlant.plant.id}>
+  <input name='renickname' type="text" bind:value={renickname}>
+  <input name='uid' type="text" bind:value={$userDetails.uid}>
+  <input name='custom' type="text" bind:value={$PICurrentPlant.plant.custom}>
+</form>
 
 <form id='formAddToMyGarden' class="hidden" method="post" action="/mobile/login?/addToGarden" use:enhance>
   <input name='id' type="text" bind:value={$PICurrentPlant.plant.id}>

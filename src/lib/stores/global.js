@@ -109,6 +109,7 @@ export const PIActiveTab = writable(0)
 export const PICurrentPlant = writable({
 	plant: {
 		id: '',
+		pid: '',
 		custom: false,
 		common_name: '',
 		description: '',
@@ -120,6 +121,7 @@ export const PICurrentPlant = writable({
 		image: '',
 	},
 	inTheGarden: false,
+	nickname: ''
 });
 
 export const userGarden = writable([
@@ -129,6 +131,22 @@ export const userGarden = writable([
 		nickname: 'Leng2x plant'
 	}
 ])
+
+export const plantopiaPerenPlants = writable([
+	{
+		id: "",
+		pid: "",
+		custom: false,
+		common_name: "",
+		description: "",
+		scientific_name: [],
+		other_name: [],
+		family: "",
+		pruning_month: [],
+		care: "",
+		image: "",
+	},
+]);
 
 export const notif = writable({
 	show: false,

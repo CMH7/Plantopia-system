@@ -25,10 +25,14 @@ export async function load(e) {
     name: '',
     password: ''
   }
+  let userGarden = []
+  let perenualPlants = []
   let data = {
     searchValue,
     plantlist,
     user,
+    userGarden,
+    perenualPlants
   }
 
   let docSnap = await getDoc(doc(db, "users", e.params.userID));
@@ -41,6 +45,23 @@ export async function load(e) {
 		password: docSnap.data().password,
   };
   // console.log(user2)
+
+  let plantDocSnaps = await getDocs(
+		query(
+			collection(db, "userGardens"),
+			where("uid", "==", e.params.userID)
+		)
+  );
+  data.userGarden = plantDocSnaps.docs.map(x => { return { ...x.data() } })
+  plantDocSnaps = await getDocs(
+    query(
+      collection(db, 'perenualPlants'),
+      where('id', 'in', data.userGarden.map(x => { return x.id}))
+    )
+  )
+  data.perenualPlants = plantDocSnaps.docs.map(x => { return { ...x.data() }})
+  
+  // console.log(data.userGarden);
   
   data.user = user2
 
@@ -56,7 +77,7 @@ export async function load(e) {
   // console.log(q)
   if (q != null) {
     const data1 = await axios.get(
-			`https://perenual.com/api/species-list?key=sk-GNAU653141782caa62551&q=${q}${
+			`https://perenual.com/api/species-list?key=sk-yxVE6561c721ab30b3122&q=${q}${
 				indoor !== "" && indoor != null ? `&indoor=${indoor}` : ""
 			}${cycle !== "" && cycle != null ? `&cycle=${cycle}` : ""}&order=asc`,
 			{
