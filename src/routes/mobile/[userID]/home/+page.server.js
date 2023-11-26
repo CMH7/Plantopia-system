@@ -44,21 +44,24 @@ export async function load(e) {
       )
     );
     data.userGarden = plantDocSnaps.docs.map(x => { return { ...x.data() } })
-    
+    let perenOnlyIDs = data.userGarden.map(x => {
+      if (!x.custom) {
+        return x.id
+      }
+    })
+    console.log(perenOnlyIDs) 
     plantDocSnaps = await getDocs(
       query(
         collection(db, 'perenualPlants'),
         where(
           'id',
           'in',
-          data.userGarden.map(x => {
-            if (!x.custom) {
-              return x.id
-            }
-          }))
+          perenOnlyIDs
+        )
       )
     )
-    data.perenualPlants = plantDocSnaps.docs.map(x => { return { ...x.data() }})
+    data.perenualPlants = plantDocSnaps.docs.map(x => { return { ...x.data() } })
+    console.log(data.perenualPlants);
   }
 
   let q = e.url.searchParams.get('q')

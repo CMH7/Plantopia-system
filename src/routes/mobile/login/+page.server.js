@@ -5,6 +5,7 @@ import {
   and,
 	collection,
 	doc,
+	getCountFromServer,
 	getDocs,
 	query,
 	serverTimestamp,
@@ -54,7 +55,7 @@ export const actions = {
 		// return
 
 		custom = custom === 'false' ? false : true
-		let docSnaps = await getDocs(
+		let docSnaps = await getCountFromServer(
 			query(
 				collection(db, "userGardens"),
 				and(
@@ -64,10 +65,10 @@ export const actions = {
 				)
 			)
 		);
-		if (!docSnaps.empty) return fail(401, { message: "Already in your garden" });
+		if (docSnaps.data().count > 0) return fail(401, { message: "Already in your garden" });
 
 		if (!custom) { // meaning galing sa perenual
-			let plantDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
+			let plantDocSnaps = await getCountFromServer(query(collection(db, "perenualPlants")));
 			await setDoc(
 				doc(
 					db,
@@ -75,7 +76,7 @@ export const actions = {
 					uid
 				),
 				{
-					id: plantDocSnaps.docs.length + 1,
+					id: plantDocSnaps.data().count + 1,
 					pid: parseInt(picurrentplant.pid),
 					common_name: picurrentplant.common_name,
 					scientific_name: picurrentplant.scientific_name,
@@ -93,7 +94,7 @@ export const actions = {
 
 			const uiid = nanoid();
 			await setDoc(doc(db, "userGardens", uiid), {
-				id: plantDocSnaps.docs.length + 1,
+				id: plantDocSnaps.data().count + 1,
 				uid,
 				nickname,
 				custom,

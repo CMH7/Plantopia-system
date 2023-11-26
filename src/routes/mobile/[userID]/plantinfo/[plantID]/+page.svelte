@@ -44,7 +44,7 @@
   </div>
 
   <div class="w-full h-[40vh] flex justify-center relative">
-    <img src={`${data.plant.image !== 'https://perenual.com/storage/image/upgrade_access.jpg' ? data.plant.image : '/plants.jpg'}`} class="w-full h-full object-cover m-0" alt="plantname">
+    <img src={`${data.plant.image !== 'https://perenual.com/storage/image/upgrade_access.jpg' && data.plant.image !== '' ? data.plant.image : '/plants.jpg'}`} class="w-full h-full object-cover m-0" alt="plantname">
     <div class="absolute top-1 left-1 badge">
       {#if data.inTheGarden}
         {data.plant.id}

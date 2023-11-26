@@ -43,28 +43,22 @@ export async function load(e) {
   
     let seasonalPlants = data.userGarden.filter(x => x.custom)
     let perenualPlants = data.userGarden.filter(x => !x.custom)
-
-    console.log(seasonalPlants);
-    console.log(perenualPlants);
     
-    let userSeasonalPlantDocSnaps;
-    let userPerenPlantsDocSnaps;
-
     if (seasonalPlants.length > 0) {
-      userSeasonalPlantDocSnaps = await getDocs(
+      let userSeasonalPlantDocSnaps = await getDocs(
         query(
           collection(db, "seasonalPlants"),
-          where("id", "in", [...seasonalPlants.map((x) => x.id)])
+          where("id", "in", seasonalPlants.map((x) => x.id))
         )
       );
-      data.userPlantList = [...userSeasonalPlantDocSnaps.docs.map(x => { return { ...x.data() } })]
+      data.userPlantList = userSeasonalPlantDocSnaps.docs.map(x => { return { ...x.data() } })
     }
     
     if (perenualPlants.length > 0) {
-      userPerenPlantsDocSnaps = await getDocs(
+      let userPerenPlantsDocSnaps = await getDocs(
         query(
           collection(db, "perenualPlants"),
-          where("id", "in", [...perenualPlants.map((x) => x.id)])
+          where("id", "in", perenualPlants.map((x) => x.id))
         )
       )
       data.userPlantList = [...data.userPlantList, ...userPerenPlantsDocSnaps.docs.map(x => { return { ...x.data() } })]

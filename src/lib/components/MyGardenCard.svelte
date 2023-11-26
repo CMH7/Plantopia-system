@@ -10,17 +10,9 @@
   export let favorite = false
   export let id = 0
 
-  function setFavorite() {
-    favorite = !favorite
-  }
-
   async function plantInformation(id) {
-    if(custom) {
-      await goto(`/mobile/${$userDetails.uid}/garden/${id}`, {replaceState: false})
-    } else {
-      if(plantImg !== 'https://perenual.com/storage/image/upgrade_access.jpg') {
-         await goto(`/mobile/${$userDetails.uid}/plantinfo/${id}`, {replaceState: false})
-      }
+    if(plantImg !== 'https://perenual.com/storage/image/upgrade_access.jpg') {
+      await goto(`/mobile/${$userDetails.uid}/plantinfo/${id}?custom=${custom}`, {replaceState: false})
     }
   }
 

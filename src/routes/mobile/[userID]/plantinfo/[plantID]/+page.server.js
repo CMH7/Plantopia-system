@@ -1,38 +1,97 @@
 //@ts-nocheck
 import { db } from '$lib/configurations/firebase';
 import axios from 'axios';
-import { and, collection, getDocs, query, where } from 'firebase/firestore';
+import { and, collection, getCountFromServer, getDocs, query, where } from 'firebase/firestore';
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ params }) {
+export async function load({ params, url }) {
+	let cus = url.searchParams.get('custom')
+	cus = cus === 'true' ? true : false
 
-	let data
+	let data = {
+		plant: {
+			id: params.plantID,
+			pid: params.plantID,
+			common_name: '',
+			custom: false,
+			description: '',
+			scientific_name: [''],
+			other_name: [''],
+			family: '',
+			pruning_month: [''],
+			care: '',
+			image: '',
+		},
+		inTheGarden: false,
+		nickname: ''
+	};
 
-	let docSnaps = await getDocs(
+	let docSnaps = await getCountFromServer(
 		query(
 			collection(db, "perenualPlants"),
 			where("pid", "==", parseInt(params.plantID))
 		)
 	);
+	let docSnaps2 = await getCountFromServer(
+		query(
+			collection(db, "seasonalPlants"),
+			where("id", "==", parseInt(params.plantID))
+		)
+	);
 	
-	if (!docSnaps.empty) {
+	if (docSnaps.data().count > 0 || docSnaps2.data().count > 0) {
 		console.log('saved')
-		let userGardenDocSnaps = await getDocs(
+
+		let plantID1 = 0
+		if (cus) {
+			const sPlantDocSnaps = await getDocs(
+				query(
+					collection(db, "seasonalPlants"),
+					where("id", "==", parseInt(params.plantID))
+				)
+			);
+			data.plant = { pid: -1, ...sPlantDocSnaps.docs[0].data() };
+			plantID1 = sPlantDocSnaps.docs[0].data().id
+		} else {
+			const pPlantDocSnaps = await getDocs(
+				query(
+					collection(db, "perenualPlants"),
+					where("pid", "==", parseInt(params.plantID))
+				)
+			);
+			data.plant = { ...pPlantDocSnaps.docs[0].data() };
+			plantID1 = pPlantDocSnaps.docs[0].data().id;
+		}
+
+		let userGardenCount = await getCountFromServer(
 			query(
 				collection(db, "userGardens"),
 				and(
-					where('uid', '==', params.userID),
-					where("id", "==", docSnaps.docs[0].data().id)
+					where("uid", "==", params.userID),
+					where("id", "==", plantID1)
 				)
 			)
 		);
-		data = {
-			plant: {
-				...docSnaps.docs[0].data()
-			},
-			inTheGarden: userGardenDocSnaps.docs.length > 0,
-			nickname: userGardenDocSnaps.docs[0].data().nickname
+
+		if (userGardenCount.data().count > 0) {
+			let userGardenDocSnaps = await getDocs(
+				query(
+					collection(db, "userGardens"),
+					and(
+						where('uid', '==', params.userID),
+						where("id", "==", plantID1)
+					)
+				)
+			);
+			
+			data.nickname = userGardenDocSnaps.docs[0].data().nickname;
 		}
+
+		data = {
+			plant: data.plant,
+			inTheGarden: userGardenCount.data().count > 0,
+			nickname: data.nickname,
+		};
 	} else {
 		console.log('new')
 		const data1 = await axios.get(
