@@ -37,7 +37,7 @@
   <div class="w-full min-h-[80vh] max-h-[80vh] overflow-x-hidden overflow-y-auto py-5 flex flex-wrap justify-center gap-5 rounded-t-2xl shadow-inner">
     {#if data.userPlantList.length > 0}
     {#each data.userPlantList as plant}
-      <MyGardenCard custom={plant.custom} favorite={true} id={plant.id} name={plant.common_name} plantImg={plant.image} sciName={plant.scientific_name[0]}  />
+      <MyGardenCard custom={plant.custom} favorite={true} id={!plant.custom ? plant.pid : plant.id} name={plant.common_name} plantImg={plant.image} sciName={plant.scientific_name[0]}  />
     {/each}
     {:else}
       <div class="w-full flex flex-col justify-center items-center gap-y-4 px-5">
