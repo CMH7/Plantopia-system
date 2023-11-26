@@ -61,7 +61,7 @@ export const actions = {
 			query(
 				collection(db, "userGardens"),
 				and(
-					where("id", "==", id),
+					where("id", "==", parseInt(id)),
 					where("uid", '==', uid),
 					where('custom', '==', custom)
 				)
@@ -91,39 +91,28 @@ export const actions = {
 					image: picurrentplant.image
 				}
 			).catch(err => {
-				return fail(500, {message: `Error saving plant data. Please try again later. ${err}`})
+				return fail(500, {message: `Error autoadd plant data. Please try again later. ${err}`})
 			})
-
+			
 			const uiid = nanoid();
 			await setDoc(doc(db, "userGardens", uiid), {
 				id: plantDocSnaps.data().count + 1,
 				uid,
 				nickname,
 				custom,
-			});
-			docSnaps = await getDocs(
-				query(
-					collection(db, "userGardens"),
-					and(where("id", "==", id), where("uid", "==", uid))
-				)
-			);
-			if (docSnaps.empty) return fail(401, { message: "Database error. Failed toi add to garden. Please try again" });
-		}
-		else {
+			}).catch(err => {
+				return fail(500, {message: `Error saving plant to usergarden data. Please try again later. ${err}`})
+			})
+		} else {
 			const uiid = nanoid();
 			await setDoc(doc(db, "userGardens", uiid), {
-				id,
+				id: parseInt(id),
 				uid,
 				nickname,
 				custom,
-			});
-			docSnaps = await getDocs(
-				query(
-					collection(db, "userGardens"),
-					and(where("id", "==", id), where("uid", "==", uid))
-				)
-			);
-			if (docSnaps.empty) return fail(401, { message: "Database error. Failed toi add to garden. Please try again" });
+			}).catch(err => {
+				return fail(500, {message: `Error saving plant to usergarden data. Please try again later. ${err}`})
+			})
 		}
 	},
 	renickname: async ({ request }) => {

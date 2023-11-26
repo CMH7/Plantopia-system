@@ -20,8 +20,9 @@
       ...userDets
     })
     userGarden.set(data.userGarden)
-    console.log($userDetails);
+    // console.log($userDetails);
     plantopiaPerenPlants.set(data.perenualPlants)
+    console.log($plantopiaPerenPlants);
 
     if(data.searchValue !== '' || data.searchValue != null) {
       $searchValue = data.searchValue
