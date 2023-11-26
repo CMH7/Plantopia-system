@@ -132,11 +132,42 @@
     // loggingin = false
   }
 
-  function removePlant() {
-    let userGar = $userGarden
-    userGar = userGar.filter(x => x.id != $PICurrentPlant.plant.id)
-    userGarden.set(userGar)
+  const removePlant = async () => {
+    // loggingin = true
+
+    let form = document.getElementById('formRemoveToMyGarden')
+    // @ts-ignore
+    const data = new FormData(form);
+    
+    // @ts-ignore
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data
+    });
+
+    /** @type {import('@sveltejs/kit').ActionResult} */
+    const result = deserialize(await response.text());
+
+    // console.log(result);
+    
+    if(result.type === 'failure') {
+      $notif.message = result.data.message
+      $notif.show = true
+    }
+
+    if (result.type === 'success') {
+      // re-run all `load` functions, following the successful update
+      // let userGar = $userGarden
+      // userGar = [...userGar, {id: $PICurrentPlant.plant.id, nickname, custom: $PICurrentPlant.plant.custom}]
+      // userGarden.set(userGar)
+      console.log('success');
+      await invalidateAll();
+    }
+
+    applyAction(result);
     CloseModal(5)
+    // window.location.reload()
+    // loggingin = false
   }
 
   async function renicknamefn() {
@@ -184,6 +215,12 @@
 </svelte:head>
 
 <MobileNoification />
+
+<form id='formRemoveToMyGarden' class="hidden" method="post" action="/mobile/login?/removeToGarden" use:enhance>
+  <input name='id' type="text" bind:value={$PICurrentPlant.plant.id}>
+  <input name='uid' type="text" bind:value={$userDetails.uid}>
+  <input name='custom' type="text" bind:value={$PICurrentPlant.plant.custom}>
+</form>
 
 <form id='formReNickname' class="hidden" method="post" action="/mobile/login?/renickname" use:enhance>
   <input name='id' type="text" bind:value={$PICurrentPlant.plant.id}>

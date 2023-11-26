@@ -49,7 +49,7 @@ export async function load(e) {
         return x.id
       }
     })
-    console.log(perenOnlyIDs) 
+    // console.log(perenOnlyIDs) 
     plantDocSnaps = await getDocs(
       query(
         collection(db, 'perenualPlants'),
@@ -61,7 +61,7 @@ export async function load(e) {
       )
     )
     data.perenualPlants = plantDocSnaps.docs.map(x => { return { ...x.data() } })
-    console.log(data.perenualPlants);
+    // console.log(data.perenualPlants);
   }
 
   let q = e.url.searchParams.get('q')

@@ -4,8 +4,10 @@ import { db } from "$lib/configurations/firebase";
 import {
   and,
 	collection,
+	deleteDoc,
 	doc,
 	getCountFromServer,
+	getDoc,
 	getDocs,
 	query,
 	serverTimestamp,
@@ -154,5 +156,32 @@ export const actions = {
 				message: `Error saving plant data. Please try again later. ${err}`,
 			});
 		});
+	},
+	removeToGarden: async ({ request }) => {
+		const data = await request.formData();
+		// console.log(data);
+		const id = data.get("id")?.toString();
+		const uid = data.get("uid")?.toString();
+		let custom = data.get("custom")?.toString();
+		custom = custom === "true" ? true : false;
+
+		// console.log(id, uid, custom)
+		// return
+
+		let plantDocsSnaps = await getDocs(
+			query(
+				collection(db, 'userGardens'),
+				and(
+					where('id', '==', parseInt(id)),
+					where('uid', '==', uid),
+					where('custom', '==', custom)
+				)
+			)
+		)
+		try {
+			await deleteDoc(doc(db, 'userGardens', plantDocsSnaps.docs[0].id))
+		} catch (error) {
+			return fail(500, {message: `Server error: ${error.message}`})
+		}
 	}
 };
