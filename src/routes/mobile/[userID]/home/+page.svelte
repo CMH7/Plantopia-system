@@ -1,25 +1,26 @@
 <script>
   //@ts-nocheck
-	import { enhance } from "$app/forms";
 	import { goto } from "$app/navigation"
+	import { page } from "$app/stores";
   import MacroInput from "$lib/components/MacroInput.svelte"
 	import MyGardenCard from "$lib/components/MyGardenCard.svelte"
-	import Overlay from "$lib/components/Overlay.svelte"
   import { overlays, pageTransitionDuration, plantCategories, userDetails, months, userGarden, searchValue, plantopiaPerenPlants } from "$lib/stores/global"
 	import { onMount } from "svelte";
-	import { fade, slide } from "svelte/transition"
+	import { fade } from "svelte/transition"
 
   export let data
 
-  onMount(() => {
+  onMount(async () => {
+    let creds = localStorage.getItem('creds')
+    creds = JSON.parse(creds)
+    const userDets = { uid: $page.params.userID, ...creds }
+    localStorage.setItem('userDets', JSON.stringify(userDets))
     userDetails.set({
-      uid: data.user.id,
-      name: data.user.name,
-      email: data.user.email,
-      password: data.user.password
+      name: $userDetails.name !== '' ? $userDetails.name : '',
+      ...userDets
     })
-
     userGarden.set(data.userGarden)
+    console.log($userDetails);
     plantopiaPerenPlants.set(data.perenualPlants)
 
     if(data.searchValue !== '' || data.searchValue != null) {

@@ -1,16 +1,11 @@
 //@ts-nocheck
-import axios from 'axios'
 import { db } from "$lib/configurations/firebase";
-import { error, fail, redirect } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
 import {
-	and,
 	collection,
-	doc,
-	getDoc,
+	getCountFromServer,
 	getDocs,
 	query,
-	serverTimestamp,
-	setDoc,
 	where,
 } from "firebase/firestore";
 
@@ -18,41 +13,64 @@ import {
 export async function load(e) {
   let data = {
     userGarden: [],
-    userPlantList: []
+    userPlantList: [],
+    perenPlants: []
   }
 
-  let docSnap = await getDoc(doc(db, "users", e.params.userID));
-  if (!docSnap.exists) throw redirect(300, '/mobile/login')
-  const user = {
-    id: docSnap.id,
-    email: docSnap.data().email,
-    name: docSnap.data().name,
-    password: docSnap.data().password,
-  };
+  let userCount = await getCountFromServer(
+    collection(db, 'users'),
+    where('id', '==', e.params.userID)
+  )
+  if (userCount.data().count <= 0) throw error(500, { message: 'Account not found.' })
 
-  let userGardenDocSnaps = await getDocs(
-    query(collection(db, "userGardens"), where("uid", "==", user.id))
-  );
+  let userGardenCount = await getCountFromServer(
+    query(
+      collection(db, 'userGardens'),
+      where('uid', '==', e.params.userID)
+    )
+  )
 
-  let userGarden = [];
-  userGardenDocSnaps.docs.forEach((x) => {
-    userGarden = [...userGarden, { id: `${x.data().id}`, custom: x.data().custom, nickname: x.data().nickname }];
-  });
-  data.userGarden = userGarden
+  if (userGardenCount.data().count > 0) {
+    let userGardenDocSnaps = await getDocs(
+      query(collection(db, "userGardens"), where("uid", "==", e.params.userID))
+    );
+  
+    data.userGarden = userGardenDocSnaps.docs.map(x => {
+      return {
+        ...x.data()
+      }
+    })
+  
+    let seasonalPlants = data.userGarden.filter(x => x.custom)
+    let perenualPlants = data.userGarden.filter(x => !x.custom)
 
+    console.log(seasonalPlants);
+    console.log(perenualPlants);
+    
+    let userSeasonalPlantDocSnaps;
+    let userPerenPlantsDocSnaps;
 
-  let customPlants = userGarden.filter(x => x.custom)
-  let customPlantsPeren = userGarden.filter(x => !x.custom)
-  let userCustomPlantDocSnaps = await getDocs(
-    query(collection(db, "seasonalPlants"), where("id", "in", [...customPlants.map(x => parseInt(x.id))]))
-  );
-  let userNotCustomPlantDocSnaps = await getDocs(
-    query(collection(db, "perenualPlants"), where("id", "in", [...customPlantsPeren.map(x => parseInt(x.id))]))
-  );
-  let temp = userNotCustomPlantDocSnaps.docs.map(x => { return { ...x.data() } })
-  data.userPlantList = [...temp , ...userCustomPlantDocSnaps.docs.map(x => { return { ...x.data() } })]
-
-  // console.log(data);
+    if (seasonalPlants.length > 0) {
+      userSeasonalPlantDocSnaps = await getDocs(
+        query(
+          collection(db, "seasonalPlants"),
+          where("id", "in", [...seasonalPlants.map((x) => x.id)])
+        )
+      );
+      data.userPlantList = [...userSeasonalPlantDocSnaps.docs.map(x => { return { ...x.data() } })]
+    }
+    
+    if (perenualPlants.length > 0) {
+      userPerenPlantsDocSnaps = await getDocs(
+        query(
+          collection(db, "perenualPlants"),
+          where("id", "in", [...perenualPlants.map((x) => x.id)])
+        )
+      )
+      data.userPlantList = [...data.userPlantList, ...userPerenPlantsDocSnaps.docs.map(x => { return { ...x.data() } })]
+      data.perenPlants = [...userPerenPlantsDocSnaps.docs.map(x => { return { ...x.data() } })]
+    }
+  }
   
   return data
 }

@@ -37,20 +37,12 @@ export const actions = {
       dateCreated: serverTimestamp(),
       dateUpdated: serverTimestamp(),
       verified: false
-    });
-    docSnaps = await getDocs(
-      query(
-        collection(db, "users"),
-        where("email", "==", email))
-        
-		);
-    if (docSnaps.empty) throw error(500, { message: 'Database error. Please try again' })
+    }).catch(err => {
+      throw error(500, { message: `Database error. Please try again, ${err}` });
+    })
 
-    await sgMail.send(constants.newMsg(
-      email,
-      name
-    ))
-    throw redirect(302, `/mobile/login`);
+    await sgMail.send(constants.newMsg(email, name));
+		throw redirect(302, `/mobile/login`);
   }
 }
 

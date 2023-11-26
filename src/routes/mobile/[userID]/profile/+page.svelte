@@ -1,8 +1,23 @@
 <script>
   //@ts-nocheck
 	import { goto } from "$app/navigation";
+	import { page } from "$app/stores";
 	import { activeModule, overlays, pageTransitionDuration, userDetails } from "$lib/stores/global";
+	import { onMount } from "svelte";
 	import { fade, fly, slide } from "svelte/transition";
+
+  export let data
+
+  onMount(() => {
+    let creds = localStorage.getItem('creds')
+    creds = JSON.parse(creds)
+    const userDets = { uid: $page.params.userID, ...creds }
+    localStorage.setItem('userDets', JSON.stringify(userDets))
+    userDetails.set({
+      name: $userDetails.name !== '' ? $userDetails.name : data.name,
+      ...userDets
+    })
+  })
 
   let menus = [
     {

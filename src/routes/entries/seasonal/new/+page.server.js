@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { db } from '$lib/configurations/firebase';
 import { error, fail, redirect } from '@sveltejs/kit';
-import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, getCountFromServer, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
 
 /** @type {import('./$types').Actions} */
@@ -24,7 +24,7 @@ export const actions = {
     oname = oname.split(',')
     pmonth = pmonth.split(",");
 
-    let plantDocSnaps = await getDocs(
+    let plantDocSnaps = await getCountFromServer(
 			query(collection(db, "seasonalPlants"))
     );
     await setDoc(
@@ -34,7 +34,7 @@ export const actions = {
         uid
       ),
       {
-        id: plantDocSnaps.docs.length + 1,
+        id: plantDocSnaps.data().count + 1,
         common_name: cname,
         scientific_name: sname,
         other_name: oname,
