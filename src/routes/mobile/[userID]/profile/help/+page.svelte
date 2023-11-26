@@ -1,23 +1,27 @@
 <script>
   //@ts-nocheck
-  	import { goto } from "$app/navigation"
-    import { pageTransitionDuration } from "$lib/stores/global"
-    import { fade } from "svelte/transition"
-    import { userDetails } from "$lib/stores/global";
+  import { helpsList, pageTransitionDuration } from "$lib/stores/global"
+  import { onMount } from "svelte";
+  import { fade } from "svelte/transition"
+    
+  export let data
+  let currentSelectedAccordion = ''
 
-    let currentSelectedAccordion = -1
+  onMount(() => {
+    helpsList.set(data.helps)
+  })
 
-    function goBack() {
-      history.back()
+  function goBack() {
+    history.back()
+  }
+
+  function openCloseAccord(index) {
+    if(currentSelectedAccordion == index) {
+      currentSelectedAccordion = -1
+    } else {
+      currentSelectedAccordion = index
     }
-
-    function openCloseAccord(index) {
-      if(currentSelectedAccordion == index) {
-        currentSelectedAccordion = -1
-      } else {
-        currentSelectedAccordion = index
-      }
-    }
+  }
 </script>
 
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
@@ -37,16 +41,16 @@
 
     <div class="join join-vertical w-full">
 
-      {#each Array(10) as _, i}
+      {#each data.helps as help}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div on:click={() => openCloseAccord(i)} class="collapse collapse-arrow join-item border border-base-300">
-          <input type="radio" name="my-accordion-4" checked={currentSelectedAccordion == i}/> 
+        <div on:click={() => openCloseAccord(help.id)} class="collapse collapse-arrow join-item border border-base-300">
+          <input type="radio" name="my-accordion-4" checked={currentSelectedAccordion === help.id}/> 
           <div class="collapse-title text-black poppins font-medium">
-            Question {i + 1}
+            {help.question}
           </div>
-          <div class="collapse-content"> 
-            <p>Question and asnwer {i}</p>
+          <div class="collapse-content max-w-full"> 
+            <div class='max-w-full overflow-hidden break-words'>{help.answer}</div>
           </div>
         </div>
       {/each}

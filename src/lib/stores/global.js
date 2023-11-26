@@ -160,7 +160,7 @@ export const perenualPlantList = writable([])
 
 export let helpsList = writable([
 	{
-		id: 0,
+		id: '',
 		question: '',
 		answer: ''
 	}

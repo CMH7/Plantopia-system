@@ -123,8 +123,16 @@
           {#each data.qnas as qna, i}
           <Row class='{i % 2 == 0 ? 'bg-slate-50' : ''} p-2'>
             <!-- <Cell class='pl-2 text-center' numeric>{qna.id}</Cell> -->
-            <Cell class='py-5 w-[45%] min-w-[45%] max-w-[45%] border-x pl-2'>{qna.question}</Cell>
-            <Cell class='py-5 w-[40%] min-w-[40%] max-w-[40%]'>{qna.answer}</Cell>
+            <Cell class='py-5 border-x pl-2'>
+              <div class="w-full min-w-full max-w-full">
+                {qna.question}
+              </div>
+            </Cell>
+            <Cell class='py-5'>
+              <div class="w-full min-w-full max-w-full overflow-hidden break-words">
+                {qna.answer}
+              </div>
+            </Cell>
             <Cell class='pr-2 border-x text-center'>
               <a href="/application/help/{qna.id}">
                 <button class="btn btn-icon btn-circle">
