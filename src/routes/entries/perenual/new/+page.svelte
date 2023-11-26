@@ -259,7 +259,7 @@
 
           <div class="flex flex-col w-1/3">
             <label for="plant-pid-{data.plant.pid}" class="font-bold">P-ID</label>
-            <input id="plant-pid-{data.plant.pid}" disabled bind:value={data.plant.id} type="text" class="input input-bordered w-5/6" />
+            <input id="plant-pid-{data.plant.pid}" bind:value={data.plant.pid} type="text" class="input input-bordered w-5/6" />
           </div>
 
           <div class="flex flex-col w-1/3">
