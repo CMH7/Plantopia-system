@@ -157,3 +157,11 @@ export const notif = writable({
 export const seasonalPlantList = writable([])
 
 export const perenualPlantList = writable([])
+
+export let helpsList = writable([
+	{
+		id: 0,
+		question: '',
+		answer: ''
+	}
+])
