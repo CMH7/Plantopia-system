@@ -5,7 +5,7 @@
 	import AdminLayout from "$lib/components/AdminLayout.svelte";
 	import Overlay from "$lib/components/Overlay.svelte";
 	import RowCol from "$lib/components/RowCol.svelte";
-	import { months, notif, overlays, pageTransitionDuration, perenualPlantList } from "$lib/stores/global.js";
+	import { cycles, months, notif, overlays, pageTransitionDuration, perenualPlantList } from "$lib/stores/global.js";
 	import { onDestroy, onMount } from "svelte";
 
   let data = {
@@ -18,7 +18,9 @@
       other_name: [],
       description: '',
       care: '',
-      custom: true
+      custom: true,
+      indoor: false,
+      cycle: 'Annual'
     }
   }
 
@@ -228,6 +230,8 @@
   <input name='desc' type="text" bind:value={data.plant.description}>
   <input name='care' type="text" bind:value={data.plant.care}>
   <input name='custom' type="text" bind:value={custom}>
+  <input name='indoor' type="text" bind:value={data.plant.indoor}>
+  <input name='cycle' type="text" bind:value={data.plant.cycle}>
 </form>
 
 <AdminLayout bind:crumbs>
@@ -248,6 +252,15 @@
           </div>
 
           <div class="flex flex-col w-full">
+            <label for="plant-fam-{data.plant.id}" class="font-bold">Cycle</label>
+            <select id="plant-fam-{data.plant.id}" bind:value={data.plant.cycle} type="text" class="input input-bordered w-5/6">
+              {#each $cycles as cycle}
+                <option value={cycle}>{cycle}</option>
+              {/each}
+            </select>
+          </div>
+
+          <div class="flex flex-col w-full">
             <label for="plant-pmonth-{data.plant.id}" class="font-bold">Pruning months</label>
             <!-- <input id="plant-0name-{data.plant.id}" bind:value={newOname} type="text" on:change|preventDefault={e => addNewOName()} class="input input-bordered w-2/3 rounded-b-none" /> -->
             <select bind:value={data.plant.pruning_month} class="border-neutral-300 rounded-md w-5/6 p-0 hide-scrollbar m-0" multiple>
@@ -257,17 +270,22 @@
             </select> 
           </div>
 
-          <div class="flex flex-col w-1/3">
+          <div class="flex flex-col w-1/2">
             <label for="plant-pid-{data.plant.pid}" class="font-bold">P-ID</label>
             <input id="plant-pid-{data.plant.pid}" bind:value={data.plant.pid} type="text" class="input input-bordered w-5/6" />
           </div>
 
-          <div class="flex flex-col w-1/3">
+          <div class="flex flex-col w-1/2">
             <label for="plant-id-{data.plant.id}" class="font-bold">ID</label>
             <input id="plant-id-{data.plant.id}" disabled bind:value={data.plant.id} type="text" class="input input-bordered w-5/6" />
           </div>
 
-          <div class="flex flex-col w-1/3">
+          <div class="flex flex-col w-1/2">
+            <label for="plant-oname-{data.plant.id}" class="font-bold">Indoor</label>
+            <input type="checkbox" bind:checked={data.plant.indoor} class="checkbox checkbox-lg" />
+          </div>
+
+          <div class="flex flex-col w-1/2">
             <label for="plant-oname-{data.plant.id}" class="font-bold">Custom</label>
             <input type="checkbox" disabled bind:checked={custom} class="checkbox checkbox-lg" />
           </div>

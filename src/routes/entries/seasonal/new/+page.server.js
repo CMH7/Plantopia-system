@@ -17,6 +17,8 @@ export const actions = {
 		let pmonth = data.get('pmonth')?.toString()
 		let desc = data.get('desc')?.toString()
 		let care = data.get('care')?.toString()
+		let cycle = data.get('cycle')?.toString()
+    let indoor = data.get("indoor")?.toString();
     let custom = data.get('custom')?.toString()
     const uid = nanoid()
     
@@ -43,7 +45,9 @@ export const actions = {
         description: desc,
         care,
         custom: custom === "true" ? true : false,
-        image: ''
+        image: '',
+        indoor: indoor === 'true' ? true : false,
+        cycle
       }
     ).catch(err => {
       return fail(500, {message: `Error saving plant data. Please try again later. ${err}`})

@@ -60,10 +60,11 @@
             <Cell class='py-5 pl-2'  numeric>ID</Cell>
             <Cell class='py-5 border-x' >Common name</Cell>
             <Cell class='py-5' >Scientific name/s</Cell>
-            <Cell class='py-5 border-x' >Other name/s</Cell>
-            <Cell class='py-5' >Family</Cell>
+            <Cell class='py-5 border-x' >Family</Cell>
+            <Cell class='py-5' >Cycle</Cell>
             <Cell class='py-5 border-x' >Pruning months</Cell>
-            <Cell class='py-5 pr-2' >Action</Cell>
+            <Cell class='py-5' >Area</Cell>
+            <Cell class='py-5 pr-2 border-x' >Action</Cell>
           </Row>
         </Head>
   
@@ -81,22 +82,15 @@
                 {/each}
               </ul>
             </Cell>
-            <Cell class='border-x'>
-              <ul>
-                {#each plant.other_name as oname}
-                  <li>
-                    <i>{oname}</i>
-                  </li>
-                {/each}
-              </ul>
-            </Cell>
-            <Cell>{plant.family}</Cell>
+            <Cell class='border-x'>{plant.family}</Cell>
+            <Cell>{plant.cycle}</Cell>
             <Cell class='max-w-[200px] flex flex-wrap border-x'>
               {#each plant.pruning_month as month}
-                <span class='mr-1'>{month},</span>
+              <span class='mr-1'>{month},</span>
               {/each}
             </Cell>
-            <Cell class='pr-2'>
+            <Cell>{plant.indoor ? 'Indoor' : 'Outdoor'}</Cell>
+            <Cell class='pr-2 border-x'>
               <a href="/entries/seasonal/{plant.id}">
                 <button class="btn btn-icon btn-circle">
                   <span class="material-symbols-rounded text-primary">

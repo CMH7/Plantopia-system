@@ -151,9 +151,9 @@
             favorite={data.perenualPlants.filter(x => x.id === plant.id).length > 0}
             id={plant.id}
             name={plant.common_name}
-            plantImg={plant.default_image?.original_url !== '' || plant.default_image?.original_url != null ? plant.default_image?.original_url : plant.image}
+            plantImg={plant.image === '' || plant.image == null ? plant.default_image?.original_url : plant.image}
             sciName={plant.scientific_name[0]}
-            custom={false}
+            custom={plant.custom}
           />
         {/each}
       </div>

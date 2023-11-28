@@ -119,6 +119,8 @@ export const PICurrentPlant = writable({
 		pruning_month: [],
 		care: '',
 		image: '',
+		cycle: '',
+		indoor: false
 	},
 	inTheGarden: false,
 	nickname: ''
@@ -164,4 +166,11 @@ export let helpsList = writable([
 		question: '',
 		answer: ''
 	}
+])
+
+export const cycles = writable([
+	'Annual',
+	'Biannual',
+	'Perennual',
+	'Biennual'
 ])

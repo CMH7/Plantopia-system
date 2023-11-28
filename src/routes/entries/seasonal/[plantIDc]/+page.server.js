@@ -35,6 +35,8 @@ export const actions = {
 		let desc = data.get('desc')?.toString()
 		let care = data.get('care')?.toString()
     let custom = data.get('custom')?.toString()
+    let indoor = data.get('indoor')?.toString()
+    let cycle = data.get('cycle')?.toString()
     
     sname = sname.split(',')
     oname = oname.split(',')
@@ -60,7 +62,9 @@ export const actions = {
       description: desc,
       care,
       custom: custom === 'true' ? true : false,
-      image: ''
+      indoor: indoor === 'true' ? true : false,
+      image: '',
+      cycle
     }).catch(err => {
       return fail(500, {message: `Error saving plant data. Please try again later. ${err}`})
     })

@@ -36,6 +36,8 @@ export const actions = {
 		let care = data.get('care')?.toString()
     let custom = data.get('custom')?.toString()
     let pid = data.get('pid')?.toString()
+    let cycle = data.get('cycle')?.toString()
+    let indoor = data.get('indoor')?.toString()
     
     sname = sname.split(',')
     oname = oname.split(',')
@@ -57,7 +59,9 @@ export const actions = {
       family: fam,
       description: desc,
       care,
+      cycle,
       custom: custom === 'true' ? true : false,
+      indoor: indoor === 'true' ? true : false,
       image: '',
       pid: parseInt(pid)
     }).catch(err => {

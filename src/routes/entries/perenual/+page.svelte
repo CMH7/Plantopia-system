@@ -60,10 +60,11 @@
             <Cell class='py-5 border-x'  numeric>ID</Cell>
             <Cell class='py-5' >Common name</Cell>
             <Cell class='py-5 border-x' >Scientific name/s</Cell>
-            <Cell class='py-5' >Other name/s</Cell>
+            <Cell class='py-5' >Cycle</Cell>
             <Cell class='py-5 border-x' >Family</Cell>
             <Cell class='py-5' >Pruning months</Cell>
-            <Cell class='py-5 border-x pr-2' >Action</Cell>
+            <Cell class='py-5 border-x' >Area</Cell>
+            <Cell class='py-5 pr-2' >Action</Cell>
           </Row>
         </Head>
   
@@ -82,22 +83,15 @@
                 {/each}
               </ul>
             </Cell>
-            <Cell>
-              <ul>
-                {#each plant.other_name as oname}
-                  <li>
-                    <i>{oname}</i>
-                  </li>
-                {/each}
-              </ul>
-            </Cell>
+            <Cell>{plant.cycle}</Cell>
             <Cell class='border-x'>{plant.family}</Cell>
             <Cell class='max-w-[200px] flex flex-wrap'>
               {#each plant.pruning_month as month}
-                <span class='mr-1'>{month},</span>
+              <span class='mr-1'>{month},</span>
               {/each}
             </Cell>
-            <Cell class='border-x pr-2'>
+            <Cell class='border-x'>{plant.indoor ? 'Indoor' : 'Outdoor'}</Cell>
+            <Cell class='pr-2'>
               <a href="/entries/perenual/{plant.id}">
                 <button class="btn btn-icon btn-circle">
                   <span class="material-symbols-rounded text-primary">

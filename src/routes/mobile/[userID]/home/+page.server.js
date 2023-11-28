@@ -67,6 +67,62 @@ export async function load(e) {
     let indoor = e.url.searchParams.get('indoor')
     let cycle = e.url.searchParams.get('cycle')
 
+    let S_PlantsDocSnaps
+    let P_PlantsDocSnaps;
+    if (indoor != null && cycle != null) {
+      S_PlantsDocSnaps = await getDocs(
+        query(
+          collection(db, 'seasonalPlants'),
+          where('indoor', '==', indoor === '1' ? true : false),
+          where('cycle', '==', cycle)
+        )
+      )
+      P_PlantsDocSnaps = await getDocs(
+				query(
+					collection(db, "perenualPlants"),
+					where("indoor", "==", indoor === "1" ? true : false),
+					where("cycle", "==", cycle)
+				)
+			);
+    } else if (indoor != null) {
+      S_PlantsDocSnaps = await getDocs(
+        query(
+          collection(db, 'seasonalPlants'),
+          where('indoor', '==', indoor === '1' ? true : false)
+        )
+      )
+      P_PlantsDocSnaps = await getDocs(
+				query(
+					collection(db, "perenuaPlants"),
+					where("indoor", "==", indoor === "1" ? true : false)
+				)
+			);
+    } else if (cycle != null) {
+      S_PlantsDocSnaps = await getDocs(
+				query(
+					collection(db, "seasonalPlants"),
+					where("cycle", "==", cycle)
+				)
+			);
+      P_PlantsDocSnaps = await getDocs(
+				query(
+					collection(db, "perenualPlants"),
+					where("cycle", "==", cycle)
+				)
+			);
+    } else {
+      S_PlantsDocSnaps = await getDocs(query(collection(db, "seasonalPlants")));
+      P_PlantsDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
+    }
+    let splants = S_PlantsDocSnaps.docs.map(x => { return { ...x.data() }})
+    let pplants = P_PlantsDocSnaps.docs.map(x => { return { ...x.data() } })
+
+    splants = splants.filter(x => `${x.common_name} ${x.scientific_name.map(sn => { return sn }).join(' ')} ${x.other_name.map(on => { return on}).join(' ')}`.trim().toLowerCase().match(q.toLowerCase()))
+    pplants = pplants.filter(x => `${x.common_name} ${x.scientific_name.map(sn => { return sn }).join(' ')} ${x.other_name.map(on => { return on}).join(' ')}`.trim().toLowerCase().match(q.toLowerCase()))
+
+    if(splants.length > 0) plantlist = [...plantlist, ...splants]
+    if(pplants.length > 0) plantlist = [...plantlist, ...pplants]
+
     const data1 = await axios.get(
 			`https://perenual.com/api/species-list?key=sk-yxVE6561c721ab30b3122&q=${q}${
 				indoor !== "" && indoor != null ? `&indoor=${indoor}` : ""
@@ -78,7 +134,7 @@ export async function load(e) {
 				},
 			}
 		);
-    plantlist = data1.data.data
+    plantlist = [...plantlist, ...data1.data.data]
 
     
     data.searchValue = q,
