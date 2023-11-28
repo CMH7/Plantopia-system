@@ -381,12 +381,17 @@
           </div>
           
           <div class="flex items-center w-1/3 gap-x-5">
-            <button type="button" on:click={() => prevPlant()} class="btn btn-neutral w-[200px] text-white">
-              Previous
-            </button>
-            <button type="button" on:click={() => nextPlant()} class="btn btn-info w-[200px] text-white">
-              Next
-            </button>
+            {#if parseInt(data.plant.id) != 1}
+              <button type="button" on:click={() => prevPlant()} class="btn btn-neutral w-[200px] text-white">
+                Previous
+              </button>
+            {/if}
+
+            {#if $seasonalPlantList.length > (parseInt(data.plant.id) + 1)}
+              <button type="button" on:click={() => nextPlant()} class="btn btn-info w-[200px] text-white">
+                Next
+              </button>
+            {/if}
           </div>
 
         </div>

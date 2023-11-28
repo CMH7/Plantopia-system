@@ -88,7 +88,9 @@ export const actions = {
 					description: picurrentplant.description,
 					care: picurrentplant.care,
 					custom: picurrentplant.custom,
-					image: picurrentplant.image
+					image: picurrentplant.image,
+					indoor: picurrentplant.indoor,
+					cycle: picurrentplant.cycle
 				}
 			).catch(err => {
 				return fail(500, {message: `Error autoadd plant data. Please try again later. ${err}`})

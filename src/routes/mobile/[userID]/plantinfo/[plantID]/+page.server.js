@@ -121,7 +121,9 @@ export async function load({ params, url }) {
 				family: data1.data.family,
 				pruning_month: data1.data.pruning_month,
 				care,
-				image: data1.data.default_image.original_url
+				image: data1.data.default_image.original_url,
+				indoor: data1.data.indoor,
+				cycle: data1.data.cycle
 			},
 			inTheGarden: false,
 			nickname: data1.data.common_name

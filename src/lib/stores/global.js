@@ -147,6 +147,8 @@ export const plantopiaPerenPlants = writable([
 		pruning_month: [],
 		care: "",
 		image: "",
+		cycle: '',
+		indoor: false
 	},
 ]);
 
@@ -171,6 +173,8 @@ export let helpsList = writable([
 export const cycles = writable([
 	'Annual',
 	'Biannual',
+	'Biennial',
 	'Perennual',
+	'Perennial',
 	'Biennual'
 ])

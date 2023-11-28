@@ -29,40 +29,40 @@
   let showSNames = true
   let newOname = ""
   let showONames = true
-  let origID = data.plant.id
-  let origCName = data.plant.common_name
-  let origFamily = data.plant.family
-  let origDesc = data.plant.description
-  let origCare = data.plant.care
+  $: origID = data.plant.id
+  $: origCName = data.plant.common_name
+  $: origFamily = data.plant.family
+  $: origDesc = data.plant.description
+  $: origCare = data.plant.care
   let custom = true
   /**
    * @type {string[]} scientific_names
    */
-  let scientific_names = data.plant.scientific_name
+  $: scientific_names = data.plant.scientific_name
 
   /**
    * @type {string[]} other_names
    */
-  let other_names = data.plant.other_name
+  $: other_names = data.plant.other_name
 
-  let pruningMonths = data.plant.pruning_month
+  $: pruningMonths = data.plant.pruning_month
 
   let saving = false
 
-  let crumbs = [
-    {
-      name: 'Entries',
-      link: '/entries'
-    },
-    {
-      name: 'Perenual',
-      link: '/entries/perenual'
-    },
-    {
-      name: `${data.plant.common_name} (${data.plant.scientific_name[0]})`,
-      link: `/entries/perenual/${$page.params.plantIDc}`
-    }
-  ]
+  $: crumbs = [
+      {
+        name: 'Entries',
+        link: '/entries'
+      },
+      {
+        name: 'Perenual',
+        link: '/entries/perenual'
+      },
+      {
+        name: `${data.plant.common_name} (${data.plant.scientific_name[0]})`,
+        link: `/entries/perenual/${data.plant.id}`
+      }
+    ]
 
   function containsOnlyNumbers(inputString) {
     // Check if the string contains only numbers
@@ -222,13 +222,13 @@
   const nextPlant = async () => {
     let nextID = parseInt(data.plant.id) + 1
     if($perenualPlantList.length > nextID ) {
-      await goto(`/entries/perenual/${nextID}`)
+      await goto(`/entries/perenual/${nextID}`, {replaceState: true})
     }
   }
 
   const prevPlant = async () => {
     if(parseInt(data.plant.id) != 1) {
-      await goto(`/entries/perenual/${parseInt(data.plant.id) - 1}`)
+      await goto(`/entries/perenual/${parseInt(data.plant.id) - 1}`, {replaceState: true})
     }
   }
 </script>
@@ -374,7 +374,7 @@
 
         <div class="flex justify-between items-center w-full">
           <div class="flex items-center w-2/3 gap-x-5">
-            <a href="/entries/seasonal">
+            <a href="/entries/perenual">
               <button type='button' class='btn btn-neutral text-white w-[200px]'>
                 Cancel
               </button>
@@ -386,12 +386,17 @@
           </div>
           
           <div class="flex items-center w-1/3 gap-x-5">
-            <button type="button" on:click={() => prevPlant()} class="btn btn-neutral w-[200px] text-white">
-              Previous
-            </button>
-            <button type="button" on:click={() => nextPlant()} class="btn btn-info w-[200px] text-white">
-              Next
-            </button>
+            {#if parseInt(data.plant.id) != 1}
+              <button type="button" on:click={() => prevPlant()} class="btn btn-neutral w-[200px] text-white">
+                Previous
+              </button>
+            {/if}
+
+            {#if $perenualPlantList.length > (parseInt(data.plant.id) + 1)}
+              <button type="button" on:click={() => nextPlant()} class="btn btn-info w-[200px] text-white">
+                Next
+              </button>
+            {/if}
           </div>
 
         </div>

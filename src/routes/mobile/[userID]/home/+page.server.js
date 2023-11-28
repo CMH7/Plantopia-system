@@ -37,6 +37,7 @@ export async function load(e) {
   )
 
   if (userGardenCountSnaps.data().count > 0) {
+    // get all user's garden
     let plantDocSnaps = await getDocs(
       query(
         collection(db, "userGardens"),
@@ -44,21 +45,25 @@ export async function load(e) {
       )
     )
 
+    // assign user's garden to data.userGarden
     data.userGarden = plantDocSnaps.docs.map((x) => {
-			return { docID: x.id, ...x.data() };
+      return { ...x.data() };
     });
     
-		let perenOnlyIDs = data.userGarden.map((x) => {
-			if (!x.custom) {
-				return x.id;
-			}
+    // get all ID of plant if custom = false (perenual)
+    let perenOnlyIDs = data.userGarden.map((x) => {
+      if (!x.custom) {
+        return x.id;
+      }
     })
     
-		plantDocSnaps = await getDocs(
-			query(collection(db, "perenualPlants"), where("id", "in", perenOnlyIDs))
+    // get all perenual plants based on the IDs from prev.
+    plantDocSnaps = await getDocs(
+      query(collection(db, "perenualPlants"), where("id", "in", perenOnlyIDs))
     );
     
-    data.perenualPlants = plantDocSnaps.docs.map(x => { return { docID: x.id, ...x.data() } })
+    // assign result to data.perenualPlants
+    data.perenualPlants = plantDocSnaps.docs.map(x => { return { ...x.data() } })
   }
 
   let q = e.url.searchParams.get('q')
@@ -70,46 +75,48 @@ export async function load(e) {
     let S_PlantsDocSnaps
     let P_PlantsDocSnaps;
     if (indoor != null && cycle != null) {
+      let indoor2 = indoor === '1' ? true : false
       S_PlantsDocSnaps = await getDocs(
         query(
           collection(db, 'seasonalPlants'),
-          where('indoor', '==', indoor === '1' ? true : false),
+          where('indoor', '==', indoor2),
           where('cycle', '==', cycle)
         )
       )
       P_PlantsDocSnaps = await getDocs(
-				query(
-					collection(db, "perenualPlants"),
-					where("indoor", "==", indoor === "1" ? true : false),
-					where("cycle", "==", cycle)
-				)
-			);
+        query(
+          collection(db, "perenualPlants"),
+          where("indoor", "==", indoor2),
+          where("cycle", "==", cycle)
+        )
+      );
     } else if (indoor != null) {
+      let indoor3 = indoor === '1' ? true : false
       S_PlantsDocSnaps = await getDocs(
         query(
           collection(db, 'seasonalPlants'),
-          where('indoor', '==', indoor === '1' ? true : false)
+          where('indoor', '==', indoor3)
         )
       )
       P_PlantsDocSnaps = await getDocs(
-				query(
-					collection(db, "perenuaPlants"),
-					where("indoor", "==", indoor === "1" ? true : false)
-				)
-			);
+        query(
+          collection(db, "perenuaPlants"),
+          where("indoor", "==", indoor3)
+        )
+      );
     } else if (cycle != null) {
       S_PlantsDocSnaps = await getDocs(
-				query(
-					collection(db, "seasonalPlants"),
-					where("cycle", "==", cycle)
-				)
-			);
+        query(
+          collection(db, "seasonalPlants"),
+          where("cycle", "==", cycle)
+        )
+      );
       P_PlantsDocSnaps = await getDocs(
-				query(
-					collection(db, "perenualPlants"),
-					where("cycle", "==", cycle)
-				)
-			);
+        query(
+          collection(db, "perenualPlants"),
+          where("cycle", "==", cycle)
+        )
+      );
     } else {
       S_PlantsDocSnaps = await getDocs(query(collection(db, "seasonalPlants")));
       P_PlantsDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
@@ -124,16 +131,16 @@ export async function load(e) {
     if(pplants.length > 0) plantlist = [...plantlist, ...pplants]
 
     const data1 = await axios.get(
-			`https://perenual.com/api/species-list?key=sk-yxVE6561c721ab30b3122&q=${q}${
-				indoor !== "" && indoor != null ? `&indoor=${indoor}` : ""
-			}${cycle !== "" && cycle != null ? `&cycle=${cycle}` : ""}&order=asc`,
-			{
-				headers: {
-					"Api-Key": "AdARzwkXXXyLaSqmDN3gv3JcY4qRoFv0luuIhmedxx0c5XffvE",
-					"Content-Type": "application/json",
-				},
-			}
-		);
+      `https://perenual.com/api/species-list?key=sk-yxVE6561c721ab30b3122&q=${q}${
+        indoor !== "" && indoor != null ? `&indoor=${indoor}` : ""
+      }${cycle !== "" && cycle != null ? `&cycle=${cycle}` : ""}&order=asc`,
+      {
+        headers: {
+          "Api-Key": "AdARzwkXXXyLaSqmDN3gv3JcY4qRoFv0luuIhmedxx0c5XffvE",
+          "Content-Type": "application/json",
+        },
+      }
+    );
     plantlist = [...plantlist, ...data1.data.data]
 
     

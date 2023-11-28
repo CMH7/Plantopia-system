@@ -19,8 +19,8 @@
       name: $userDetails.name !== '' ? $userDetails.name : '',
       ...userDets
     })
-    userGarden.set(data.userGarden.map(x => { return { id: x.id, uid: x.uid, custom: x.custom, nickname: x.nickname } } ))
-    plantopiaPerenPlants.set(data.perenualPlants.map(x => { return { id: x.id, uid: x.uid, custom: x.custom, nickname: x.nickname } } ))
+    userGarden.set(data.userGarden)
+    plantopiaPerenPlants.set(data.perenualPlants)
 
     if(data.searchValue !== '' || data.searchValue != null) {
       $searchValue = data.searchValue
