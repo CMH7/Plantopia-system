@@ -1,12 +1,17 @@
 <script>
-	import { userDetails } from '$lib/stores/global';
-	import { goto } from '$app/navigation';
-
   //@ts-nocheck
+	import { userDetails, userGarden } from '$lib/stores/global';
+	import { goto } from '$app/navigation';
 	import MyGardenCard from '$lib/components/MyGardenCard.svelte';
 	import { months, pageTransitionDuration } from '$lib/stores/global.js';
 	import { fade, slide } from 'svelte/transition';
-  //@ts-ignore
+	import { onMount } from 'svelte';
+  
+
+  onMount(() => {
+    userGarden.set(data.seasonalPlants.map(x => { return { id: x.id, uid: x.uid, custom: x.custom, nickname: x.nickname}}))
+  })
+
   export let data
   let color = $months.filter(x => x.name.toLowerCase() === data.month.toLowerCase())[0]?.color
 
@@ -34,10 +39,17 @@
   
   <div class="w-full min-h-[73vh] max-h-[73vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
   
-    {#if data?.data?.length > 0}
+    {#if data.plantlist.length > 0}
       <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
-        {#each data?.data as _, i}
-          <MyGardenCard />
+        {#each data.plantlist as plant}
+          <MyGardenCard 
+            favorite={data.seasonalPlants.filter(x => x.id == plant.id).length > 0}
+            id={plant.id}
+            name={plant.common_name}
+            plantImg={plant.image}
+            sciName={plant.scientific_name[0]}
+            custom={true}
+          />
         {/each}
       </div>
     {:else}
@@ -51,12 +63,12 @@
           No plants in garden.
         </div>
   
-        <button class="btn btn-primary btn-wide font-bold poppins text-[5vw] text-white">
+        <!-- <button class="btn btn-primary btn-wide font-bold poppins text-[5vw] text-white">
           <span class="material-symbols-rounded text-white text-3xl">
             add
           </span>
           Add plant
-        </button>
+        </button> -->
       </div>
     {/if}
   </div>

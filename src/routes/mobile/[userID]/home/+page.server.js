@@ -20,19 +20,20 @@ import {
 export async function load(e) {
   let plantlist = []
   let searchValue = ''
-  let userGarden = []
   let perenualPlants = []
   let data = {
     searchValue,
     plantlist,
-    userGarden,
     perenualPlants
   }
 
   let userGardenCountSnaps = await getCountFromServer(
     query(
       collection(db, 'userGardens'),
-      where('uid', '==', e.params.userID)
+      and(
+          where("uid", "==", e.params.userID),
+          where('custom', '==', false)
+        )
     )
   )
 
@@ -40,28 +41,13 @@ export async function load(e) {
     let plantDocSnaps = await getDocs(
       query(
         collection(db, "userGardens"),
-        where("uid", "==", e.params.userID)
-      )
-    );
-    data.userGarden = plantDocSnaps.docs.map(x => { return { ...x.data() } })
-    let perenOnlyIDs = data.userGarden.map(x => {
-      if (!x.custom) {
-        return x.id
-      }
-    })
-    // console.log(perenOnlyIDs) 
-    plantDocSnaps = await getDocs(
-      query(
-        collection(db, 'perenualPlants'),
-        where(
-          'id',
-          'in',
-          perenOnlyIDs
+        and(
+          where("uid", "==", e.params.userID),
+          where('custom', '==', false)
         )
       )
-    )
-    data.perenualPlants = plantDocSnaps.docs.map(x => { return { ...x.data() } })
-    // console.log(data.perenualPlants);
+    );
+    data.perenualPlants = plantDocSnaps.docs.map(x => { return { docID: x.id, ...x.data() } })
   }
 
   let q = e.url.searchParams.get('q')

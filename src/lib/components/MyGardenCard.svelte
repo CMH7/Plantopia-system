@@ -42,7 +42,11 @@
     <div class="flex flex-col">
       <div class="poppins text-center w-full text-ellipsis overflow-hidden text-secondary text-sm font-bold">
         {#if favorite}
-          {$userGarden.filter(x => x.id == $plantopiaPerenPlants.filter(x => x.pid === id)[0]?.id )[0]?.nickname}
+          {#if custom}
+            {$userGarden.filter(x => x.id == id )[0]?.nickname}
+          {:else}
+            {$userGarden.filter(x => x.id == $plantopiaPerenPlants.filter(x => x.pid === id)[0]?.id )[0]?.nickname}
+          {/if}
         {:else}
           {name}
         {/if}

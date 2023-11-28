@@ -21,7 +21,6 @@
     })
     userGarden.set(data.userGarden)
     plantopiaPerenPlants.set(data.perenPlants)
-    console.log($plantopiaPerenPlants);
   })
 
   function catPlant(monthName) {
