@@ -79,67 +79,69 @@ export async function load(e) {
     let S_PlantsDocSnaps
     let P_PlantsDocSnaps
 
-    if (indoor != null || cycle != null) {
-      if (indoor != null && cycle != null) {
-        let indoor2 = indoor === '1' ? true : false
-        S_PlantsDocSnaps = await getDocs(
-          query(
-            collection(db, 'seasonalPlants'),
-            where('indoor', '==', indoor2),
-            where('cycle', '==', cycle)
-          )
+    if (indoor != null && cycle != null) {
+      let indoor2 = indoor === '1' ? true : false
+      S_PlantsDocSnaps = await getDocs(
+        query(
+          collection(db, 'seasonalPlants'),
+          where('indoor', '==', indoor2),
+          where('cycle', '==', cycle)
         )
-        P_PlantsDocSnaps = await getDocs(
-          query(
-            collection(db, "perenualPlants"),
-            where("indoor", "==", indoor2),
-            where("cycle", "==", cycle)
-          )
-        );
-      } else if (indoor != null) {
-        let indoor3 = indoor === '1' ? true : false
-        S_PlantsDocSnaps = await getDocs(
-          query(
-            collection(db, 'seasonalPlants'),
-            where('indoor', '==', indoor3)
-          )
+      )
+      P_PlantsDocSnaps = await getDocs(
+        query(
+          collection(db, "perenualPlants"),
+          where("indoor", "==", indoor2),
+          where("cycle", "==", cycle)
         )
-        P_PlantsDocSnaps = await getDocs(
-          query(
-            collection(db, "perenuaPlants"),
-            where("indoor", "==", indoor3)
-          )
-        );
-      } else if (cycle != null) {
-        S_PlantsDocSnaps = await getDocs(
-          query(
-            collection(db, "seasonalPlants"),
-            where("cycle", "==", cycle)
-          )
-        );
-        P_PlantsDocSnaps = await getDocs(
-          query(
-            collection(db, "perenualPlants"),
-            where("cycle", "==", cycle)
-          )
-        );
-      } else {
-        S_PlantsDocSnaps = await getDocs(query(collection(db, "seasonalPlants")));
-        P_PlantsDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
-      }
+      );
+    } else if (indoor != null) {
+      let indoor3 = indoor === '1' ? true : false
+      S_PlantsDocSnaps = await getDocs(
+        query(
+          collection(db, 'seasonalPlants'),
+          where('indoor', '==', indoor3)
+        )
+      )
+      P_PlantsDocSnaps = await getDocs(
+        query(
+          collection(db, "perenuaPlants"),
+          where("indoor", "==", indoor3)
+        )
+      );
+    } else if (cycle != null) {
+      S_PlantsDocSnaps = await getDocs(
+        query(
+          collection(db, "seasonalPlants"),
+          where("cycle", "==", cycle)
+        )
+      );
+      P_PlantsDocSnaps = await getDocs(
+        query(
+          collection(db, "perenualPlants"),
+          where("cycle", "==", cycle)
+        )
+      );
+    } else {
+      S_PlantsDocSnaps = await getDocs(query(collection(db, "seasonalPlants")));
+      P_PlantsDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
     }
 
-    if (S_PlantsDocSnaps.empty && S_PlantsDocSnaps != null) throw error(500, { message: "S_PlantsDocSnaps Error" });
-    if (P_PlantsDocSnaps.empty && P_PlantsDocSnaps != null) throw error(500, { message: "P_PlantsDocSnaps Error" });
+    if (S_PlantsDocSnaps != null && S_PlantsDocSnaps.empty ) throw error(500, { message: "S_PlantsDocSnaps Error" })
+    if (P_PlantsDocSnaps != null && P_PlantsDocSnaps.empty) throw error(500, { message: "P_PlantsDocSnaps Error" })
 
-    let splants = S_PlantsDocSnaps.docs.map(x => { return { ...x.data() }})
-    let pplants = P_PlantsDocSnaps.docs.map(x => { return { ...x.data() } })
-
-    splants = splants.filter(x => `${x.common_name} ${x.scientific_name.map(sn => { return sn }).join(' ')} ${x.other_name.map(on => { return on}).join(' ')}`.trim().toLowerCase().match(q.toLowerCase()))
-    pplants = pplants.filter(x => `${x.common_name} ${x.scientific_name.map(sn => { return sn }).join(' ')} ${x.other_name.map(on => { return on}).join(' ')}`.trim().toLowerCase().match(q.toLowerCase()))
-
-    if(splants.length > 0) plantlist = [...plantlist, ...splants]
-    if(pplants.length > 0) plantlist = [...plantlist, ...pplants]
+    if ((S_PlantsDocSnaps != null && !S_PlantsDocSnaps.empty) && (P_PlantsDocSnaps != null && !P_PlantsDocSnaps.empty)) {
+      let splants = S_PlantsDocSnaps.docs.map(x => { return { ...x.data() }})
+      let pplants = P_PlantsDocSnaps.docs.map(x => { return { ...x.data() } })
+  
+      splants = splants.filter(x => `${x.common_name} ${x.scientific_name.map(sn => { return sn }).join(' ')} ${x.other_name.map(on => { return on}).join(' ')}`.trim().toLowerCase().match(q.toLowerCase()))
+      pplants = pplants.filter(x => `${x.common_name} ${x.scientific_name.map(sn => { return sn }).join(' ')} ${x.other_name.map(on => { return on}).join(' ')}`.trim().toLowerCase().match(q.toLowerCase()))
+  
+      if(splants.length > 0) plantlist = [...plantlist, ...splants]
+      if(pplants.length > 0) plantlist = [...plantlist, ...pplants]
+      console.log(`${splants.length > 0 ? 'sp' : 'no-sp'}`);
+      console.log(`${pplants.length > 0 ? 'pp' : 'no-pp'}`);
+    }
 
     const data1 = await axios.get(
       `https://perenual.com/api/species-list?key=sk-yxVE6561c721ab30b3122&q=${q}${
@@ -152,8 +154,7 @@ export async function load(e) {
         },
       }
     );
-    plantlist = [...plantlist, ...data1.data.data]
-
+    plantlist = [...plantlist, ...data1.data.data.filter(x => x.default_image?.original_url !== 'https://perenual.com/storage/image/upgrade_access.jpg')]
     
     data.searchValue = q,
     data.plantlist = plantlist

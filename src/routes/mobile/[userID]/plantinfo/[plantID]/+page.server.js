@@ -38,21 +38,11 @@ export async function load({ params, url }) {
 			where("id", "==", parseInt(params.plantID))
 		)
 	);
-	
-	if (docSnaps.data().count > 0 || docSnaps2.data().count > 0) {
-		console.log('saved')
+	if ((!cus && docSnaps.data().count > 0) || (cus && docSnaps2.data().count > 0)) {
+		let plantID1 = 0;
 
-		let plantID1 = 0
-		if (cus) {
-			const sPlantDocSnaps = await getDocs(
-				query(
-					collection(db, "seasonalPlants"),
-					where("id", "==", parseInt(params.plantID))
-				)
-			);
-			data.plant = { pid: -1, ...sPlantDocSnaps.docs[0].data() };
-			plantID1 = sPlantDocSnaps.docs[0].data().id
-		} else {
+		if (!cus && docSnaps.data().count > 0) {
+			console.log("saved in perenual");
 			const pPlantDocSnaps = await getDocs(
 				query(
 					collection(db, "perenualPlants"),
@@ -62,40 +52,46 @@ export async function load({ params, url }) {
 			data.plant = { ...pPlantDocSnaps.docs[0].data() };
 			plantID1 = pPlantDocSnaps.docs[0].data().id;
 		}
-
+		else if (cus && docSnaps2.data().count > 0) {
+			console.log("saved in seasonal");
+			const sPlantDocSnaps = await getDocs(
+				query(
+					collection(db, "seasonalPlants"),
+					where("id", "==", parseInt(params.plantID))
+				)
+			);
+			data.plant = { pid: -1, ...sPlantDocSnaps.docs[0].data() };
+			plantID1 = sPlantDocSnaps.docs[0].data().id;
+		}
+		
 		let userGardenCount = await getCountFromServer(
 			query(
 				collection(db, "userGardens"),
-				and(
-					where("uid", "==", params.userID),
-					where("id", "==", plantID1)
-				)
+				and(where("uid", "==", params.userID), where("id", "==", plantID1))
 			)
 		);
-
+	
 		if (userGardenCount.data().count > 0) {
 			let userGardenDocSnaps = await getDocs(
 				query(
 					collection(db, "userGardens"),
 					and(
-						where('uid', '==', params.userID),
-						and(
-							where("id", "==", plantID1),
-							where('custom', '==', cus)
-						)
+						where("uid", "==", params.userID),
+						where("id", "==", plantID1), where("custom", "==", cus)
 					)
 				)
 			);
-			
+	
 			data.nickname = userGardenDocSnaps.docs[0].data().nickname;
 		}
-
+		
 		data = {
 			plant: data.plant,
 			inTheGarden: userGardenCount.data().count > 0,
 			nickname: data.nickname,
 		};
-	} else {
+	}
+	else {
 		console.log('new')
 		const data1 = await axios.get(
 			`https://perenual.com/api/species/details/${params.plantID}?key=sk-yxVE6561c721ab30b3122`

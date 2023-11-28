@@ -75,7 +75,7 @@ export const actions = {
 				doc(
 					db,
 					"perenualPlants",
-					uid
+					nanoid()
 				),
 				{
 					id: plantDocSnaps.data().count + 1,
