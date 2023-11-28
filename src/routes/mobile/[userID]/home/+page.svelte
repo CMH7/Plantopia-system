@@ -4,7 +4,7 @@
 	import { page } from "$app/stores";
   import MacroInput from "$lib/components/MacroInput.svelte"
 	import MyGardenCard from "$lib/components/MyGardenCard.svelte"
-  import { overlays, pageTransitionDuration, plantCategories, userDetails, months, userGarden, searchValue } from "$lib/stores/global"
+  import { overlays, pageTransitionDuration, plantCategories, userDetails, months, userGarden, searchValue, plantopiaPerenPlants } from "$lib/stores/global"
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition"
 
@@ -19,7 +19,8 @@
       name: $userDetails.name !== '' ? $userDetails.name : '',
       ...userDets
     })
-    userGarden.set(data.perenualPlants.map(x => { return { id: x.id, uid: x.uid, custom: x.custom, nickname: x.nickname } } ))
+    userGarden.set(data.userGarden.map(x => { return { id: x.id, uid: x.uid, custom: x.custom, nickname: x.nickname } } ))
+    plantopiaPerenPlants.set(data.perenualPlants.map(x => { return { id: x.id, uid: x.uid, custom: x.custom, nickname: x.nickname } } ))
 
     if(data.searchValue !== '' || data.searchValue != null) {
       $searchValue = data.searchValue

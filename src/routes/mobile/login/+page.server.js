@@ -167,10 +167,15 @@ export const actions = {
 				)
 			)
 		)
-		try {
-			await deleteDoc(doc(db, 'userGardens', plantDocsSnaps.docs[0].id))
-		} catch (error) {
-			return fail(500, {message: `Server error: ${error.message}`})
-		}
+		await deleteDoc(doc(db, 'userGardens', plantDocsSnaps.docs[0].id))
+
+		// throw redirect(
+		// 	301,
+		// 	`/mobile/${uid}/plantinfo/${
+		// 		custom
+		// 			? plantDocsSnaps.docs[0].data().id
+		// 			: plantDocsSnaps.docs[0].data().pid
+		// 	}?custom=${custom}`
+		// );
 	}
 };

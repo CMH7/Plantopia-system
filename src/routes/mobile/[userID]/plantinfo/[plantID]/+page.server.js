@@ -79,7 +79,10 @@ export async function load({ params, url }) {
 					collection(db, "userGardens"),
 					and(
 						where('uid', '==', params.userID),
-						where("id", "==", plantID1)
+						and(
+							where("id", "==", plantID1),
+							where('custom', '==', cus)
+						)
 					)
 				)
 			);

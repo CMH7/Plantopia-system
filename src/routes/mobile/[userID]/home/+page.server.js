@@ -21,19 +21,18 @@ export async function load(e) {
   let plantlist = []
   let searchValue = ''
   let perenualPlants = []
+  let userGarden = []
   let data = {
     searchValue,
     plantlist,
+    userGarden,
     perenualPlants
   }
 
   let userGardenCountSnaps = await getCountFromServer(
     query(
       collection(db, 'userGardens'),
-      and(
-          where("uid", "==", e.params.userID),
-          where('custom', '==', false)
-        )
+      where("uid", "==", e.params.userID)
     )
   )
 
@@ -41,12 +40,24 @@ export async function load(e) {
     let plantDocSnaps = await getDocs(
       query(
         collection(db, "userGardens"),
-        and(
-          where("uid", "==", e.params.userID),
-          where('custom', '==', false)
-        )
+        where("uid", "==", e.params.userID)
       )
+    )
+
+    data.userGarden = plantDocSnaps.docs.map((x) => {
+			return { docID: x.id, ...x.data() };
+    });
+    
+		let perenOnlyIDs = data.userGarden.map((x) => {
+			if (!x.custom) {
+				return x.id;
+			}
+    })
+    
+		plantDocSnaps = await getDocs(
+			query(collection(db, "perenualPlants"), where("id", "in", perenOnlyIDs))
     );
+    
     data.perenualPlants = plantDocSnaps.docs.map(x => { return { docID: x.id, ...x.data() } })
   }
 
