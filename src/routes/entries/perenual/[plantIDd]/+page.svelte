@@ -6,7 +6,7 @@
 	import AdminLayout from "$lib/components/AdminLayout.svelte";
 	import Overlay from "$lib/components/Overlay.svelte";
 	import RowCol from "$lib/components/RowCol.svelte";
-	import { cycles, months, notif, overlays, pageTransitionDuration, seasonalPlantList } from "$lib/stores/global.js";
+	import { cycles, months, notif, overlays, pageTransitionDuration, perenualPlantList, seasonalPlantList } from "$lib/stores/global.js";
 	import { onDestroy, onMount } from "svelte";
 
   export let data
@@ -218,6 +218,19 @@
     saving = false
     closeModal()
   }
+
+  const nextPlant = async () => {
+    let nextID = parseInt(data.plant.id) + 1
+    if($perenualPlantList.length > nextID ) {
+      await goto(`/entries/perenual/${nextID}`)
+    }
+  }
+
+  const prevPlant = async () => {
+    if(parseInt(data.plant.id) != 1) {
+      await goto(`/entries/perenual/${parseInt(data.plant.id) - 1}`)
+    }
+  }
 </script>
 
 <form id='formSavePlant2' class="hidden" method="post" action="?/savePlant" use:enhance>
@@ -359,16 +372,28 @@
           </div>
         </div>
 
-        <div class="flex items-center w-full gap-x-5">
-          <a href="/entries/perenual">
-            <button type='button' class='btn btn-neutral text-white w-[200px]'>
-              Cancel
+        <div class="flex justify-between items-center w-full">
+          <div class="flex items-center w-2/3 gap-x-5">
+            <a href="/entries/seasonal">
+              <button type='button' class='btn btn-neutral text-white w-[200px]'>
+                Cancel
+              </button>
+            </a>
+            
+            <button type="button" on:click={() => showSaveModal()} class="btn btn-primary w-[200px] text-white">
+              Save
             </button>
-          </a>
+          </div>
+          
+          <div class="flex items-center w-1/3 gap-x-5">
+            <button type="button" on:click={() => prevPlant()} class="btn btn-neutral w-[200px] text-white">
+              Previous
+            </button>
+            <button type="button" on:click={() => nextPlant()} class="btn btn-info w-[200px] text-white">
+              Next
+            </button>
+          </div>
 
-          <button type="button" on:click={() => showSaveModal()} class="btn btn-primary w-[200px] text-white">
-            Save
-          </button>
         </div>
 
       </form>
