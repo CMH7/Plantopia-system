@@ -29,12 +29,16 @@ export async function load(e) {
     perenualPlants
   }
 
+  console.log(e.params.userID);
+  if(e.params.userID === '' || e.params.userID == null) throw error(500, {message: 'UserID error'})
+
   let userGardenCountSnaps = await getCountFromServer(
     query(
       collection(db, 'userGardens'),
       where("uid", "==", e.params.userID)
     )
   )
+  console.log(userGardenCountSnaps.data().count)
 
   if (userGardenCountSnaps.data().count > 0) {
     // get all user's garden
@@ -44,6 +48,8 @@ export async function load(e) {
         where("uid", "==", e.params.userID)
       )
     )
+    if (plantDocSnaps.empty) throw error(500, { message: 'UserGarden Error' })
+    
 
     // assign user's garden to data.userGarden
     data.userGarden = plantDocSnaps.docs.map((x) => {
@@ -51,16 +57,14 @@ export async function load(e) {
     });
     
     // get all ID of plant if custom = false (perenual)
-    let perenOnlyIDs = data.userGarden.map((x) => {
-      if (!x.custom) {
-        return x.id;
-      }
-    })
+    let perenOnlyIDs = data.userGarden.filter(x => !x.custom).map(x => { return x.id })
+    console.log(perenOnlyIDs);
     
     // get all perenual plants based on the IDs from prev.
     plantDocSnaps = await getDocs(
       query(collection(db, "perenualPlants"), where("id", "in", perenOnlyIDs))
-    );
+    )
+    if (plantDocSnaps.empty) throw error(500, { message: "PerenualLIst Error" });
     
     // assign result to data.perenualPlants
     data.perenualPlants = plantDocSnaps.docs.map(x => { return { ...x.data() } })
@@ -73,54 +77,61 @@ export async function load(e) {
     let cycle = e.url.searchParams.get('cycle')
 
     let S_PlantsDocSnaps
-    let P_PlantsDocSnaps;
-    if (indoor != null && cycle != null) {
-      let indoor2 = indoor === '1' ? true : false
-      S_PlantsDocSnaps = await getDocs(
-        query(
-          collection(db, 'seasonalPlants'),
-          where('indoor', '==', indoor2),
-          where('cycle', '==', cycle)
+    let P_PlantsDocSnaps
+
+    if (indoor != null || cycle != null) {
+      if (indoor != null && cycle != null) {
+        let indoor2 = indoor === '1' ? true : false
+        S_PlantsDocSnaps = await getDocs(
+          query(
+            collection(db, 'seasonalPlants'),
+            where('indoor', '==', indoor2),
+            where('cycle', '==', cycle)
+          )
         )
-      )
-      P_PlantsDocSnaps = await getDocs(
-        query(
-          collection(db, "perenualPlants"),
-          where("indoor", "==", indoor2),
-          where("cycle", "==", cycle)
+        P_PlantsDocSnaps = await getDocs(
+          query(
+            collection(db, "perenualPlants"),
+            where("indoor", "==", indoor2),
+            where("cycle", "==", cycle)
+          )
+        );
+      } else if (indoor != null) {
+        let indoor3 = indoor === '1' ? true : false
+        S_PlantsDocSnaps = await getDocs(
+          query(
+            collection(db, 'seasonalPlants'),
+            where('indoor', '==', indoor3)
+          )
         )
-      );
-    } else if (indoor != null) {
-      let indoor3 = indoor === '1' ? true : false
-      S_PlantsDocSnaps = await getDocs(
-        query(
-          collection(db, 'seasonalPlants'),
-          where('indoor', '==', indoor3)
-        )
-      )
-      P_PlantsDocSnaps = await getDocs(
-        query(
-          collection(db, "perenuaPlants"),
-          where("indoor", "==", indoor3)
-        )
-      );
-    } else if (cycle != null) {
-      S_PlantsDocSnaps = await getDocs(
-        query(
-          collection(db, "seasonalPlants"),
-          where("cycle", "==", cycle)
-        )
-      );
-      P_PlantsDocSnaps = await getDocs(
-        query(
-          collection(db, "perenualPlants"),
-          where("cycle", "==", cycle)
-        )
-      );
-    } else {
-      S_PlantsDocSnaps = await getDocs(query(collection(db, "seasonalPlants")));
-      P_PlantsDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
+        P_PlantsDocSnaps = await getDocs(
+          query(
+            collection(db, "perenuaPlants"),
+            where("indoor", "==", indoor3)
+          )
+        );
+      } else if (cycle != null) {
+        S_PlantsDocSnaps = await getDocs(
+          query(
+            collection(db, "seasonalPlants"),
+            where("cycle", "==", cycle)
+          )
+        );
+        P_PlantsDocSnaps = await getDocs(
+          query(
+            collection(db, "perenualPlants"),
+            where("cycle", "==", cycle)
+          )
+        );
+      } else {
+        S_PlantsDocSnaps = await getDocs(query(collection(db, "seasonalPlants")));
+        P_PlantsDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
+      }
     }
+
+    if (S_PlantsDocSnaps.empty && S_PlantsDocSnaps != null) throw error(500, { message: "S_PlantsDocSnaps Error" });
+    if (P_PlantsDocSnaps.empty && P_PlantsDocSnaps != null) throw error(500, { message: "P_PlantsDocSnaps Error" });
+
     let splants = S_PlantsDocSnaps.docs.map(x => { return { ...x.data() }})
     let pplants = P_PlantsDocSnaps.docs.map(x => { return { ...x.data() } })
 
