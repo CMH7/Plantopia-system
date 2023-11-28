@@ -29,27 +29,27 @@
   let showSNames = true
   let newOname = ""
   let showONames = true
-  let origID = data.plant.id
-  let origCName = data.plant.common_name
-  let origFamily = data.plant.family
-  let origDesc = data.plant.description
-  let origCare = data.plant.care
+  $: origID = data.plant.id
+  $: origCName = data.plant.common_name
+  $: origFamily = data.plant.family
+  $: origDesc = data.plant.description
+  $: origCare = data.plant.care
   let custom = true
   /**
    * @type {string[]} scientific_names
    */
-  let scientific_names = data.plant.scientific_name
+  $: scientific_names = data.plant.scientific_name
 
   /**
    * @type {string[]} other_names
    */
-  let other_names = data.plant.other_name
+  $: other_names = data.plant.other_name
 
-  let pruningMonths = data.plant.pruning_month
+  $: pruningMonths = data.plant.pruning_month
 
   let saving = false
 
-  let crumbs = [
+  $: crumbs = [
     {
       name: 'Entries',
       link: '/entries'
@@ -60,7 +60,7 @@
     },
     {
       name: `${data.plant.common_name} (${data.plant.scientific_name[0]})`,
-      link: `/entries/seasonal/${$page.params.plantIDc}`
+      link: `/entries/seasonal/${data.plant.id}`
     }
   ]
 
