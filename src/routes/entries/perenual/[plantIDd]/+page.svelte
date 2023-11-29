@@ -45,7 +45,7 @@
    */
   $: other_names = data.plant.other_name
 
-  $: pruningMonths = data.plant.pruning_month
+  let pruningMonths = data.plant.pruning_month
 
   let saving = false
 
@@ -221,14 +221,16 @@
 
   const nextPlant = async () => {
     let nextID = parseInt(data.plant.id) + 1
-    if($perenualPlantList.length > nextID ) {
-      await goto(`/entries/perenual/${nextID}`, {replaceState: true})
+    if(data.perenualCount > nextID ) {
+      // await goto(`/entries/perenual/${nextID}`, {replaceState: true})
+      location.href = `/entries/perenual/${nextID}`
     }
   }
 
   const prevPlant = async () => {
     if(parseInt(data.plant.id) != 1) {
-      await goto(`/entries/perenual/${parseInt(data.plant.id) - 1}`, {replaceState: true})
+      // await goto(`/entries/perenual/${parseInt(data.plant.id) - 1}`, {replaceState: true})
+      location.href = `/entries/perenual/${parseInt(data.plant.id) - 1}`
     }
   }
 </script>
@@ -385,14 +387,14 @@
             </button>
           </div>
           
-          <div class="flex items-center w-1/3 gap-x-5">
+          <div class="flex justify-end items-center w-1/3 gap-x-5">
             {#if parseInt(data.plant.id) != 1}
               <button type="button" on:click={() => prevPlant()} class="btn btn-neutral w-[200px] text-white">
                 Previous
               </button>
             {/if}
 
-            {#if $perenualPlantList.length > (parseInt(data.plant.id) + 1)}
+            {#if data.perenualCount > (parseInt(data.plant.id) + 1)}
               <button type="button" on:click={() => nextPlant()} class="btn btn-info w-[200px] text-white">
                 Next
               </button>

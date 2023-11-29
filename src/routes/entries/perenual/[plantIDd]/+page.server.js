@@ -1,13 +1,17 @@
 //@ts-nocheck
 import { db } from '$lib/configurations/firebase';
 import { error, fail } from '@sveltejs/kit';
-import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, getCountFromServer, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
   let data = {
-    plant: {}
+    plant: {},
+    perenualCount: 0
   }
+
+  const pCount = await getCountFromServer(query(collection(db, 'perenualPlants')))
+  data.perenualCount = pCount.data().count
 
   let plantDocSnaps = await getDocs(
     query(collection(db, "perenualPlants"), where("id", '==', parseInt(params.plantIDd)))
