@@ -125,28 +125,54 @@ export const actions = {
 		const uid = data.get("uid")?.toString();
 		let custom = data.get("custom")?.toString();
 		custom = custom === 'true' ? true : false
-		
-		let plantDocSnaps = await getDocs(
-			query(collection(db, "userGardens"),
-				and(
-					where("id", "==", parseInt(id)),
-					where('uid', '==', uid)
+
+		let pPlantID = parseInt(id)
+
+		if (!custom) {
+			const pCount = await getCountFromServer(query(collection(db, 'perenualPlants'), where('pid', '==', parseInt(id))))
+			if (pCount.data().count == 0) throw error(404, { message: 'Plant not found in DB. Please try again later.' })
+			
+			const pPlantDocSnaps = await getDocs(query(collection(db, 'perenualPlants'), where('pid', '==', parseInt(id))))
+			pPlantID = pPlantDocSnaps.docs[0].data().id;
+			
+			const plantDocSnaps = await getDocs(
+				query(
+					collection(db, "userGardens"),
+					and(where("id", "==", pPlantID), where("uid", "==", uid))
 				)
-			)
-		);
-
-		const userPlant = doc(db, "userGardens", plantDocSnaps.docs[0].id);
-
-		await updateDoc(userPlant, {
-			id: parseInt(id),
-			uid,
-			nickname: renickname,
-			custom
-		}).catch((err) => {
-			return fail(500, {
-				message: `Error saving plant data. Please try again later. ${err}`,
+			);
+			const userPlant = doc(db, "userGardens", plantDocSnaps.docs[0].id);
+			await updateDoc(userPlant, {
+				id: pPlantID,
+				uid,
+				nickname: renickname,
+				custom,
+			}).catch((err) => {
+				return fail(500, {
+					message: `Error saving plant data. Please try again later. ${err}`,
+				});
 			});
-		});
+		} else {
+			const plantDocSnaps = await getDocs(
+				query(
+					collection(db, "userGardens"),
+					and(where("id", "==", pPlantID), where("uid", "==", uid))
+				)
+			);
+			const userPlant = doc(db, "userGardens", plantDocSnaps.docs[0].id);
+			await updateDoc(userPlant, {
+				id: pPlantID,
+				uid,
+				nickname: renickname,
+				custom,
+			}).catch((err) => {
+				return fail(500, {
+					message: `Error saving plant data. Please try again later. ${err}`,
+				});
+			});
+		}
+		
+
 	},
 	removeToGarden: async ({ request }) => {
 		const data = await request.formData();
