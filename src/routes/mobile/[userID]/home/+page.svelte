@@ -149,7 +149,7 @@
         {#each data?.plantlist as plant}
           <MyGardenCard 
             favorite={data.perenualPlants.filter(x => x.id === plant.id || x.pid === plant.id).length > 0}
-            id={plant.custom ? plant.id : plant.pid}
+            id={plant.custom && plant.custom != null ? plant.id : plant.custom != null ? plant.pid : plant.id}
             name={plant.common_name}
             plantImg={plant.image === '' || plant.image == null ? plant.default_image?.original_url : plant.image}
             sciName={plant.scientific_name[0]}
