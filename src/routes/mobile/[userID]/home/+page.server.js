@@ -144,16 +144,16 @@ export async function load(e) {
     }
 
     const data1 = await axios.get(
-      `https://perenual.com/api/species-list?key=sk-yxVE6561c721ab30b3122&q=${q}${
-        indoor !== "" && indoor != null ? `&indoor=${indoor}` : ""
-      }${cycle !== "" && cycle != null ? `&cycle=${cycle}` : ""}&order=asc`,
-      {
-        headers: {
-          "Api-Key": "AdARzwkXXXyLaSqmDN3gv3JcY4qRoFv0luuIhmedxx0c5XffvE",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+			`https://perenual.com/api/species-list?key=sk-GNAU653141782caa62551&q=${q}${
+				indoor !== "" && indoor != null ? `&indoor=${indoor}` : ""
+			}${cycle !== "" && cycle != null ? `&cycle=${cycle}` : ""}&order=asc`,
+			{
+				headers: {
+					"Api-Key": "AdARzwkXXXyLaSqmDN3gv3JcY4qRoFv0luuIhmedxx0c5XffvE",
+					"Content-Type": "application/json",
+				},
+			}
+		);
     plantlist = [...plantlist, ...data1.data.data.filter(x => x.default_image?.original_url !== 'https://perenual.com/storage/image/upgrade_access.jpg')]
     
     data.searchValue = q,
