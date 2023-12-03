@@ -87,14 +87,14 @@ export async function load(e) {
         query(
           collection(db, 'seasonalPlants'),
           where('indoor', '==', indoor2),
-          where('cycle', '==', cycle)
+          where('cycle', '==', `${cycle.charAt(0).toUpperCase()}${cycle.slice(1)}`)
         )
       )
       P_PlantsDocSnaps = await getDocs(
         query(
           collection(db, "perenualPlants"),
           where("indoor", "==", indoor2),
-          where("cycle", "==", cycle)
+          where("cycle", "==", `${cycle.charAt(0).toUpperCase()}${cycle.slice(1)}`)
         )
       );
     } else if (indoor != null) {
@@ -115,13 +115,13 @@ export async function load(e) {
       S_PlantsDocSnaps = await getDocs(
         query(
           collection(db, "seasonalPlants"),
-          where("cycle", "==", cycle)
+          where("cycle", "==", `${cycle.charAt(0).toUpperCase()}${cycle.slice(1)}`)
         )
       );
       P_PlantsDocSnaps = await getDocs(
         query(
           collection(db, "perenualPlants"),
-          where("cycle", "==", cycle)
+          where("cycle", "==", `${cycle.charAt(0).toUpperCase()}${cycle.slice(1)}`)
         )
       );
     } else {
@@ -129,8 +129,8 @@ export async function load(e) {
       P_PlantsDocSnaps = await getDocs(query(collection(db, "perenualPlants")));
     }
 
-    if (S_PlantsDocSnaps != null && S_PlantsDocSnaps.empty ) throw error(500, { message: "S_PlantsDocSnaps Error" })
-    if (P_PlantsDocSnaps != null && P_PlantsDocSnaps.empty) throw error(500, { message: "P_PlantsDocSnaps Error" })
+    // if (S_PlantsDocSnaps != null && S_PlantsDocSnaps.empty ) throw error(500, { message: "S_PlantsDocSnaps Error" })
+    // if (P_PlantsDocSnaps != null && P_PlantsDocSnaps.empty) throw error(500, { message: "P_PlantsDocSnaps Error" })
 
     if ((S_PlantsDocSnaps != null && !S_PlantsDocSnaps.empty) && (P_PlantsDocSnaps != null && !P_PlantsDocSnaps.empty)) {
       let splants = S_PlantsDocSnaps.docs.map(x => { return { ...x.data() }})
