@@ -60,14 +60,16 @@ export async function load(e) {
     let perenOnlyIDs = data.userGarden.filter(x => !x.custom).map(x => { return x.id })
     console.log(perenOnlyIDs);
     
-    // get all perenual plants based on the IDs from prev.
-    plantDocSnaps = await getDocs(
-      query(collection(db, "perenualPlants"), where("id", "in", perenOnlyIDs))
-    )
-    if (plantDocSnaps.empty) throw error(500, { message: "PerenualLIst Error" });
-    
-    // assign result to data.perenualPlants
-    data.perenualPlants = plantDocSnaps.docs.map(x => { return { ...x.data() } })
+    if (perenOnlyIDs.length > 0) {
+      // get all perenual plants based on the IDs from prev.
+      plantDocSnaps = await getDocs(
+        query(collection(db, "perenualPlants"), where("id", "in", perenOnlyIDs))
+      )
+      if (plantDocSnaps.empty) throw error(500, { message: "PerenualLIst Error" });
+      
+      // assign result to data.perenualPlants
+      data.perenualPlants = plantDocSnaps.docs.map(x => { return { ...x.data() } })
+    }
   }
 
   let q = e.url.searchParams.get('q')
