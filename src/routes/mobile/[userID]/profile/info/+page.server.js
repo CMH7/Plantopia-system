@@ -1,6 +1,7 @@
 //@ts-nocheck
 import { db } from "$lib/configurations/firebase";
-import { error, fail } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
+import bcryptjs from 'bcryptjs'
 import {
 	and,
 	collection,
@@ -10,6 +11,7 @@ import {
 	query,
 	serverTimestamp,
 	setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -27,4 +29,30 @@ export async function load({ params }) {
   return {
     user
   };
+}
+
+/** @type {import('./$types').Actions} */
+export const actions = {
+  saveChanges: async ({ request }) => {
+    const data = await request.formData();
+    const user = JSON.parse(data.get('user')?.toString())
+    console.log(user);
+
+    const userDocSnaps = await getDoc(doc(db, 'users', user.uid))
+    const userA = { ...userDocSnaps.data() }
+
+    await updateDoc(doc(db, 'users', user.uid),
+      {
+        name: user.name,
+        password: bcryptjs.hashSync(user.password),
+        email: user.email
+      }
+    ).catch(err => {
+      return fail(500, {message: 'Error saving changes of user'})
+    })
+
+    if (!bcryptjs.compareSync(user.password, userA.password)) {
+      throw redirect(302, `/mobile/login/new`);
+    }
+  }
 }
