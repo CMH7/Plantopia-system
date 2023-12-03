@@ -145,8 +145,12 @@ export async function load(e) {
       console.log(`${pplants.length > 0 ? 'pp' : 'no-pp'}`);
     }
 
+    const perenAPIKeyDocSnaps = await getDocs(query(collection(db, 'mobileConfig'), where('active', '==', true)))
+    // console.log(perenAPIKeyDocSnaps.docs[0].data());
+    const perenAPIKey = perenAPIKeyDocSnaps.docs[0].data().perenAPIKey
+
     const data1 = await axios.get(
-			`https://perenual.com/api/species-list?key=sk-GNAU653141782caa62551&q=${q}${
+			`https://perenual.com/api/species-list?key=${perenAPIKey}&q=${q}${
 				indoor !== "" && indoor != null ? `&indoor=${indoor}` : ""
 			}${cycle !== "" && cycle != null ? `&cycle=${cycle}` : ""}&order=asc`,
 			{

@@ -18,6 +18,12 @@
       desc: 'Questions and answers. To help mobile app uesrs.',
       webLink: '/application/help'
     },
+    {
+      title: 'Mobile Configuration',
+      img: 'mobileSettings.png',
+      desc: 'Mobile application configurations and settings',
+      webLink: '/application/configuration'
+    },
   ]
 
   //@ts-ignore

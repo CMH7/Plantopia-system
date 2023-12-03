@@ -93,12 +93,17 @@ export async function load({ params, url }) {
 	}
 	else {
 		console.log('new')
+		const perenAPIKeyDocSnaps = await getDocs(
+			query(collection(db, "mobileConfig"))
+		);
+		// console.log(perenAPIKeyDocSnaps.docs);
+		const perenAPIKey = perenAPIKeyDocSnaps.docs.filter(x => x.active)[0].data().perenAPIKey
 		const data1 = await axios.get(
-			`https://perenual.com/api/species/details/${params.plantID}?key=sk-GNAU653141782caa62551`
+			`https://perenual.com/api/species/details/${params.plantID}?key=${perenAPIKey}`
 		);
 	
 		const data2 = await axios.get(
-			`http://perenual.com/api/species-care-guide-list?species_id=${params.plantID}&key=sk-GNAU653141782caa62551`
+			`http://perenual.com/api/species-care-guide-list?species_id=${params.plantID}&key=${perenAPIKey}`
 		);
 	
 		let care = ''
