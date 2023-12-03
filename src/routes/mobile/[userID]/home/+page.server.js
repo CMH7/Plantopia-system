@@ -132,17 +132,20 @@ export async function load(e) {
     // if (S_PlantsDocSnaps != null && S_PlantsDocSnaps.empty ) throw error(500, { message: "S_PlantsDocSnaps Error" })
     // if (P_PlantsDocSnaps != null && P_PlantsDocSnaps.empty) throw error(500, { message: "P_PlantsDocSnaps Error" })
 
-    if ((S_PlantsDocSnaps != null && !S_PlantsDocSnaps.empty) && (P_PlantsDocSnaps != null && !P_PlantsDocSnaps.empty)) {
+    if (S_PlantsDocSnaps != null && !S_PlantsDocSnaps.empty) {
       let splants = S_PlantsDocSnaps.docs.map(x => { return { ...x.data() }})
-      let pplants = P_PlantsDocSnaps.docs.map(x => { return { ...x.data() } })
   
       splants = splants.filter(x => `${x.common_name} ${x.scientific_name.map(sn => { return sn }).join(' ')} ${x.other_name.map(on => { return on}).join(' ')}`.trim().toLowerCase().match(q.toLowerCase()))
-      pplants = pplants.filter(x => `${x.common_name} ${x.scientific_name.map(sn => { return sn }).join(' ')} ${x.other_name.map(on => { return on}).join(' ')}`.trim().toLowerCase().match(q.toLowerCase()))
   
       if(splants.length > 0) plantlist = [...plantlist, ...splants]
-      if(pplants.length > 0) plantlist = [...plantlist, ...pplants]
       console.log(`${splants.length > 0 ? 'sp' : 'no-sp'}`);
-      console.log(`${pplants.length > 0 ? 'pp' : 'no-pp'}`);
+    }
+
+    if (P_PlantsDocSnaps != null && !P_PlantsDocSnaps.empty) {
+      let pplants = P_PlantsDocSnaps.docs.map(x => { return { ...x.data() } })
+      pplants = pplants.filter(x => `${x.common_name} ${x.scientific_name.map(sn => { return sn }).join(' ')} ${x.other_name.map(on => { return on}).join(' ')}`.trim().toLowerCase().match(q.toLowerCase()))
+      if (pplants.length > 0) plantlist = [...plantlist, ...pplants];
+      console.log(`${pplants.length > 0 ? "pp" : "no-pp"}`);
     }
 
     const perenAPIKeyDocSnaps = await getDocs(query(collection(db, 'mobileConfig'), where('active', '==', true)))
