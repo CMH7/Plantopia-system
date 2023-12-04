@@ -75,11 +75,11 @@
     $overlays[index].active = false
   }
 
-  function Logout() {
+  async function Logout() {
     $overlays.forEach(x => x.active = false)
     activeModule.set(0)
     localStorage.clear();
-    goto('/mobile/login', {replaceState: true})
+    await goto('/mobile/login', {replaceState: true})
   }
 
   function save(index) {

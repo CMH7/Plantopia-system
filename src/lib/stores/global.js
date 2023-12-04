@@ -96,10 +96,10 @@ export const months = readonly(
 export const pageTransitionDuration = writable(150);
 
 export const userDetails = writable({
-	uid: 'xxx',
-	name: 'Charles Maverick Herrera',
-	email: 'charlesm.herrera0700@gmail.com',
-	password: 'secret1234'
+	uid: '',
+	name: '',
+	email: '',
+	password: ''
 })
 
 export const infoEditing = writable(false)

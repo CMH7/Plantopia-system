@@ -24,8 +24,6 @@
         const creds = JSON.parse(storedCreds);
         email = creds.email;
         password = creds.password;
-        console.log(creds);
-        console.log('logging in');
         autLogin()
       } catch (error) {
         console.error('Error parsing stored credentials:', error);
