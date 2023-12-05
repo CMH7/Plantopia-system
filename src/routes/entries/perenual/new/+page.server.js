@@ -21,6 +21,7 @@ export const actions = {
     let custom = data.get('custom')?.toString()
     let cycle = data.get('cycle')?.toString()
     let indoor = data.get('indoor')?.toString()
+    let image = data.get('image')?.toString()
     const uid = nanoid()
     
     sname = sname.split(',')
@@ -40,7 +41,7 @@ export const actions = {
 			care,
 			custom: custom === "true" ? true : false,
 			indoor: indoor === "true" ? true : false,
-			image: "",
+			image,
 			cycle
 		}).catch((err) => {
 			return fail(500, {

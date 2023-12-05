@@ -245,6 +245,7 @@
   <input name='cycle' type="text" bind:value={data.plant.cycle}>
   <input name='indoor' type="text" bind:value={data.plant.indoor}>
   <input name='custom' type="text" bind:value={custom}>
+  <input name='image' type="text" bind:value={data.plant.image}>
 </form>
 
 <AdminLayout bind:crumbs>
@@ -283,6 +284,10 @@
             </select> 
           </div>
 
+          <div class="flex flex-col w-full">
+            <label for="plant-image-{data.plant.id}" class="font-bold">Image link</label>
+            <input id="plant-image-{data.plant.id}" bind:value={data.plant.image} type="text" class="input input-bordered w-5/6" />
+          </div>
           
           <div class="flex flex-col w-1/3">
             <label for="plant-id-{data.plant.id}" class="font-bold">ID</label>
