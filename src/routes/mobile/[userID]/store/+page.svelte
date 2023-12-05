@@ -6,14 +6,14 @@
 
   onMount(() => {
     activeModule.set(1)
-    Notification.requestPermission().then(perm => {
-      if(perm === 'granted') {
-        const notification = new Notification(`Welcome back user`, {
-          body: "Its nice to see you again coming back!",
-          icon: "/P.png"
-        })
-      }
-    })
+    // Notification.requestPermission().then(perm => {
+    //   if(perm === 'granted') {
+    //     const notification = new Notification(`Welcome back user`, {
+    //       body: "Its nice to see you again coming back!",
+    //       icon: "/P.png"
+    //     })
+    //   }
+    // })
   })
 
   let clientplants = [

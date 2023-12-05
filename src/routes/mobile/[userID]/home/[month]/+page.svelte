@@ -6,6 +6,7 @@
 	import { months, pageTransitionDuration } from '$lib/stores/global.js';
 	import { fade, slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
   
 
   onMount(() => {
@@ -16,7 +17,7 @@
   let color = $months.filter(x => x.name.toLowerCase() === data.month.toLowerCase())[0]?.color
 
   function goBack() {
-    goto(`/mobile/${$userDetails.uid}/home`, {replaceState: true})
+    goto(`/mobile/${$page.params.userID}/home`, {replaceState: true})
   }
   
 </script>

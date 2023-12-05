@@ -21,6 +21,6 @@ export async function load({ params }) {
   )
 
   return {
-    name: user.data().name
+    ...user.data()
   }
 }

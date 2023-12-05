@@ -28,8 +28,6 @@ export async function load(e) {
     userGarden,
     perenualPlants
   }
-
-  console.log(e.params.userID);
   if(e.params.userID === '' || e.params.userID == null) throw error(500, {message: 'UserID error'})
 
   let userGardenCountSnaps = await getCountFromServer(

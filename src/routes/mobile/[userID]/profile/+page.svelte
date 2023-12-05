@@ -13,10 +13,7 @@
     creds = JSON.parse(creds)
     const userDets = { uid: $page.params.userID, ...creds }
     localStorage.setItem('userDets', JSON.stringify(userDets))
-    userDetails.set({
-      name: $userDetails.name !== '' ? $userDetails.name : data.name,
-      ...userDets
-    })
+    userDetails.set({...data})
   })
 
   let menus = [
@@ -35,7 +32,7 @@
   }
 
   function next(path) {
-    goto(`/mobile/${$userDetails.uid}/profile/${path}`)
+    goto(`/mobile/${$page.params.userID}/profile/${path}`)
   }
 </script>
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
@@ -95,7 +92,7 @@
       </div>
     </div>
 
-    <div class="w-full h-[20vh] flex justify-center items-center">
+    <!-- <div class="w-full h-[20vh] flex justify-center items-center">
       <button on:click={() => showLogoutModal()} class="w-[80%] h-[7vh] bg-error/70 rounded-xl poppins text-black flex items-center justify-center gap-x-3 shadow-xl">
         <span class="material-symbols-rounded text-black">
           logout
@@ -103,6 +100,6 @@
 
         Logout
       </button>
-    </div>
+    </div> -->
   </div>
 </div>

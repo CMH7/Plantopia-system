@@ -60,10 +60,10 @@
         }
       )
       // await goto(`/mobile/${$userDetails.uid}/home?q=${$searchValue}${filters}`, {replaceState: true})
-      window.location = `/mobile/${$userDetails.uid}/home?q=${$searchValue}${filters}`
+      window.location = `/mobile/${$page.params.userID}/home?q=${$searchValue}${filters}`
     }else {
       console.log('home');
-      await goto(`/mobile/${$userDetails.uid}/home`, {replaceState: true})
+      await goto(`/mobile/${$page.params.userID}/home`, {replaceState: true})
     }
   }
 </script>

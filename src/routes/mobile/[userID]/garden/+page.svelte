@@ -22,10 +22,6 @@
     userGarden.set(data.userGarden)
     plantopiaPerenPlants.set(data.perenPlants)
   })
-
-  function catPlant(monthName) {
-    goto(`/mobile/${$userDetails.uid}/garden/${monthName}`, {replaceState: true})
-  }
 </script>
 
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
