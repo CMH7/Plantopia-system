@@ -240,9 +240,6 @@
 <div class="w-screen { $page.url.pathname === '/mobile/splash' || $page.url.pathname === '/mobile/login' || $page.url.pathname === '/mobile/signup' ? 'h-screen' : 'h-[90vh]'} overflow-hidden">
   <slot />
 </div>
-{#if $page.url.pathname !== '/mobile/splash' && $page.url.pathname !== '/mobile/login' && $page.url.pathname !== '/mobile/signup'}
-  <MobileNavbar />
-{/if}
 
 <!-- filter -->
 {#if $overlays[0].active}
