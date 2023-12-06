@@ -91,15 +91,5 @@
 
       </div>
     </div>
-
-    <!-- <div class="w-full h-[20vh] flex justify-center items-center">
-      <button on:click={() => showLogoutModal()} class="w-[80%] h-[7vh] bg-error/70 rounded-xl poppins text-black flex items-center justify-center gap-x-3 shadow-xl">
-        <span class="material-symbols-rounded text-black">
-          logout
-        </span>
-
-        Logout
-      </button>
-    </div> -->
   </div>
 </div>
