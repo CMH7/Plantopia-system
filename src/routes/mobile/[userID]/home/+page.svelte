@@ -81,7 +81,7 @@
     </div>
   </div>
   
-  <div class="w-full min-h-[63vh] max-h-[63vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
+  <div class="w-full min-h-[93vh] max-h-[93vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
   
     {#if !data?.searchValue}
       <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
