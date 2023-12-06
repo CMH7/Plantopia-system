@@ -68,31 +68,7 @@
   }
 </script>
 
-<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
-  <div class="w-full h-[20vh]">
-    <div class="w-full h-1/2 flex justify-center items-center">
-      <img src="/plantopiaText2.png" alt="plantopiatext2" class="w-3/5 h-auto object-contain">
-    </div>
-  
-    <div class="w-full h-1/2 flex justify-center items-center gpx gap-x-2">
-      <MacroInput onChange={search} bind:value={$searchValue} icon='search' placeholder='Search plant' className='w-[70vw]'>
-        <div slot='prepend'>
-          <button class="p-2 centerxy btn btn-square btn-ghost">
-            <span class="material-symbols-rounded text-primary">
-              image_search
-            </span>
-          </button>
-        </div>
-      </MacroInput>
-  
-      <button on:click={() => OpenFilter()} class="centerxy btn btn-square btn-primary">
-        <span class="material-symbols-rounded text-white">
-          filter_list
-        </span>
-      </button>
-    </div>
-  </div>
-  
+<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>  
   <div class="w-full h-[7vh]">
     <div class="bg-white poppins text-primary px-5 w-full text-[8vw] font-bold">
       {#if !data?.searchValue}
