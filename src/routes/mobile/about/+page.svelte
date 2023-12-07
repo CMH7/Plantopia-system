@@ -1,14 +1,3 @@
-<script>
-	import { goto } from "$app/navigation";
-	import { pageTransitionDuration } from "$lib/stores/global";
-	import { fade, fly } from "svelte/transition";
-  import { userDetails } from "$lib/stores/global";
-
-  function goBack() {
-    history.back()
-  }
-</script>
-
 <div class="w-full h-fit">
   <div class="w-full h-[35vh] flex justify-center items-center">
     <img src="/ezgif.png" alt="logowithtext" width="250" height="250" class="object-contain">
