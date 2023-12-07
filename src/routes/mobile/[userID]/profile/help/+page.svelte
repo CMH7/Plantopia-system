@@ -25,19 +25,7 @@
 </script>
 
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
-  
-  <div class="w-full h-[10vh] flex justify-center items-center relative">
-    <div class="poppins uppercase text-secondary font-bold text-[6vw]">
-      FAQs
-    </div>
-    <button on:click={() => goBack()} class="btn btn-circle btn-ghost absolute left-[3%]">
-      <span class="material-symbols-rounded text-4xl text-secondary m-0 p-0">
-        chevron_left
-      </span>
-    </button>
-  </div>
-
-  <div class="w-full h-[90vh] flex flex-col items-center overflow-y-auto rounded-t-2xl shadow-inner">
+  <div class="w-full h-[100vh] flex flex-col items-center overflow-y-auto rounded-t-2xl shadow-inner">
 
     <div class="join join-vertical w-full">
 

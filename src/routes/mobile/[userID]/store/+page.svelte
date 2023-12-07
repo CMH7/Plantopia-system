@@ -81,12 +81,7 @@
  in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} 
  out:fade={{ duration: $pageTransitionDuration }}
 >
-
-  <div class="w-full h-[10vh] flex justify-center items-center relative">
-    <img src="/plantopiaText2.png" alt="plantopiatext2" class="w-3/5 h-auto object-contain">
-  </div>
-
-  <div class="w-full h-[80vh]">
+  <div class="w-full h-[100vh]">
 
     <div class="w-full h-[35%] carousel">
       {#each Array(9) as _, i}

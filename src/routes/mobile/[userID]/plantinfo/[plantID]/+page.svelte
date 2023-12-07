@@ -34,14 +34,6 @@
 
 
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
-  <div class="w-full h-[10vh] flex justify-center items-center relative">
-    <img src="/plantopiaText2.png" alt="plantopiatext2" class="w-3/5 h-auto object-contain">
-    <button on:click={() => goBack()} class="btn btn-circle btn-ghost absolute left-[3%]">
-      <span class="material-symbols-rounded text-4xl text-secondary m-0 p-0">
-        chevron_left
-      </span>
-    </button>
-  </div>
 
   <div class="w-full h-[40vh] flex justify-center relative">
     <img src={`${data.plant.image !== 'https://perenual.com/storage/image/upgrade_access.jpg' && data.plant.image !== '' ? data.plant.image : '/plants.jpg'}`} class="w-full h-full object-cover m-0" alt="plantname">
@@ -70,7 +62,7 @@
     </div>
   </div>
   
-  <div class="w-full h-[40vh] p-2">
+  <div class="w-full h-[60vh] p-2">
     <div class="w-full h-[5vh] flex justify-between">
       <div class="tabs">
         <button on:click={() => changeTab(0)} class="tab tab-lifted {$PIActiveTab == 0 ? 'tab-active' : ''}">
@@ -98,7 +90,7 @@
       </button>
     </div>
     
-    <div class="w-full h-[35vh] overflow-y-auto p-3 poppins">
+    <div class="w-full h-[55vh] overflow-y-auto p-3 poppins">
       {#if $PIActiveTab == 0}
         <div in:fly={{duration: $pageTransitionDuration, delay: $pageTransitionDuration, x: -100}} out:fly={{duration: $pageTransitionDuration}}>
           {$PICurrentPlant.plant.care}

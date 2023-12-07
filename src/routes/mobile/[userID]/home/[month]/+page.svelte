@@ -22,23 +22,14 @@
   
 </script>
 
-<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
-  <div class="w-full h-[10vh] flex justify-center items-center relative">
-    <img src="/plantopiaText2.png" alt="plantopiatext2" class="w-3/5 h-auto object-contain">
-    <button on:click={() => goBack()} class="btn btn-circle btn-ghost absolute left-[3%]">
-      <span class="material-symbols-rounded text-4xl text-secondary m-0 p-0">
-        chevron_left
-      </span>
-    </button>
-  </div>
-  
+<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>  
   <div class="w-full h-[7vh]">
     <div class="bg-white poppins {color} px-5 w-full text-[8vw] font-bold">
       {data.month}
     </div>
   </div>
   
-  <div class="w-full min-h-[73vh] max-h-[73vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
+  <div class="w-full min-h-[93vh] max-h-[93vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
   
     {#if data.plantlist.length > 0}
       <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">

@@ -36,11 +36,7 @@
   }
 </script>
 <div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
-  <div class="w-full h-[10vh] flex justify-center items-center">
-    <img src="/plantopiaText2.png" alt="plantopiatext2" class="w-3/5 h-auto object-contain">
-  </div>
-  
-  <div class="w-full h-[80vh]">
+  <div class="w-full h-[100vh]">
     
     <div class="w-full h-[60vh] flex flex-col items-center px-[10vw] rounded-t-2xl shadow-inner">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
