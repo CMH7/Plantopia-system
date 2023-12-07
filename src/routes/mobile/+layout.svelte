@@ -237,7 +237,7 @@
   <input name="dataa" type='text' bind:value={stringifiedCurrentPlant}>
 </form>
 
-<div class="w-screen h-[90vh] overflow-hidden">
+<div class="w-screen h-[100vh] overflow-hidden">
   <slot />
 </div>
 

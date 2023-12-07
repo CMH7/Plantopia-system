@@ -26,7 +26,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div on:click={() => plantInformation(id)} class="w-[43vw] min-h-[230px] max-h-[230px] relative overflow-clip transition-all hover:cursor-pointer hover:border-primary border rounded-xl hover:shadow-xl p-2 flex flex-col gap-x-3">
+<div on:click={() => plantInformation(id)} class="w-[43vw] min-h-[230px] max-h-[230px] bg-white relative overflow-clip transition-all border-2 border-primary rounded-xl p-2 flex flex-col gap-x-3">
 
   {#if plantImg === 'https://perenual.com/storage/image/upgrade_access.jpg'}
     <div class="absolute top-1 left-1 badge badge-primary text-white text-xs">
@@ -52,7 +52,7 @@
         {/if}
       </div>
       
-      <div class="poppins text-center text-xs leading-tight italic overflow-hidden text-primary">
+      <div class="poppins text-center text-[10px] leading-tight italic overflow-hidden text-primary">
         {sciName}
       </div>
     </div>

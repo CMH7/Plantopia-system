@@ -66,15 +66,24 @@
       await goto(`/mobile/${$page.params.userID}/home`, {replaceState: true})
     }
   }
+
+  const goBack = () => {
+    location.href = `/mobile/${$page.params.userID}/home`
+  }
 </script>
 
-<div class="w-full h-fit">  
+<div class="w-full h-fit pb-36">  
   <div class="w-full h-[7vh]">
     <div class="bg-white poppins text-primary px-5 w-full text-[8vw] font-bold">
       {#if !data?.searchValue}
         Plants
       {:else}
-        <div class="w-full flex items-center justify-between">
+        <div class="w-full flex items-center">
+          <button on:click={() => goBack()} class="btn btn-ghost pr-1 pl-0">
+            <span class='material-symbols-rounded text-4xl text-primary m-0 p-0'>
+              chevron_left
+            </span>
+          </button>
           Results
         </div>
       {/if}
@@ -84,7 +93,7 @@
   <div class="w-full min-h-[93vh] max-h-[93vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
   
     {#if !data?.searchValue}
-      <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
+      <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 pb-36 px-5">
         {#each $months as month, i}
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -121,7 +130,7 @@
         </button> -->
       </div>
     {:else}
-      <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
+      <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 pb-36 px-5">
         {#each data?.plantlist as plant}
           <MyGardenCard 
             favorite={data.userGarden.filter(x => x.id == plant.id || x.pid == plant.id).length > 0}

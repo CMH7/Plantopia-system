@@ -16,11 +16,19 @@
   export let data
   let color = $months.filter(x => x.name.toLowerCase() === data.month.toLowerCase())[0]?.color
   
+  const goBack = () => {
+    location.href = `/mobile/${$page.params.userID}/home`
+  }
 </script>
 
 <div class="w-full h-fit">  
-  <div class="w-full h-[7vh]">
-    <div class="bg-white poppins {color} px-5 w-full text-[8vw] font-bold">
+  <div class="w-full h-[7vh] flex items-center">
+    <button on:click={() => goBack()} class="btn btn-ghost pr-1">
+      <span class='material-symbols-rounded text-4xl {color} m-0 p-0'>
+        chevron_left
+      </span>
+    </button>
+    <div class="bg-white poppins {color} w-full text-[8vw] font-bold">
       {data.month}
     </div>
   </div>
