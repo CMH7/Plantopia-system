@@ -27,10 +27,6 @@
     }
   ]
 
-  function showLogoutModal() {
-    $overlays[1].active = true
-  }
-
   function next(path) {
     goto(`/mobile/${$page.params.userID}/profile/${path}`)
   }
@@ -45,11 +41,11 @@
   
         <div>
           <div class="poppins text-primary font-bold">
-            {$userDetails.name}
+            {data.name}
           </div>
   
           <div class="text-xs italic text-neutral">
-            {$userDetails.email}
+            {data.email}
           </div>  
         </div>
   
