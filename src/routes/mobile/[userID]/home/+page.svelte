@@ -68,7 +68,7 @@
   }
 </script>
 
-<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>  
+<div class="w-full h-fit">  
   <div class="w-full h-[7vh]">
     <div class="bg-white poppins text-primary px-5 w-full text-[8vw] font-bold">
       {#if !data?.searchValue}

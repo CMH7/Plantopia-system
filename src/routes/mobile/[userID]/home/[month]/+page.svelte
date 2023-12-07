@@ -15,14 +15,10 @@
 
   export let data
   let color = $months.filter(x => x.name.toLowerCase() === data.month.toLowerCase())[0]?.color
-
-  function goBack() {
-    goto(`/mobile/${$page.params.userID}/home`, {replaceState: true})
-  }
   
 </script>
 
-<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>  
+<div class="w-full h-fit">  
   <div class="w-full h-[7vh]">
     <div class="bg-white poppins {color} px-5 w-full text-[8vw] font-bold">
       {data.month}

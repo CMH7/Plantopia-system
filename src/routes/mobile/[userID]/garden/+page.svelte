@@ -24,7 +24,7 @@
   })
 </script>
 
-<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
+<div class="w-full h-fit">
  
   <div class="w-full min-h-[100vh] max-h-[100vh] overflow-x-hidden overflow-y-auto py-5 flex flex-wrap justify-center gap-5 rounded-t-2xl shadow-inner">
     {#if data.userPlantList.length > 0}

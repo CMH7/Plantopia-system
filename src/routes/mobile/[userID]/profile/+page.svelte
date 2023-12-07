@@ -31,7 +31,7 @@
     goto(`/mobile/${$page.params.userID}/profile/${path}`)
   }
 </script>
-<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
+<div class="w-full h-fit">
   <div class="w-full h-[100vh]">
     
     <div class="w-full h-[60vh] flex flex-col items-center px-[10vw] rounded-t-2xl shadow-inner">

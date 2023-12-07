@@ -9,7 +9,7 @@
   }
 </script>
 
-<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
+<div class="w-full h-fit">
   <div class="w-full h-[35vh] flex justify-center items-center">
     <img src="/ezgif.png" alt="logowithtext" width="250" height="250" class="object-contain">
   </div>

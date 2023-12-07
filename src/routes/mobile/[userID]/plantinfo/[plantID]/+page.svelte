@@ -10,10 +10,6 @@
   onMount(() => {
     PICurrentPlant.set(data)
   })
-  
-  function goBack() {
-    history.back()
-  }
 
   function changeTab(index) {
     PIActiveTab.set(index)
@@ -33,7 +29,7 @@
 </script>
 
 
-<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
+<div class="w-full h-fit">
 
   <div class="w-full h-[40vh] flex justify-center relative">
     <img src={`${data.plant.image !== 'https://perenual.com/storage/image/upgrade_access.jpg' && data.plant.image !== '' ? data.plant.image : '/plants.jpg'}`} class="w-full h-full object-cover m-0" alt="plantname">

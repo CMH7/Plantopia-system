@@ -24,7 +24,7 @@
   }
 </script>
 
-<div class="w-full h-fit" in:fade={{ duration: $pageTransitionDuration, delay: $pageTransitionDuration }} out:fade={{ duration: $pageTransitionDuration }}>
+<div class="w-full h-fit">
   <div class="w-full h-[100vh] flex flex-col items-center overflow-y-auto rounded-t-2xl shadow-inner">
 
     <div class="join join-vertical w-full">
