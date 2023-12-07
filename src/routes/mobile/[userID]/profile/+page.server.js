@@ -20,7 +20,10 @@ export async function load({ params }) {
     doc(db, 'users', params.userID)
   )
 
-  return {
-    ...user.data()
+	return {
+		uid: user.data().uid,
+		name: user.data().name,
+		email: user.data().email,
+		password: user.data().password
   }
 }

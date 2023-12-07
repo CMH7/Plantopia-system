@@ -4,7 +4,6 @@
 	import { page } from "$app/stores";
 	import { activeModule, overlays, pageTransitionDuration, userDetails } from "$lib/stores/global";
 	import { onMount } from "svelte";
-	import { fade, fly, slide } from "svelte/transition";
 
   export let data
 
