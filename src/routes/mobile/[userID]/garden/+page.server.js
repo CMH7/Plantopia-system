@@ -3,7 +3,9 @@ import { db } from "$lib/configurations/firebase";
 import { error } from "@sveltejs/kit";
 import {
 	collection,
+	doc,
 	getCountFromServer,
+	getDoc,
 	getDocs,
 	query,
 	where,
