@@ -20,14 +20,14 @@ export async function load({ params, url }) {
   
     const auth = getAuth()
     await signInWithEmailAndPassword(auth, url.searchParams.get('e'), url.searchParams.get('p'))
-      .then(res => {
+      .then(async res => {
         user = auth.currentUser
         console.log('loggedin')
   
-        updatePassword(user, url.searchParams.get("pp"))
+        await updatePassword(user, url.searchParams.get("pp"))
         console.log('password change 1')
         
-        updateDoc(doc(db, "users", user?.uid), {
+        await updateDoc(doc(db, "users", user?.uid), {
           password: url.searchParams.get("pp"),
         })
         console.log('password change 2')
