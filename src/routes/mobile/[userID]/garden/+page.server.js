@@ -11,17 +11,24 @@ import {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(e) {
+  let user = {
+    name: '',
+    uid: '',
+    email: '',
+    password: ''
+  }
   let data = {
     userGarden: [],
     userPlantList: [],
-    perenPlants: []
+    perenPlants: [],
+    user
   }
 
-  let userCount = await getCountFromServer(
-    collection(db, 'users'),
-    where('id', '==', e.params.userID)
-  )
-  if (userCount.data().count <= 0) throw error(500, { message: 'Account not found.' })
+  const userDS = await getDoc(doc(db, "users", e.params.userID));
+	data.user.name = userDS.data().name;
+	data.user.email = userDS.data().email;
+	data.user.password = userDS.data().password;
+	data.user.uid = e.params.userID;
 
   let userGardenCount = await getCountFromServer(
     query(

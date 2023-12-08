@@ -2,23 +2,14 @@
   //@ts-nocheck
 	import { goto } from "$app/navigation"
 	import { page } from "$app/stores";
-  import MacroInput from "$lib/components/MacroInput.svelte"
 	import MyGardenCard from "$lib/components/MyGardenCard.svelte"
-  import { overlays, pageTransitionDuration, plantCategories, userDetails, months, userGarden, searchValue, plantopiaPerenPlants } from "$lib/stores/global"
+  import { userDetails, months, userGarden, searchValue, plantopiaPerenPlants } from "$lib/stores/global"
 	import { onMount } from "svelte";
-	import { fade } from "svelte/transition"
 
   export let data
 
   onMount(async () => {
-    let creds = localStorage.getItem('creds')
-    creds = JSON.parse(creds)
-    const userDets = { uid: $page.params.userID, ...creds }
-    localStorage.setItem('userDets', JSON.stringify(userDets))
-    userDetails.set({
-      name: $userDetails.name !== '' ? $userDetails.name : '',
-      ...userDets
-    })
+    userDetails.set(data.user)
     userGarden.set(data.userGarden)
     plantopiaPerenPlants.set(data.perenualPlants)
 
@@ -27,44 +18,8 @@
     }
   })
 
-  function OpenFilter() {
-    $overlays[0].active = true
-  }
-
   function catPlant(monthName) {
-    goto(`/mobile/${$userDetails.uid}/home/${monthName}`, {replaceState: true})
-  }
-
-  const search = async () => {
-    if($searchValue !== '') {
-      console.log('search');
-      console.log($searchValue);
-      let filters = ''
-      let inoutdoor = false
-      $plantCategories.forEach(
-        x => {
-          if (x.selected) {
-            if(x.name === 'Indoor') {
-              filters += '&indoor=1'
-              inoutdoor = true;
-            } else if(x.name === 'Indoor') {
-              if(!inoutdoor) {
-                filters += '&indoor=0'
-              } else {
-                filters = ''
-              }
-            } else {
-              filters += `&cycle=${x.name.toLowerCase()}`
-            }
-          }
-        }
-      )
-      // await goto(`/mobile/${$userDetails.uid}/home?q=${$searchValue}${filters}`, {replaceState: true})
-      window.location = `/mobile/${$page.params.userID}/home?q=${$searchValue}${filters}`
-    }else {
-      console.log('home');
-      await goto(`/mobile/${$page.params.userID}/home`, {replaceState: true})
-    }
+    goto(`/mobile/${$page.params.userID}/home/${monthName}`, {replaceState: true})
   }
 
   const goBack = () => {

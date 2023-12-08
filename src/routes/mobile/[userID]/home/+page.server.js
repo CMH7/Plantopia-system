@@ -22,13 +22,25 @@ export async function load(e) {
   let searchValue = ''
   let perenualPlants = []
   let userGarden = []
+  let user = {
+    name: '',
+    uid: '',
+    email: '',
+    password: ''
+  }
   let data = {
     searchValue,
     plantlist,
     userGarden,
-    perenualPlants
+    perenualPlants,
+    user
   }
-  if(e.params.userID === '' || e.params.userID == null) throw error(500, {message: 'UserID error'})
+  if (e.params.userID === '' || e.params.userID == null) throw error(500, { message: 'UserID error' })
+  const userDS = await getDoc(doc(db, 'users', e.params.userID))
+  data.user.name = userDS.data().name
+  data.user.email = userDS.data().email
+  data.user.password = userDS.data().password
+  data.user.uid = e.params.userID
 
   let userGardenCountSnaps = await getCountFromServer(
     query(

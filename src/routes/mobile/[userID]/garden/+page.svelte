@@ -1,24 +1,14 @@
 <script>
   //@ts-nocheck
-	import { goto } from "$app/navigation";
-  import { months, pageTransitionDuration, plantopiaPerenPlants, userGarden } from "$lib/stores/global"
-	import { fade, slide } from "svelte/transition";
+  import { plantopiaPerenPlants, userGarden } from "$lib/stores/global"
   import { userDetails } from "$lib/stores/global";
 	import { onMount } from "svelte";
 	import MyGardenCard from "$lib/components/MyGardenCard.svelte";
-	import { page } from "$app/stores";
 
   export let data
 
   onMount(() => {
-    let creds = localStorage.getItem('creds')
-    creds = JSON.parse(creds)
-    const userDets = { uid: $page.params.userID, ...creds }
-    localStorage.setItem('userDets', JSON.stringify(userDets))
-    userDetails.set({
-      name: $userDetails.name !== '' ? $userDetails.name : '',
-      ...userDets
-    })
+    userDetails.set(data.user)
     userGarden.set(data.userGarden)
     plantopiaPerenPlants.set(data.perenPlants)
   })
@@ -41,13 +31,6 @@
           <div class="text-[5vw] poppins text-primary ">
             No plants found.
           </div>
-    
-          <!-- <button class="btn btn-primary btn-wide font-bold poppins text-[5vw] text-white">
-            <span class="material-symbols-rounded text-white text-3xl">
-              add
-            </span>
-            Add plant
-          </button> -->
         </div>
     {/if}
   </div>
