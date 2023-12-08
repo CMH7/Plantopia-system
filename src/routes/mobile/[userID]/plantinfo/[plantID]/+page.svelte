@@ -26,6 +26,10 @@
   function renickname() {
     $overlays[6].active = true
   }
+
+  const goBack = () => {
+    history.back()
+  }
 </script>
 
 
@@ -33,12 +37,19 @@
 
   <div class="w-full h-[40vh] flex justify-center relative">
     <img src={`${data.plant.image !== 'https://perenual.com/storage/image/upgrade_access.jpg' && data.plant.image !== '' ? data.plant.image : '/plants.jpg'}`} class="w-full h-full object-cover m-0" alt="plantname">
-    <div class="absolute top-1 left-1 badge">
-      {#if data.inTheGarden}
-        {data.plant.id}
-      {:else}
-        {$PICurrentPlant.plant.id}
-      {/if}
+    <div class="absolute top-1 left-1 w-full flex justify-between items-center">
+      <button on:click={() => goBack()} class="btn">
+        <span class='material-symbols-rounded text-4xl m-0 p-0'>
+          chevron_left
+        </span>
+      </button>
+      <div class="badge mr-5">
+        {#if data.inTheGarden}
+          {data.plant.id}
+        {:else}
+          {$PICurrentPlant.plant.id}
+        {/if}
+      </div>
     </div>
     <div class='absolute w-fit rounded-t-xl px-[3vw] py-1 -bottom-1 bg-white poppins text-xl text-primary font-bold flex items-center gap-x-3' >
       <div>

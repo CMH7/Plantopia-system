@@ -233,7 +233,7 @@
   <input name='id' type="text" bind:value={$PICurrentPlant.plant.id}>
   <input name='nickname' type="text" bind:value={nickname}>
   <input name='custom' type="text" bind:value={$PICurrentPlant.plant.custom}>
-  <input name='uid' type="text" bind:value={$userDetails.uid}>
+  <input name='uid' type="text" bind:value={$page.params.userID}>
   <input name="dataa" type='text' bind:value={stringifiedCurrentPlant}>
 </form>
 
