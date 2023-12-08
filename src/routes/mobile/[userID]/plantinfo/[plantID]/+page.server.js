@@ -96,8 +96,9 @@ export async function load({ params, url }) {
 		const perenAPIKeyDocSnaps = await getDocs(
 			query(collection(db, "mobileConfig"))
 		);
-		// console.log(perenAPIKeyDocSnaps.docs);
-		const perenAPIKey = perenAPIKeyDocSnaps.docs.filter(x => x.active)[0].data().perenAPIKey
+		console.log(perenAPIKeyDocSnaps.docs.map(x => x.data()));
+		const perenAPIKey = perenAPIKeyDocSnaps.docs.map(x => x.data()).filter(x => x.active)[0]?.perenAPIKey
+		console.log(perenAPIKey)
 		const data1 = await axios.get(
 			`https://perenual.com/api/species/details/${params.plantID}?key=${perenAPIKey}`
 		);
