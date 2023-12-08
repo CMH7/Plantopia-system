@@ -24,16 +24,16 @@ export async function load({ params, url }) {
         user = auth.currentUser
         console.log('loggedin')
   
-        await updatePassword(user, url.searchParams.get("pp"))
+        updatePassword(user, url.searchParams.get("pp"))
         console.log('password change 1')
         
-        await updateDoc(doc(db, "users", user?.uid), {
+        updateDoc(doc(db, "users", user?.uid), {
           password: url.searchParams.get("pp"),
         })
         console.log('password change 2')
         
-        signOut(auth)
-        console.log('logged out')
+        // signOut(auth)
+        // console.log('logged out')
 
       }).catch(err => {
         console.log(err)
