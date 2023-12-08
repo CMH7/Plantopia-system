@@ -58,6 +58,7 @@
       Password changed!
     </h1>
   {:else}
+  {@html data.valid}
     <h1 class="text-white">
       Invalid credentials
     </h1>

@@ -19,8 +19,8 @@ export async function load({ params, url }) {
     let user
   
     const auth = getAuth()
-    signInWithEmailAndPassword(auth, url.searchParams.get('e'), url.searchParams.get('p'))
-      .then(async res => {
+    await signInWithEmailAndPassword(auth, url.searchParams.get('e'), url.searchParams.get('p'))
+      .then(res => {
         user = auth.currentUser
         console.log('loggedin')
   
@@ -31,17 +31,19 @@ export async function load({ params, url }) {
           password: url.searchParams.get("pp"),
         })
         console.log('password change 2')
+        data.valid = true;
         
         // signOut(auth)
         // console.log('logged out')
-
+        
       }).catch(err => {
         console.log(err)
         data.valid = false
         data.message = 'Invalid credentials'
       })
-      data.valid = true;
-    
-  }
-  return data
+      console.log(`datavalid ${data.valid}`)
+      return data
+    } else {
+      return data
+    }
 }
