@@ -36,7 +36,7 @@
   <div class="w-full min-h-[93vh] max-h-[93vh] relative overflow-x-hidden overflow-y-auto rounded-t-2xl shadow-inner">
   
     {#if data.plantlist.length > 0}
-      <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 px-5">
+      <div class="w-full flex flex-wrap justify-center gap-x-2 gap-y-3 pt-5 pb-36 px-5">
         {#each data.plantlist as plant}
           <MyGardenCard 
             favorite={data.seasonalPlants.filter(x => x.id == plant.id).length > 0}

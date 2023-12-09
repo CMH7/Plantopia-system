@@ -97,7 +97,7 @@
       </button>
     </div>
     
-    <div class="w-full h-[55vh] overflow-y-auto p-3 poppins">
+    <div class="w-full h-[55vh] overflow-y-auto p-3 pb-36 poppins">
       {#if $PIActiveTab == 0}
         <div in:fly={{duration: $pageTransitionDuration, delay: $pageTransitionDuration, x: -100}} out:fly={{duration: $pageTransitionDuration}}>
           {$PICurrentPlant.plant.care}
