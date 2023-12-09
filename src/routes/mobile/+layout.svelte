@@ -285,7 +285,7 @@
 {#if $overlays[1].active}
 <Overlay>
   <div class="w-full h-full flex justify-center items-center">
-    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+    <div class="card bg-white min-h-[150px] max-h-[150px] relative w-[80%] shadow-xl overflow-hidden">
       <div class="poppins w-full px-5 pt-2 text-sm text-center">
         Are you sure you want to logout?
       </div>
@@ -307,7 +307,7 @@
 {#if $overlays[2].active}
 <Overlay>
   <div class="w-full h-full flex justify-center items-center">
-    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+    <div class="card bg-white min-h-[150px] max-h-[150px] relative w-[80%] shadow-xl overflow-hidden">
       <div class="w-full flex justify-center pt-1">
         <span class="material-symbols-rounded text-primary">
           help
@@ -334,7 +334,7 @@
 {#if $overlays[3].active}
 <Overlay>
   <div class="w-full h-full flex justify-center items-center">
-    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+    <div class="card bg-white min-h-[150px] max-h-[150px] relative w-[80%] shadow-xl overflow-hidden">
       <div class="w-full flex justify-center pt-1">
         <span class="material-symbols-rounded text-primary">
           potted_plant
@@ -361,7 +361,7 @@
 {#if $overlays[5].active}
 <Overlay>
   <div class="w-full h-full flex justify-center items-center">
-    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+    <div class="card bg-white min-h-[150px] max-h-[150px] relative w-[80%] shadow-xl overflow-hidden">
       <div class="w-full flex justify-center pt-1">
         <span class="material-symbols-rounded text-primary">
           potted_plant
@@ -388,7 +388,7 @@
 {#if $overlays[4].active}
 <Overlay>
   <div class="w-full h-full flex justify-center items-center">
-    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+    <div class="card bg-white min-h-[150px] max-h-[150px]] relative w-[80%] shadow-xl overflow-hidden">
       <div class="poppins w-full px-5 pt-2">
         Nickname
       </div>
@@ -410,7 +410,7 @@
 {#if $overlays[6].active}
 <Overlay>
   <div class="w-full h-full flex justify-center items-center">
-    <div class="card bg-white h-[20vh] relative w-[80%] shadow-xl overflow-hidden">
+    <div class="card bg-white min-h-[150px] max-h-[150px] relative w-[80%] shadow-xl overflow-hidden">
       <div class="poppins w-full px-5 pt-2">
         Nickname
       </div>

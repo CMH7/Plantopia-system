@@ -30,6 +30,12 @@
       desc: 'Plant lists from perenual data but filtered thoroughly by researchers to fit in Philippines',
       webLink: '/entries/perenual'
     },
+    {
+      title: 'Store Plants',
+      img: 'plants.jpg',
+      desc: 'Plant list from store',
+      webLink: '/entries/storeplants'
+    },
   ]
 
   //@ts-ignore
