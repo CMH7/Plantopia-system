@@ -291,10 +291,10 @@
       </div>
 
       <div class="w-full flex items-center justify-center absolute bottom-0">
-        <button on:click={() => CloseModal(1)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => CloseModal(1)} class="bg-error text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           Cancel
         </button>
-        <button on:click={() => Logout()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => Logout()} class="bg-secondary text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           Logout
         </button>
       </div>
@@ -318,10 +318,10 @@
       </div>
 
       <div class="w-full flex items-center justify-center absolute bottom-0">
-        <button on:click={() => CloseModal(2)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => CloseModal(2)} class="bg-error text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           No
         </button>
-        <button on:click={() => save(2)} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => save(2)} class="bg-secondary text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           Yes
         </button>
       </div>
@@ -345,10 +345,10 @@
       </div>
 
       <div class="w-full flex items-center justify-center absolute bottom-0">
-        <button on:click={() => CloseModal(3)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => CloseModal(3)} class="bg-error text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           No
         </button>
-        <button on:click={() => showNickname()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => showNickname()} class="bg-secondary text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           Yes
         </button>
       </div>
@@ -372,10 +372,10 @@
       </div>
 
       <div class="w-full flex items-center justify-center absolute bottom-0">
-        <button on:click={() => CloseModal(5)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => CloseModal(5)} class="bg-error text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           No
         </button>
-        <button on:click={() => removePlant()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => removePlant()} class="bg-secondary text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           Yes
         </button>
       </div>
@@ -394,10 +394,10 @@
       </div>
       <MacroInput icon='match_case' bind:value={nickname} className='px-4' />
       <div class="w-full flex items-center justify-center absolute bottom-0">
-        <button on:click={() => CloseModal(4)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => CloseModal(4)} class="bg-error text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           Cancel
         </button>
-        <button on:click={() => addToMyGarden()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => addToMyGarden()} class="bg-secondary text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           Submit
         </button>
       </div>
@@ -416,10 +416,10 @@
       </div>
       <MacroInput icon='match_case' bind:value={renickname} className='px-4' />
       <div class="w-full flex items-center justify-center absolute bottom-0">
-        <button on:click={() => CloseModal(6)} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => CloseModal(6)} class="bg-error text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           Cancel
         </button>
-        <button on:click={() => renicknamefn()} class="bg-secondary text-white poppins font-bold w-1/2 h-[7vh]">
+        <button on:click={() => renicknamefn()} class="bg-secondary text-white poppins font-bold w-1/2 min-h-[50px] max-h-[50px]">
           Submit
         </button>
       </div>
