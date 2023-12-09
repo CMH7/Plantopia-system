@@ -51,15 +51,6 @@
 
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <ul tabindex="0" class="mt-3 z-[1000] p-2 shadow menu menu-md dropdown-content bg-base-100 rounded-box w-80">
-        <li>
-          <!-- svelte-ignore a11y-missing-attribute -->
-          <a class="justify-between">
-            Profile
-            <span class="badge">New</span>
-          </a>
-        </li>
-        <!-- svelte-ignore a11y-missing-attribute -->
-        <li><a>Settings</a></li>
         <!-- svelte-ignore a11y-missing-attribute -->
         <li><button on:click={() => logout()}>Logout</button></li>
       </ul>

@@ -21,8 +21,7 @@
               <label tabindex="0" class="btn btn-ghost rounded-btn">More</label>
               <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
               <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                <li><a href='/login'>Admin login</a></li> 
-                <li><a href='/mobile'>Mobile app demo</a></li>
+                <li><a href='/login'>Admin login</a></li>
               </ul>
             </div>
           </div>
