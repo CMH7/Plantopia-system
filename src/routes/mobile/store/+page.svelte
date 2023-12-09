@@ -1,5 +1,8 @@
 <script>
-	import MyGardenCard from "$lib/components/MyGardenCard.svelte";
+  //@ts-nocheck
+	import StoreCard from "$lib/components/StoreCard.svelte";
+
+  export let data
 </script>
 
 <div class="w-full h-fit">
@@ -12,8 +15,13 @@
       {/each}
     </div>
     <div class="w-full h-[70%] flex flex-wrap justify-center gap-x-2 gap-y-3 py-5 px-5 overflow-y-auto">
-      {#each Array(10) as _, i}
-        <MyGardenCard id={i} />
+      {#each data.sp as plant}
+        <StoreCard
+          id={plant.id}
+          name={plant.common_name}
+          plantImg={plant.image}
+          sciName={plant.scientific_name[0]}
+        />
       {/each}
     </div>
   </div>
