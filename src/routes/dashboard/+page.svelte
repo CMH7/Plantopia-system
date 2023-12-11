@@ -40,11 +40,11 @@
         <div class="w-full grid grid-rows-[12] gap-y-6">
 
           <div class="row row-span-6 ">
-            <DashboardCard data={`${data.allUsersCount}`} btnLink='/dashboard/users' />
+            <DashboardCard data={`${data.usersCount}`} btnLink='/dashboard/users' />
           </div>
 
           <div class="row row-span-6">
-            <DashboardCard icon='psychiatry' title='Total Gardens' data={`${data.allUserGardensCount}`} caption={new Date().toDateString()} btnLink='/dashboard/gardens' />
+            <DashboardCard icon='psychiatry' title='Total Gardens' data={`${data.gardensCount}`} caption={new Date().toDateString()} btnLink='/dashboard/gardens' />
           </div>
 
         </div>
@@ -80,7 +80,7 @@
             <div class="w-full max-h-[500px] grid grid-cols-12 gap-3 overflow-y-scroll">
 
               {#each data.topPlants as plant, i}
-                <TopPlantsCard plantName={plant.common_name} plantImg={plant.image === 'https://perenual.com/storage/image/upgrade_access.jpg' || plant.image === '' || plant.image == null ? '/aloe.png' : plant.image} totalCount={plant.count} />
+                <TopPlantsCard plantName={plant.data.common_name} plantImg={plant.data.image === '' || plant.data.image == null ? '/aloe.png' : plant.data.image} totalCount={plant.count} />
               {/each}
 
             </div>

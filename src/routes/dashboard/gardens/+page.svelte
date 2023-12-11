@@ -39,6 +39,7 @@
             <Cell class='py-5 pl-2 border-x text-center' numeric>#</Cell>
             <Cell class='py-5'>Internal ID</Cell>
             <Cell class='py-5 border-x'>Full Name</Cell>
+            <Cell class='py-5'>Email</Cell>
             <Cell class='py-5 border-x text-center' >Action</Cell>
           </Row>
         </Head>
@@ -46,10 +47,11 @@
         <Body>
           {#each data.allUsers as user, i}
           <Row class='{i % 2 == 0 ? 'bg-slate-50' : ''} p-2'>
-            <Cell class='pl-2 text-center'>{i + 1}</Cell>
-            <Cell class='border-x'>{user.id}</Cell>
-            <Cell class='border-x'>{user.name}</Cell>
-            <Cell class='border-x text-center'>
+            <Cell class='pl-2 py-5 border-x text-center'>{i + 1}</Cell>
+            <Cell class='py-5'>{user.docID}</Cell>
+            <Cell class='py-5 border-x'>{user.name}</Cell>
+            <Cell class='py-5'>{user.email}</Cell>
+            <Cell class='py-5 border-x text-center'>
               <div class="btn btn-sm btn-accent text-primary">
                 <span class="material-symbols-rounded">
                   open_in_full
