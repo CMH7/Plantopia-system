@@ -1,4 +1,5 @@
-<script lang='ts'>
+<script>
+  //@ts-nocheck
 	import { goto } from "$app/navigation";
 	import DashboardCard from "$lib/components/DashboardCard.svelte";
   import Macro from "$lib/components/Macro.svelte"
@@ -78,8 +79,8 @@
 
             <div class="w-full max-h-[500px] grid grid-cols-12 gap-3 overflow-y-scroll">
 
-              {#each Array(20) as p, i}
-                <TopPlantsCard plantName={`plant${i}`} plantImg="aloe.png" totalCount={`${99 * i}`} />
+              {#each data.topPlants as plant, i}
+                <TopPlantsCard plantName={plant.common_name} plantImg={plant.image === 'https://perenual.com/storage/image/upgrade_access.jpg' || plant.image === '' || plant.image == null ? '/aloe.png' : plant.image} totalCount={plant.count} />
               {/each}
 
             </div>

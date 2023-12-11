@@ -3,7 +3,7 @@
 
   let mainLinks = [
     'Dashboard',
-    'Entries',
+    'PLants',
     'Application'
   ]
 
