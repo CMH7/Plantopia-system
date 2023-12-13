@@ -1,21 +1,15 @@
 <script>
   //@ts-nocheck
-	import { applyAction, deserialize, enhance } from "$app/forms";
-	import { invalidateAll } from "$app/navigation";
 	import AdminLayout from "$lib/components/AdminLayout.svelte";
 	import Overlay from "$lib/components/Overlay.svelte";
 	import RowCol from "$lib/components/RowCol.svelte";
-	import { notif, overlays, pageTransitionDuration } from "$lib/stores/global.js";
+	import { db } from "$lib/configurations/firebase.js";
+	import { overlays } from "$lib/stores/global.js";
+	import { doc, updateDoc } from "firebase/firestore";
 
   export let data
 
-  const origActiveKey = data.activeKey
-
-  let newAPIKey = {
-    name: '',
-    perenAPIKey: '',
-    active: false
-  }
+  const origAPIKey = data.apiKey
 
   let crumbs = [
     {
@@ -28,14 +22,7 @@
     }
   ]
 
-  let cycles = [
-    {
-      name: 'Plantopia',
-      perenAPIKey: ''
-    }
-  ]
-
-  let saving = false
+  let updating = false
 
   const showModal = () => {
     $overlays[9].active = true
@@ -46,61 +33,75 @@
   }
 
   const saveChanges = async () => {
-    saving = true
-
-    let form = document.getElementById('formNewActiveAPIKey')
-    // @ts-ignore
-    const data = new FormData(form);
-    
-    // @ts-ignore
-    const response = await fetch(form.action, {
-      method: 'POST',
-      body: data
-    });
-
-    /** @type {import('@sveltejs/kit').ActionResult} */
-    const result = deserialize(await response.text());
-
-    console.log(result);
-    
-    if(result.type === 'failure') {
-      $notif.message = result.data?.message
-      $notif.show = true
+    updating = true
+    let success = false
+    if(!checker()){
+      updating = false
+      return
     }
 
-    if (result.type === 'success') {
-      // re-run all `load` functions, following the successful update
-      setTimeout(() => {
-        $notif.message = 'Successfully udpated active API Key!'
-        $notif.show = true
-      }, $pageTransitionDuration)
-      await invalidateAll();
-    }
+    await updateDoc(doc(db, 'mobileConfig', data.mobileConfigDocID), {
+      apiKey: data.apiKey
+    }).then(res => {
+      notify(
+        'success',
+        'Update success',
+        'API Key updated successfully.'
+      )
+      success = true
+    })
 
-    applyAction(result);
-    saving = false
+    updating = false
     closeModal()
+    if(success) {
+      location.reload()
+    } else {
+      notify(
+        'error',
+        'Update failed',
+        'API Key update failed.',
+        1,
+        false
+      )
+    }
+  }
+
+  const checker = () => {
+    if(data.apiKey === '') {
+      notify(
+        'warning',
+        'Invalid input',
+        'API Key cannot be empty.'
+      )
+      return false
+    }
+    
+    if(data.apiKey.length !== 50) {
+      notify(
+        'warning',
+        'Invalid input',
+        'API Key must be 50 characters.'
+      )
+      return false
+    }
+    return true
+  }
+
+  const notify = (status, title, text, type = 1, autoclose = true, autotimeout = 3000, position = 'top right') => {
+    new Notify({
+      status,
+      title,
+      text,
+      effect: 'slide',
+      type,
+      autoclose,
+      autotimeout,
+      position
+    })
   }
 </script>
 
-<form id='formNewActiveAPIKey' class="hidden" method="post" action="?/editActiveAPIKey" use:enhance>
-  <input name='oldActiveKey' type="text" value={origActiveKey}>
-  <input name='newActiveKey' type="text" bind:value={data.activeKey}>
-</form>
-
 <AdminLayout bind:crumbs>
-  <RowCol>
-    <div class="w-full flex justify-end items-center px-32 mb-3">
-      <a href="/application/configuration/apikeysnew">
-        <button type='button' class="btn btn-wide btn-primary poppins text-white">
-          <span class="material-symbols-rounded">
-            add
-          </span>
-          Add API Key
-        </button>
-      </a>
-    </div>
-  </RowCol>
   <RowCol>
     <div class=" w-full px-32 poppins">
       <form action="" class="w-full flex flex-wrap gap-y-10">
@@ -108,23 +109,17 @@
         <div class="flex flex-wrap w-1/3">
           <div class="flex flex-col w-full">
             <label for="plant-mobile-configuration-api-key" class="font-bold">API Key</label>
-            <select id="plant-mobile-configuration-api-key" bind:value={data.activeKey} class="input input-bordered w-5/6">
-              {#each data.apiKeys as keys}
-                <option value={keys.id}>{keys.name} ({keys.perenAPIKey})</option>
-              {/each}
-            </select>
+            <input id="plant-mobile-configuration-api-key" bind:value={data.apiKey} on:change={() => checker()} type="text" class="input input-bordered w-full" />
           </div>
         </div>
       </form>
 
-      {#if origActiveKey !== data.activeKey}
+      {#if origAPIKey !== data.apiKey}
         <div class="flex justify-between items-center w-full mt-5">
           <div class="flex items-center w-2/3 gap-x-5">
-            <a href="/entries/seasonal">
-              <button type='button' class='btn btn-neutral text-white w-[200px]'>
-                Cancel
-              </button>
-            </a>
+            <button on:click={e => data.apiKey = origAPIKey} type='button' class='btn btn-neutral text-white w-[200px]'>
+              Cancel
+            </button>
             
             <button type="button" on:click={() => showModal()} class="btn btn-primary w-[200px] text-white">
               Save
@@ -141,11 +136,11 @@
   <div class="w-full h-full flex justify-center items-center">
     <div class="card bg-white h-[20vh] relative w-96 shadow-xl overflow-hidden">
       <div class="poppins w-full px-5 pt-2 text-center">
-        Are you sure you want to add this API Key?
+        Are you sure you want to save changes to API Key?
       </div>
 
       <div class="w-full flex items-center justify-center absolute bottom-0">
-        {#if !saving}
+        {#if !updating}
           <button on:click={() => closeModal()} class="bg-error text-white poppins font-bold w-1/2 h-[7vh]">
             No
           </button>
@@ -154,7 +149,7 @@
           </button>
         {:else}
           <div>
-            adding...
+            updating...
           </div>
         {/if}
       </div>

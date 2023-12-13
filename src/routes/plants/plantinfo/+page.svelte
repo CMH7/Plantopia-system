@@ -240,7 +240,7 @@
         seasons: data.plant.seasons,
         description: data.plant.description,
         care: data.plant.care,
-        image: imageDownloadURL,
+        image: imageDownloadURL !== '' ? imageDownloadURL : data.plant.image,
         indoor: data.plant.indoor,
         inStore: data.plant.inStore,
         price: parseInt(mask.unmaskedValue)

@@ -24,6 +24,12 @@
       desc: 'Mobile application configurations and settings',
       webLink: '/application/configuration'
     },
+    {
+      title: 'Store Banners',
+      img: 'promo.jpg',
+      desc: 'Store\'s banners about, sales and promos',
+      webLink: '/application/banners'
+    },
   ]
 
   //@ts-ignore
@@ -36,7 +42,7 @@
 
 <AdminLayout bind:crumbs>
   <RowCol>
-    <div class="flex justify- items-center gap-10 px-32">
+    <div class="flex flex-wrap justify- items-center gap-10 px-28 pb-36">
       {#each settings as setting}
         <div class="card card-compact w-96 h-96 bg-base-100 shadow-xl">
           <figure class="m-0 p-0">
@@ -46,7 +52,7 @@
             <h2 class="card-title p-0 m-0">{setting.title}</h2>
             <p class="p-0 m-0">{setting.desc}</p>
             <div class="card-actions justify-end">
-              <button on:click={() => gotos(setting.webLink)} class="btn btn-primary">View</button>
+              <button on:click={() => gotos(setting.webLink)} class="btn btn-primary text-white">View</button>
             </div>
           </div>
         </div>
