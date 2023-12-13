@@ -80,7 +80,7 @@
             <div class="w-full max-h-[500px] grid grid-cols-12 gap-3 overflow-y-scroll">
 
               {#each data.topPlants as plant, i}
-                <TopPlantsCard plantName={plant.data.common_name} plantImg={plant.data.image === '' || plant.data.image == null ? '/aloe.png' : plant.data.image} totalCount={plant.count} />
+                <TopPlantsCard id={plant.data.docID} plantName={plant.data.common_name} plantImg={plant.data.image === '' || plant.data.image == null ? '/aloe.png' : plant.data.image} totalCount={plant.count} />
               {/each}
 
             </div>

@@ -59,7 +59,7 @@ export async function load(e) {
 	})
 
 	data.topPlants = topPlants
-	console.log(topPlants);
+	// console.log(topPlants);
 
 	return data;
 }

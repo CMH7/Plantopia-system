@@ -29,6 +29,10 @@
     }
   ]
 
+  const gotos = async (id) => {
+    await goto(`/dashboard/gardens/${id}`)
+  }
+
 </script>
 <AdminLayout bind:crumbs>
   <RowCol>
@@ -52,12 +56,12 @@
             <Cell class='py-5 border-x'>{user.name}</Cell>
             <Cell class='py-5'>{user.email}</Cell>
             <Cell class='py-5 border-x text-center'>
-              <div class="btn btn-sm btn-accent text-primary">
+              <button on:click={e => gotos(user.docID)} class="btn btn-sm btn-accent text-primary">
                 <span class="material-symbols-rounded">
                   open_in_full
                 </span>
                 View
-              </div>
+              </button>
             </Cell>
           </Row>
           {/each}
