@@ -33,11 +33,11 @@
       {#each data.plants as plant, i}
         <div class="w-2/12 h-[300px] rounded-2xl bg-white border-2 border-primary p-3 shadow-lg hover:shadow-2xl hover:scale-110 transition-all">
           <img class="select-none w-full h-[50%] m-0 p-0 rounded-lg" src={plant.image == null || plant.image === '' ? '/aloe.png' : plant.image } alt={`${plant.common_name} image`}>
-          <div class="select-none text-primary text-3xl font-black text-center mt-2 mb-1">
+          <div class="select-none text-primary text-xl font-black text-center mt-2 mb-1">
             {plant.common_name}
           </div>
 
-          <div class=" select-none italic text-primary text-center">
+          <div class=" select-none italic text-primary text-sm text-center">
             {plant.scientific_name[0]}
           </div>
 

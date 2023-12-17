@@ -8,13 +8,13 @@ export async function load(e) {
 		allUsers: [],
   };
   
-  const gardensDSs = await getDocs(query(collection(db, 'gardens')))
-  const gardensList = gardensDSs.docs.map(x => { return { docID: x.id, ...x.data() } })
+  const gardenMobilesDSs = await getDocs(query(collection(db, 'gardenMobile')))
+  const gardenMobilesList = gardenMobilesDSs.docs.map(x => { return { docID: x.id, ...x.data() } })
   
   const usersDSs = await getDocs(
     query(
       collection(db, 'users'),
-      where('uid', 'in', gardensList.map(x => x.owner))
+      where('uid', 'in', gardenMobilesList.map(x => x.owner))
     )
   )
   const usersList = usersDSs.docs.map(x => { return {docID: x.id, ...x.data()}})

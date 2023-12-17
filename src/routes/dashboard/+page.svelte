@@ -8,6 +8,7 @@
   import { months } from "$lib/stores/global";
 	import { onMount } from "svelte";
 
+  
   onMount(async () => {
     let admin_creds = localStorage.getItem('admin_creds')
     //@ts-ignore
@@ -17,8 +18,13 @@
       await goto('/login', {replaceState: true})
     }
   })
-
+  
   export let data
+  let curMonth = data.month
+
+  const selectChange = () => {
+    location.href = `/dashboard?month=${curMonth}`
+  }
   
 </script>
 
@@ -66,7 +72,7 @@
               </div>
 
               <div class="grow">
-                <select class="select select-bordered w-full max-w-xs float-right">
+                <select bind:value={curMonth} on:change={e => selectChange()} class="select select-bordered w-full max-w-xs float-right">
                   <option disabled selected>Select Month</option>
                   {#each $months as month, i}
                     <option value='{i + 1}'>{month.name}</option>

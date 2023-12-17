@@ -16,41 +16,29 @@ export async function load({ params }) {
   const userDS = await getDoc(doc(db, 'users', params.docID))
   data.user = { docID: userDS.id, ...userDS.data() }
 
-  const userGardensDSs = await getDocs(
+  const userGardenMobilesDSs = await getDocs(
     query(
-      collection(db, 'gardens'),
+      collection(db, 'gardenMobile'),
       where('owner', '==', params.docID)
     )
   )
-  const userGardensList = userGardensDSs.docs.map(x => { return { docID: x.id, ...x.data() } })
-
-  /**@type {string[]} */
-  let upgIDs = []
-  userGardensList.forEach(x => {
-    upgIDs = [...upgIDs, ...x.upg]
-  })
-
-  const upgDSs = await getDocs(
-    query(
-      collection(db, 'userPlantGarden'),
-      where(documentId(), 'in', upgIDs)
-    )
-  )
-  const upgList = upgDSs.docs.map(x => { return { docID: x.id, ...x.data() } })
+  const userGardenMobilesList = userGardenMobilesDSs.docs.map(x => { return { docID: x.id, ...x.data() } })
   
   const plantsDSs = await getDocs(
     query(
       collection(db, 'plants'),
-      where(documentId(), 'in', upgList.map(x => { return x.plant}))
+      where(documentId(), 'in', userGardenMobilesList.map(x => { return x.plant._key.path.segments[x.plant._key.path.segments.length - 1]}))
     )
   )
   const plantsList = plantsDSs.docs.map(x => { return { docID: x.id, ...x.data() } })
   plantsList.forEach(x => {
-    upgList.forEach(y => {
-      if (y.plant === x.docID) {
-        x.common_name = y.nickname
+    userGardenMobilesList.forEach((y) => {
+      if (y.nickname !== '') {
+        if (y.plant._key.path.segments[y.plant._key.path.segments.length - 1] === x.docID) {
+          x.common_name = y.nickname;
+        }
       }
-    })
+		});
   })
   
   data.plants = plantsList
