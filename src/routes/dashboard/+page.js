@@ -11,40 +11,43 @@ export async function load(e) {
 	};
 
 	let usersCount = await getCountFromServer(query(collection(db, 'users')))
-	let gardensCount = await getCountFromServer(query(collection(db, 'gardens')))
 	
 	data.usersCount = usersCount.data().count
-	data.gardensCount = gardensCount.data().count
-
-	const gardensDSs = await getDocs(query(collection(db, 'gardens')))
-	const gardensList = gardensDSs.docs.map(x => { return { docID: x.id, ...x.data() } })
 	
-	let upgIDs = []
-	gardensList.forEach(x => {
-		upgIDs = [...upgIDs, ...x.upg]
-	})
 
-	const upgDSs = await getDocs(
-		query(
-			collection(db, "userPlantGarden"),
-			where(documentId(), 'in', upgIDs)
-		)
-	);
-	const upgList = upgDSs.docs.map(x => { return { docID: x.id, ...x.data() } })
+	const gardenMobileDSs = await getDocs(query(collection(db, "gardenMobile")));
+	const gardenMobileList = gardenMobileDSs.docs.map(x => { return { docID: x.id, ...x.data() } })
 
-	let topPlants = []
-	upgList.forEach(x => {
-		if (topPlants.filter(o => o.plant === x.plant).length > 0) {// meaning +1 to count
-			topPlants.filter(o => o.plant === x.plant)[0].count += 1
-		} else { // meaning newly added
-			topPlants.push({
-				plant: x.plant,
-				count: 1,
-				data: {}
-			})
+	let gardenMobilesDistinct = []
+	gardenMobileList.forEach(x => {
+		if (!gardenMobilesDistinct.includes(x.owner)) {
+			gardenMobilesDistinct.push(x.owner)
 		}
 	})
+
+	data.gardensCount = gardenMobilesDistinct.length
+
+	// const temp = await getDocs(query(collection(db, 'plants', gardenMobilesDistinct)))
+	// console.log(temp)
+
+	let topPlants = []
+	gardenMobileList.forEach((x) => {
+		if (topPlants.filter((o) => o.plant === x.plant).length > 0) {
+			// meaning +1 to count
+			// console.log(x.plant._key.segments[x.plant._key.segments.length-1]);
+			topPlants.filter((o) => o.plant === x.plant)[0].count += 1;
+		} else {
+			// console.log(x.plant._key.path.segments[x.plant._key.path.segments.length - 1])
+			// meaning newly added
+			topPlants.push({
+				plant: x.plant._key.path.segments[x.plant._key.path.segments.length - 1],
+				count: 1,
+				data: {},
+			});
+		}
+	});
 	
+	// console.log(topPlants)
 	const plantsDSs = await getDocs(query(
 		collection(db, 'plants'),
 		where(documentId(), 'in', topPlants.map(x => x.plant))

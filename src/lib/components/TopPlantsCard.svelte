@@ -8,7 +8,7 @@
 
 <div class="col col-span-3">
 
-  <a href={`/plants/plantinfo?docID=${id}`}>
+  <a href={`/plants/plantinfo?docID=${id}`} class='no-underline'>
     <div class="w-full h-[200px] overflow-clip transition-all cursor-pointer hover:border-primary border rounded-xl hover:shadow-xl p-3">
   
       <div class="w-full h-2/3 flex justify-center">

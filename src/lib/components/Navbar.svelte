@@ -1,4 +1,5 @@
 <script>
+  //@ts-nocheck
   import { goto } from "$app/navigation";
 
   let mainLinks = [
@@ -12,6 +13,10 @@
     await goto("/login", {replaceState: true })
   }
 
+  const goToModule = async link => {
+    console.log(link)
+    await goto(link)
+  }
 
 </script>
 
@@ -22,11 +27,9 @@
     <img class="h-[50px] m-0 p-0 " src="/ezgif.png" alt="plantopia text">
     {#each mainLinks as linkk}
       <div class="flex items-center"> 
-        <a href={`/${linkk.toLowerCase()}`}>
-          <button class="btn btn-ghost">
-            {linkk}
-          </button>
-        </a>
+        <button on:click={e => goToModule(`/${linkk.toLowerCase()}`)} class="btn btn-ghost">
+          {linkk}
+        </button>
       </div>
     {/each}
   </div>

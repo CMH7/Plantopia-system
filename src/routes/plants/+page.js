@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { db } from "$lib/configurations/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { WriteBatch, collection, doc, getDocs, query, where, writeBatch } from "firebase/firestore";
 
 /** @type {import('./$types').PageLoad} */
 export async function load(e) {
@@ -14,5 +14,14 @@ export async function load(e) {
 		return { docID: x.id, ...x.data() };
 	});
 	data.plants = allPlants;
+
+	// const batch = writeBatch(db)
+
+	// allPlants.forEach(x => {
+	// 	batch.update(doc(db, 'plants', x.docID), {
+	// 		watering: 1
+	// 	})
+	// })
+	// await batch.commit()
 	return data;
 }

@@ -23,6 +23,7 @@
 		indoor: false,
 		inStore: false,
 		price: 0,
+    watering: 1
 	}
 
   let inputPrice
@@ -178,6 +179,18 @@
     }
   }
 
+  const checkWatering = (e) => {
+    if(plant.watering  === '') {
+      notify('warning', 'Invalid input', 'Price cannot be empty', 1)
+      inputPrice.innerHTML = ''
+    } else if(!containsOnlyNumbers(plant.watering )){
+      notify('warning', 'Invalid input', `Numbers only.`, 1)
+      inputPrice.innerHTML = ''
+    } else {
+      plant.watering = e.target.value
+    }
+  }
+
   function containsOnlyNumbers(inputString) {
     // Check if the string contains only numbers
     return /^\d+$/.test(inputString);
@@ -328,28 +341,34 @@
             {/each}
           </select> 
         </div>
-  
+
         <!-- In Store, Price & Indoor -->
         <div class="flex items-center">
           <!-- In Store -->
-          <div class="flex flex-col w-1/3">
+          <div class="flex flex-col w-1/2">
             <label for="plant-indoor-{plant.docID}" class="font-bold">Indoor</label>
             <input id='plant-indoor-{plant.docID}' type="checkbox" bind:checked={plant.indoor} class="checkbox checkbox-primary checkbox-lg" />
           </div>
     
           <!-- Indoor -->
-          <div class="flex flex-col w-1/3">
+          <div class="flex flex-col w-1/2">
             <label for="plant-instore-{plant.docID}" class="font-bold">In Store</label>
             <input id='plant-instore-{plant.docID}' type="checkbox" bind:checked={plant.inStore} class="checkbox checkbox-primary checkbox-lg" />
           </div>
   
-          <!-- Price -->
-          <div class="flex flex-col w-1/3">
-            <label for="plant-price-{plant.docID}" class="font-bold">Price</label>
-            <input id="plant-price-{plant.docID}" value={plant.price} on:change={e => checkPrice(e)} type="text" class="input input-bordered w-full" />
-          </div>
         </div>
-  
+        
+        <!-- Price -->
+        <div class="flex flex-col w-full">
+          <label for="plant-price-{plant.docID}" class="font-bold">Price</label>
+          <input id="plant-price-{plant.docID}" value={plant.price} on:change={e => checkPrice(e)} type="text" class="input input-bordered w-full" />
+        </div>
+        
+        <!-- Watering -->
+        <div class="flex flex-col w-full">
+          <label for="plant-watering-{plant.docID}" class="font-bold">Watering</label>
+          <input id="plant-watering-{plant.docID}" value={plant.watering} on:change={e => checkWatering(e)} type="text" class="input input-bordered w-full" />
+        </div>
   
         <!-- Image -->
         <div class="flex flex-col w-full">
